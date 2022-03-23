@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Admin;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
@@ -11,6 +13,10 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Admin::create([
+            'name'=>'reslaan',
+            'email'=>'Reslaan@gmail.com',
+            'password'=>Hash::make('12345678'),
+        ]);
     }
 }

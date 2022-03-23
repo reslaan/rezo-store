@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +15,13 @@ use Illuminate\Support\Facades\Route;
 |all prefix admin
 */
 
+Route::group(['prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function (){
+
+
+
 // auth
-Route::group(['namespace'=>'Admin','middleware'=> 'guest:admin'],function (){
+Route::group(['namespace'=>'Admin','middleware'=> 'guest:admin','prefix'=>'admin'],function (){
     Route::get('login','LoginController@loginForm')->name('admin.login');
     Route::post('login','LoginController@login')->name('admin.login');
 });
@@ -22,6 +29,14 @@ Route::group(['namespace'=>'Admin','middleware'=> 'guest:admin'],function (){
 
 
 
-Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin'], function (){
+Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix'=> 'admin'], function (){
     Route::get('/','DashboardController@index')->name('admin.dashboard');
+
+    Route::group(['prefix'=>'settings'],function (){
+     Route::get('shipping-methods/{type}','SettingController@editShippingMethods')->name('edit.shipping.methods');
+    });
+});
+
+
+
 });

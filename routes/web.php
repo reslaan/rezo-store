@@ -17,4 +17,6 @@ Route::get('/', function () {
     return view('layouts.admin');
 });
 
-
+Route::get('login',function (){
+    return 'this page for normal users';
+})->name('login');
