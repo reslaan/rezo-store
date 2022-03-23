@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ShippingRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,37 @@ class SettingController extends Controller
         else
             $shippingMethod = Setting::where('key','free_shipping_label')->first();
 
-        return $shippingMethod;
+        return view('admin.settings.shipping.edit', with([
+            'shipping' => $shippingMethod
+        ]));
+    }
+    public function updateShippingMethods(ShippingRequest $request )
+    {
+
+
+        try {
+
+            DB::beginTransaction();
+            $shipping = Setting::find($request->id);
+            $shipping->update(['plain_value'=>$request->plain_value]);
+
+            // save translations
+            $shipping->value = $request->value;
+            $shipping->save();
+
+            DB::commit();
+            return  redirect()->back()->with([
+                'success' => 'تم التحديث بنجاح'
+            ]);
+        }catch (\Exception $ex){
+            return  redirect()->back()->with([
+                'error' => 'العملية لم تتم يرجى المحاولة لاحقاً'
+            ]);
+            DB::rollback();
+        }
+
+
+
+
     }
 }
