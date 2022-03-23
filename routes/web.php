@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.admin');
 });
+
+Route::get('login',function (){
+    return 'this page for normal users';
+})->name('login');
