@@ -16,7 +16,7 @@ return [
     'home' =>'الرئيسية',
     'languages' =>'لغات الموقع',
     'main-categories' =>'الأقسام الرئيسية',
-    'sub-categories' =>'الأقسام الفرعية',
+    'subcategories' =>'الأقسام الفرعية',
     'stores' =>'المتاجر',
     'settings' =>'الإعدادات',
     'shipping-methods' =>'وسائل التوصيل',

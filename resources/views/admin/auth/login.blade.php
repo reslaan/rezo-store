@@ -37,6 +37,7 @@
                                 <fieldset class="form-group position-relative has-icon-left">
                                     <input type="password" name="password" class="form-control form-control-lg input-lg"
                                            id="user-password"
+                                           value="{{old('password')}}"
                                            placeholder="أدخل كلمة المرور">
                                     <div class="form-control-position">
                                         <i class="la la-key"></i>

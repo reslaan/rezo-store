@@ -16,7 +16,7 @@ return [
     'home' =>'Home',
     'languages' =>'Languages',
     'main-categories' =>'Main Categories',
-    'sub-categories' =>'Sub Categories',
+    'subcategories' =>'Sub Categories',
     'stores' =>'Stores',
     'settings' =>'Settings',
     'shipping-methods' =>'Shipping Methods',

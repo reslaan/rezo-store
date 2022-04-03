@@ -22,4 +22,22 @@ class Category extends Model
     protected $casts = [
         'is_active' => 'boolean'
     ];
+
+    public function scopeCategories($query){
+        return $query->whereNull('parent_id');
+    }
+    public function scopeSubcategories($query){
+        return $query->whereNotNull('parent_id');
+    }
+
+    public function active(){
+        return $this->is_active == 1 ? 'مفعل' : 'غير مفعل';
+    }
+
+    public function parent(){
+        return $this->belongsTo(self::class,'parent_id');
+    }
+
+
+
 }
