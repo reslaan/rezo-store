@@ -54,6 +54,9 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request, $type)
     {
 
+        try {
+
+            DB::beginTransaction();
         if ($type == 'subcategories') {
             $request->validate(
                 [
@@ -70,7 +73,7 @@ class CategoryController extends Controller
 
 //        $category = new Category();
 //        $category->slug = $request->slug;
-//        $category->is_active = $is_active;
+  //      $category->is_active = $is_active;
 //        if ($request->has('parent_id')){
 //            $category->parent_id = $request->parent_id;
 //        }
@@ -78,9 +81,18 @@ class CategoryController extends Controller
         $category = Category::create($request->except('_token'));
         // save translation
         $category->name = $request->name;
+        $category->is_active = $is_active;
         $category->save();
+            DB::commit();
         Session::flash('success', 'تم إضافة القسم بنجاح');
         return redirect()->back();
+
+        } catch (\Exception $ex) {
+            return redirect()->back()->with([
+                'error' => 'العملية لم تتم يرجى المحاولة لاحقاً'
+            ]);
+            DB::rollback();
+        }
     }
 
     /**
