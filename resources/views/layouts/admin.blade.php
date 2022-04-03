@@ -52,7 +52,7 @@
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/style-rtl.css')}}">
     <!-- END Custom CSS-->
-    @notify_css
+
     @yield('style')
     <link href="https://fonts.googleapis.com/css?family=Cairo&display=swap" rel="stylesheet">
     <style>
@@ -167,6 +167,9 @@
     });
     $('#meridians14').timeDropper({
         meridians: true,setCurrentTime: false
+    });
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
     });
 </script>
 @yield('script')

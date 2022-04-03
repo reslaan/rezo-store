@@ -38,6 +38,16 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix'=> '
     Route::get('profile','ProfileController@profile')->name('profile');
     Route::put('profile','ProfileController@updateProfile');
 
+    ///////////////// Categories ///////////////////////
+    Route::get('/{type}','CategoryController@index')->name('admin.categories');
+    Route::get('/edit-{type}/{id}','CategoryController@edit')->name('admin.edit-category');
+    Route::put('/{type}/{id}','CategoryController@update')->name('admin.update-category');
+    Route::delete('/{type}/{id}','CategoryController@destroy')->name('admin.delete-category');
+    Route::get('new/{type}','CategoryController@create')->name('admin.new-category');
+    Route::post('new/{type}','CategoryController@store');
+
+    ////////////////// end categories /////////////////
+
     Route::group(['prefix'=>'settings'],function (){
      Route::get('shipping-methods/{type}','SettingController@editShippingMethods')->name('edit.shipping.methods');
      Route::put('shipping-methods','SettingController@updateShippingMethods')->name('update.shipping.methods');
