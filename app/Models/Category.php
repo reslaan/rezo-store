@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
     use Translatable;
 
+    public $table = "categories";
     // The relation to eager load on every query
     protected $with = ['translations'];
 
@@ -23,6 +26,10 @@ class Category extends Model
         'is_active' => 'boolean'
     ];
 
+    public function translations(): HasMany
+    {
+        return $this->hasMany(CategoryTranslation::class,'category_id');
+    }
     public function scopeCategories($query){
         return $query->whereNull('parent_id');
     }
@@ -31,13 +38,22 @@ class Category extends Model
     }
 
     public function active(){
-        return $this->is_active == 1 ? 'مفعل' : 'غير مفعل';
+        return $this->is_active == 1 ? __('admin/forms.active') : __('admin/forms.inactive');
     }
 
     public function parent(){
         return $this->belongsTo(self::class,'parent_id');
     }
 
+    public function children(){
+        return Category::where('parent_id',$this->id)->get();
+    }
+
+    public function name(){
+        $locale = CategoryTranslation::where('category_id',$this->id)->where('locale',app()->getLocale())->exists();
+        if ($this->name != null && $locale != null)
+        return $this->name;
+    }
 
 
 }

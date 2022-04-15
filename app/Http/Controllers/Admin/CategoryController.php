@@ -20,7 +20,9 @@ class CategoryController extends Controller
     public function index($type)
     {
 
-        $categories = Category::$type()->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
+
+        $categories = Category::$type()->orderBy('id', 'DESC')->get();
+
         return view('admin.categories.index')->with([
             'categories' => $categories,
             'type' => $type,
@@ -33,7 +35,7 @@ class CategoryController extends Controller
      */
     public function create($type)
     {
-        $categories = Category::categories()->get();
+        $categories = Category::all();
         if ($type == 'subcategories') {
             return view('admin.categories.new')->with([
                 'type' => $type,
@@ -53,10 +55,10 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request, $type)
     {
+        if (!$request->has('is_active')) {
+           $request->merge(['is_active' => 0]);
+        }
 
-        try {
-
-            DB::beginTransaction();
         if ($type == 'subcategories') {
             $request->validate(
                 [
@@ -66,30 +68,30 @@ class CategoryController extends Controller
                 'parent_id.exists' => 'القسم غير موجود',
             ]);
         }
-        $is_active = 0;
-        if ($request->has('is_active')) {
-            $is_active = 1;
-        }
+        try {
+
+
+            DB::beginTransaction();
+
 
 //        $category = new Category();
 //        $category->slug = $request->slug;
-  //      $category->is_active = $is_active;
+            //      $category->is_active = $is_active;
 //        if ($request->has('parent_id')){
 //            $category->parent_id = $request->parent_id;
 //        }
 
-        $category = Category::create($request->except('_token'));
-        // save translation
-        $category->name = $request->name;
-        $category->is_active = $is_active;
-        $category->save();
+            $category = Category::create($request->except('_token'));
+            // save translation
+            $category->name = $request->name;
+            $category->save();
             DB::commit();
-        Session::flash('success', 'تم إضافة القسم بنجاح');
-        return redirect()->back();
+            Session::flash('success', __('alerts.category_created'));
+            return redirect()->back();
 
         } catch (\Exception $ex) {
             return redirect()->back()->with([
-                'error' => 'العملية لم تتم يرجى المحاولة لاحقاً'
+                'error' => __('alerts.try_later')
             ]);
             DB::rollback();
         }
@@ -113,11 +115,14 @@ class CategoryController extends Controller
     public function edit($type, $id)
     {
 
+
         $category = Category::find($id);
 
+        
+
         if (!$category)
-            return redirect(route('admin.categories'))->with([
-                'error' => 'هذا القسم غير موجود',
+            return redirect(route('admin.categories',$type))->with([
+                'error' => __('alerts.not_exist'),
             ]);
 
 
@@ -145,36 +150,37 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $type, $id)
     {
+
+
         try {
 
             DB::beginTransaction();
             $category = Category::find($id);
             if (!$category)
                 return redirect()->back()->with([
-                    'error' => 'هذا القسم غير موجود'
+                    'error' => __('alerts.not_exist')
                 ]);
-                $is_active = 0;
-                if ($request->has('is_active')) {
-                    $is_active = 1;
-                }
-                $category->update($request->all());
+            $is_active = 0;
+            if ($request->has('is_active')) {
+                $is_active = 1;
+            }
+            $category->update($request->all());
 
-                $category->name = $request->name;
-                $category->is_active = $is_active;
-                $category->save();
+            $category->name = $request->name;
+            $category->is_active = $is_active;
+            $category->save();
 
-                DB::commit();
-                return redirect()->back()->with([
-                    'success' => 'تم التعديل بنجاح',
-                    'type' => $type,
-                ]);
+            DB::commit();
+            return redirect()->back()->with([
+                'success' => __('alerts.edit_success'),
+                'type' => $type,
+            ]);
 
 
         } catch (\Exception $ex) {
             return redirect()->back()->with([
-                'error' => 'العملية لم تتم يرجى المحاولة لاحقاً'
+                'error' => __('alerts.try_later')
             ]);
-            DB::rollback();
         }
 
     }
@@ -192,7 +198,7 @@ class CategoryController extends Controller
 
 
         return redirect()->back()->with([
-            'success' => 'تم الحذف بنجاح',
+            'success' => __('alerts.deleted'),
             'type' => $type,
         ]);
     }

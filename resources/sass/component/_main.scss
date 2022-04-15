@@ -1,0 +1,19 @@
+.auth-overlay{
+     background: linear-gradient(to  bottom ,darken($primary , 10%) , lighten($primary,30%));
+    background-size: cover;
+}
+.auth-text{
+    line-height: 0.25;
+}
+////student part ////
+
+ul.list-group li a{
+    font-weight: 600;
+}
+ul.list-group li.active{
+    background-color: $primary;
+
+}
+ul.list-group li.active a{
+color: $light;
+}

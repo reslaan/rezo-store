@@ -1,0 +1,71 @@
+h5 {
+    font-weight: bold;
+}
+
+.text-red {
+    color: $site-red;
+}
+
+.text-blue {
+    color: $site-blue;
+}
+
+.text-teal {
+    color: $site-teal;
+}
+
+.text-dark-yellow {
+    color: $site-dark-yellow;
+}
+
+////
+.nav-link {
+    color: $site-light-gray;
+    padding-left: 0;
+
+    &:lang(ar) {
+        padding-right: 0;
+    }
+}
+
+.courses {
+    .nav-link:hover {
+        color: $site-blue;
+    }
+}
+
+.tutorial {
+    .nav-link:hover {
+        color: $site-dark-yellow;
+    }
+}
+
+.contact {
+    .nav-link:hover {
+        color: $site-teal;
+    }
+}
+
+
+.follow-nav {
+    .fab{
+        width: 100%;
+        padding: 6px;
+        &::before{
+            font-size: 1.2rem;
+        }
+
+    }
+    .fa-youtube:hover{
+        color: $youtube;
+    }
+    .fa-linkedin-in:hover{
+       color: $linkedin;
+    }
+    .fa-twitter:hover{
+        color: $twitter;
+    }
+    .fa-facebook:hover{
+        color: $facebook;
+    }
+}
