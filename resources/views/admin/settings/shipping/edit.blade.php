@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin',['activePage' => 'settings'])
 
 @section('content')
     <div class="app-content content">

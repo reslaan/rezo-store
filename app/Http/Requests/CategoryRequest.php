@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UpdateUniqueValue;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use phpDocumentor\Reflection\Types\This;
 
 class CategoryRequest extends FormRequest
@@ -22,14 +24,14 @@ class CategoryRequest extends FormRequest
      *
      * @return void
      */
-    /*
+
     public function prepareForValidation()
     {
         $this->merge([
             'slug' => Str::slug($this->slug),
         ]);
     }
-    */
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -38,8 +40,12 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:category_translations,name,'.$this->id,
+
+//            'name' => 'required|unique:category_translations,name,'.$this->id,
+            'name' => ['required',new UpdateUniqueValue('category_translations',$this->id,'category_id')],
             'slug' => 'required|unique:categories,slug,'.$this->id,
+
+            //Rule::unique('category_translations','name')->ignore($this->id),
         ];
     }
 
@@ -47,10 +53,7 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'الرجاء إدخال إسم القسم',
-            'slug.required' => 'الرجاء إدخال إسم الرابط',
-            'name.unique' => 'اسم القسم موجود بالفعل',
-            'slug.unique' => 'اسم الرابط موجود بالفعل',
+
         ];
     }
 

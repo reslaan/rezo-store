@@ -1,0 +1,13 @@
+/// top bar
+.search-btn{
+    margin-right: 1px;
+}
+.search-input{
+    background-color: $secondary;
+    transition: background-color .3s ease-out;
+    &:focus,
+    &:active,
+    &:visited{
+        background-color: $light;
+    }
+}

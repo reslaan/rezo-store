@@ -38,15 +38,38 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix'=> '
     Route::get('profile','ProfileController@profile')->name('profile');
     Route::put('profile','ProfileController@updateProfile');
 
+
+
     ///////////////// Categories ///////////////////////
-    Route::get('/{type}','CategoryController@index')->name('admin.categories');
-    Route::get('/edit-{type}/{id}','CategoryController@edit')->name('admin.edit-category');
-    Route::put('/{type}/{id}','CategoryController@update')->name('admin.update-category');
-    Route::delete('/{type}/{id}','CategoryController@destroy')->name('admin.delete-category');
-    Route::get('new/{type}','CategoryController@create')->name('admin.new-category');
-    Route::post('new/{type}','CategoryController@store');
+
+        Route::get('{type}/all','CategoryController@index')->name('admin.categories');
+        Route::get('new/{type}','CategoryController@create')->name('admin.new-category');
+        Route::post('new/{type}','CategoryController@store');
+        Route::get('edit/{type}/{id}','CategoryController@edit')->name('admin.edit-category');
+        Route::put('update/{type}/{id}','CategoryController@update')->name('admin.update-category');
+        Route::delete('delete/{type}/{id}','CategoryController@destroy')->name('admin.delete-category');
+
 
     ////////////////// end categories /////////////////
+
+    ///////////////// Brands ///////////////////////
+    Route::group(['prefix' => 'brands'],function(){
+        Route::get('/','BrandController@index')->name('admin.brands');
+        Route::get('new','BrandController@create')->name('admin.new-brand');
+        Route::post('new','BrandController@store');
+        Route::get('/edit/{id}','BrandController@edit')->name('admin.edit-brand');
+        Route::put('/update/{id}','BrandController@update')->name('admin.update-brand');
+        Route::delete('delete/{id}','BrandController@destroy')->name('admin.delete-brand');
+    });
+    ////////////////// end Brands /////////////////
+
+
+    ///////////////// Tags ///////////////////////
+    Route::name('admin.')->group(function (){
+        Route::resource('tags','TagController');
+    });
+
+    ////////////////// end Brands /////////////////
 
     Route::group(['prefix'=>'settings'],function (){
      Route::get('shipping-methods/{type}','SettingController@editShippingMethods')->name('edit.shipping.methods');

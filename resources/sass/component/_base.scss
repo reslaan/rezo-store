@@ -1,0 +1,58 @@
+/// remove shadow  in bootstrap components
+.btn:focus,
+.btn:active,
+    //.btn:focus:active,
+.btn-check:focus,
+.btn-check:checked,
+.form-select:focus,
+.form-control:focus,
+.navbar-toggler:focus,
+.form-check-input:focus{
+    box-shadow: none;
+}
+/////// end remove shadow  in bootstrap components
+///base
+body:lang(ar){
+    font-family: 'Cairo';
+}
+
+.btn-primary , .btn-primary:hover , .btn-outline-primary:hover{
+    color: $light;
+}
+
+a{
+    text-decoration: none;
+}
+
+summary::marker{
+    content: "";
+}
+summary::after {
+    //content:'  \003E';
+    font-size: 80%;
+    content:'  \25B6';
+}
+summary:lang(ar)::after{
+    content: ' 	\25C0';
+}
+
+details[open] > summary::after {
+    content:" \25BC";
+    color: $primary;
+
+}
+details[open] > summary {
+        color: $primary;
+}
+
+
+
+/// edit select2 library
+.select2-container .select2-selection--single{
+    height: 38px;
+    padding: .3rem;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+    height: 36px;
+    right: 2px;
+}
