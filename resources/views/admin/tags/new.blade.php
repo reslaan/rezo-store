@@ -92,3 +92,16 @@
     </main>
 
 @endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#name').change(function (e) {
+                let name = $(this).val().replace(/ +/g, '-');
+                console.log(name)
+                let slug = $('#slug');
+                slug.val(name) ;
+            })
+        })
+    </script>
+@endsection

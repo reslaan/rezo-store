@@ -44,7 +44,11 @@ details[open] > summary::after {
 details[open] > summary {
         color: $primary;
 }
-
+.required::after{
+    content: '*';
+    color: red;
+    font-weight: bold;
+}
 
 
 /// edit select2 library

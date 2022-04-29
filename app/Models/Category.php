@@ -30,6 +30,9 @@ class Category extends Model
     {
         return $this->hasMany(CategoryTranslation::class,'category_id');
     }
+    public function products(){
+        return $this->belongsToMany(Product::class,'product_categories');
+    }
     public function scopeCategories($query){
         return $query->whereNull('parent_id');
     }

@@ -32,4 +32,8 @@ class Tag extends Model
     {
         return $this->hasMany(TagTranslation::class,'tag_id');
     }
+
+    public function products(){
+        return $this->belongsToMany(Product::class,'product_tags');
+    }
 }

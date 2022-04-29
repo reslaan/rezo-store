@@ -45,12 +45,12 @@
                                 @foreach($brands as $brand)
                                     <tr class=" bg-lighten-5 ">
                                         <td class="align-middle">{{$brand->name}}</td>
-                                        <td class="w-25  align-middle">
+                                        <td class="w-25 align-middle">
                                             <img src="{{$brand->photoPath()}}" alt=""
                                                  class="img-fluid  w-50" width="200"
                                                  height="200">
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="w-25 align-middle">
                                             <div class="row">
                                                  <div class="col-8 col-md-6 text-light {{($brand->is_active == 0) ? 'bg-secondary': 'bg-primary' }} m-auto fs-5 p-1"
                                                  >{{$brand->active()}}</div>

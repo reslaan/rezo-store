@@ -61,6 +61,36 @@
         </li>
 
 
+        <li class="treeview">
+            <a class="app-menu__item  {{ $activePage == 'products' ? ' active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-archive"></i>
+                <span class="app-menu__label">{{__('admin/sidebar.products')}}
+                </span>
+                <span class="badge badge badge-primary badge-pill float-right mr-2">{{App\Models\Product::count()}}</span>
+                <i class="treeview-indicator fa  fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item" href="{{route('admin.products.index')}}"><i class="icon fa fa-circle-o"></i> {{__('admin/sidebar.all')}}  </a></li>
+                <li><a class="treeview-item" href="{{route('admin.attributes.index')}}"><i class="icon fa fa-sliders-h-square"></i> {{__('admin/sidebar.attributes')}}  </a></li>
+                <li><a class="treeview-item" href="{{route('admin.options.index')}}"><i class="icon fa fa-sliders-h"></i> {{__('admin/sidebar.options')}}  </a></li>
+                <li><a class="treeview-item" href="{{route('admin.products.create')}}"><i class="icon fa fa-plus"></i> {{__('admin/sidebar.add-product')}}</a></li>
+            </ul>
+        </li>
+
+
+        <li class="treeview">
+            <a class="app-menu__item  {{ $activePage == 'offers' ? ' active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-percent"></i>
+                <span class="app-menu__label">{{__('Offers')}}
+                </span>
+                <span class="badge badge badge-primary badge-pill float-right mr-2">{{App\Models\Product::count()}}</span>
+                <i class="treeview-indicator fa  fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item" href="{{route('admin.products.index')}}"><i class="icon fa fa-circle-o"></i> {{__('admin/sidebar.all')}}  </a></li>
+                <li><a class="treeview-item" href="{{route('admin.attributes.index')}}"><i class="icon fa fa-sliders-h-square"></i> {{__('admin/sidebar.attributes')}}  </a></li>
+                <li><a class="treeview-item" href="{{route('admin.options.index')}}"><i class="icon fa fa-sliders-h"></i> {{__('admin/sidebar.options')}}  </a></li>
+                <li><a class="treeview-item" href="{{route('admin.products.create')}}"><i class="icon fa fa-plus"></i> {{__('admin/sidebar.add-product')}}</a></li>
+            </ul>
+        </li>
+
+
 
 
         <li class="treeview">
