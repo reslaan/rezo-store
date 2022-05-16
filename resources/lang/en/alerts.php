@@ -18,6 +18,7 @@ return [
     'category_created' => 'Category Created Successfully',
     'brand_created' => 'Brand Created Successfully',
     'tag_created' => 'Tag Created Successfully',
+    'product_created' => 'Product Created Successfully',
     'deleted' => 'deleted done',
     'delete' => 'delete',
     'ok' => 'OK',
@@ -30,4 +31,5 @@ return [
     // error
     'try_later' => 'There is an error, please try later',
     'not_exist' => 'This element not exist',
+    'limit_5' => 'Max files is 5 ',
 ];

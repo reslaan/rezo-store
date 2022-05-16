@@ -11,10 +11,10 @@
                 <div class="col-md-6 ">
                     <ul class="breadcrumb py-2 ps-3 mb-0 bg-transparent ">
                         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                        <li class="breadcrumb-item"><a href="">{{__('admin/sidebar.home')}} </a>
+                        <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                         </li>
                         <li class="breadcrumb-item"><a
-                                href="{{route('admin.products.index')}}">  {{__('admin/forms.products')}} </a>
+                                href="{{route('admin.products.index')}}">  {{__('forms.products')}} </a>
                         </li>
                     </ul>
                 </div>
@@ -25,7 +25,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="basic-layout-form"> {{__('admin/forms.new-product')}} </h4>
+                        <h4 class="card-title" id="basic-layout-form"> {{__('forms.new-product')}} </h4>
                     </div>
                     @include('admin.includes.alerts.alert')
                     <div class="card-body">
@@ -37,7 +37,7 @@
 
 
 
-                            @include('admin.products.fields')
+                            @include('admin.products.includes.fields')
 
 
 
@@ -47,7 +47,7 @@
                                 {{-- submit form--}}
                                 <div class="col-md-2 order-md-0">
                                         <button type="submit" class="btn btn-primary w-100">
-                                            {{__('admin/forms.save')}}
+                                            {{__('forms.save')}}
                                         </button>
                                 </div>
 
@@ -67,15 +67,15 @@
 @section('script')
     <script>
 
-        const all = '{{__("admin/forms.all")}}'
-        const none = '{{__("admin/forms.none")}}'
-        const empty = '{{__("admin/forms.empty")}}'
-        const emptySearch = '{{__("admin/forms.emptySearch")}}'
-        const limit = '{{__("admin/forms.limit")}}'
-        const placeholder = '{{__("admin/forms.placeholder")}}'
-        const placeholderMulti = '{{__("admin/forms.placeholderMulti")}}'
-        const search = '{{__("admin/forms.search")}}'
-        const disabled = '{{__("admin/forms.disabled")}}'
+        const all = '{{__("forms.all")}}'
+        const none = '{{__("forms.none")}}'
+        const empty = '{{__("forms.empty")}}'
+        const emptySearch = '{{__("forms.emptySearch")}}'
+        const limit = '{{__("forms.limit")}}'
+        const placeholder = '{{__("forms.placeholder")}}'
+        const placeholderMulti = '{{__("forms.placeholderMulti")}}'
+        const search = '{{__("forms.search")}}'
+        const disabled = '{{__("forms.disabled")}}'
     </script>
 
     <script src="{{asset('assets/js/tail-select.js')}}"></script>

@@ -77,15 +77,15 @@ return [
         'array' => 'The :attribute must not have more than :value items.',
     ],
     'max' => [
-        'numeric' => 'The :attribute may not be greater than :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
-        'string' => 'The :attribute may not be greater than :max characters.',
-        'array' => 'The :attribute may not have more than :max items.',
+        'numeric' => ' :attribute يجب أن لا يتعدى  :max أرقام.',
+        'file' => ' :attribute يجب أن لا يتعدى :max كيلوبايت.',
+        'string' => ' :attribute يجب أن لا يتعدى :max حرف.',
+        'array' => ' :attribute يجب أن لا تتعدى :max عناصر.',
     ],
     'mimes' => 'نوع :attribute يجب أن يكون :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
-        'numeric' => ' :attribute يجب أن لا يقل عن :min.',
+        'numeric' => ' :attribute يجب أن لا يقل عن :min أرقام.',
         'file' => ' :attribute يجب أن لا يقل عن  :min كيلوبايت.',
         'string' => ' :attribute يجب أن لا يقل عن :min حروف.',
         'array' => ' :attribute يجب ان تحتوي على الأقل على  :min عناصر.',
@@ -147,10 +147,20 @@ return [
     */
 
     'attributes' => [
-        'name' => __('admin/forms.name'),
-        'photo' => __('admin/forms.photo'),
-        'slug' => __('admin/forms.slug'),
-        'value' => __('admin/forms.shipping-value'),
+        'name' => __('forms.name'),
+        'price' => __('forms.price'),
+        'photo' => __('forms.photo'),
+        'slug' => __('forms.slug'),
+        'qty' => __('forms.qty'),
+        'sku' => __('forms.sku'),
+        'categories' => __('forms.categories'),
+        'tags' => __('forms.tags'),
+        'brand' => __('forms.brand'),
+        'short_description' => __('forms.short_description'),
+        'description' => __('forms.description'),
+        'value' => __('forms.shipping-value'),
+        'attribute_options.*.*.name' => __('forms.option'),
+        'attribute_options.*.*.price' => __('forms.price'),
     ],
 
 ];

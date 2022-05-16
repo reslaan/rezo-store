@@ -1,5 +1,17 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css2?family=Cairo);@charset "UTF-8";
 
+.bg-light-50 {
+  background: #fafafa !important;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}
+
+.border-dashed:hover {
+  border-style: solid !important;
+}
+
 .w-10 {
   width: 10% !important;
 }

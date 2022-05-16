@@ -13,10 +13,10 @@
                 <div class="col-md-6 ">
                     <ul class="breadcrumb py-2 ps-3 mb-0 bg-transparent ">
                         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                        <li class="breadcrumb-item"><a href="">{{__('admin/sidebar.home')}} </a>
+                        <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                         </li>
                         <li class="breadcrumb-item"><a
-                                href="{{route('admin.products.index')}}">  {{__('admin/forms.products')}} </a>
+                                href="{{route('admin.products.index')}}">  {{__('forms.products')}} </a>
                         </li>
                     </ul>
                 </div>
@@ -28,9 +28,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="card-title mb-0" id="basic-layout-form"><i
-                                class="fa fa-edit"></i> {{__('admin/forms.edit-product')}} </h4>
+                                class="fa fa-edit"></i> {{__('forms.edit-product')}} </h4>
                         <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.products.create')}}"><i
-                                class="icon fa fa-plus"></i> {{__('admin/sidebar.add-product')}}</a>
+                                class="icon fa fa-plus"></i> {{__('sidebar.add-product')}}</a>
                     </div>
                     @include('admin.includes.alerts.alert')
                     <div class="card-body">
@@ -43,17 +43,17 @@
                             <input name="_method" value="put" type="hidden">
                             <input name="id" value="{{$product->id}}" type="hidden">
 
-                            @include('admin.products.fields')
+                            @include('admin.products.includes.fields')
 
 
                             <div class="row gy-2">
 
                                 {{-- show option fields--}}
-                                <div class="col-xl-2 col-lg-3 col-md-4 order-md-1 ps-md-0">
+                                <div class="col-xl-2 col-lg-3 col-md-4 order-md-1 ps-md-0 px-lg-0">
                                     <button type="button" id="showFields" class="btn btn-primary w-100 "
                                             data-bs-toggle="modal" data-bs-target="#extraFields">
                                         <i class="fa fa-sliders-h pe-1"></i>
-                                        <span>{{__('admin/forms.product_options')}}</span>
+                                        <span>{{__('forms.product_options')}}</span>
                                     </button>
 
                                 </div>
@@ -61,37 +61,19 @@
                                 {{--  update product--}}
                                 <div class="col-md-3 col-lg-2 order-md-0">
                                     <button type="submit" class="btn btn-primary w-100">
-                                        {{__('admin/forms.update')}}
+                                        {{__('forms.update')}}
                                     </button>
                                 </div>
 
                             </div>
 
 
-                            <div class="modal fade" id="extraFields" data-bs-backdrop="static" data-bs-keyboard="false">
-                                <div class="modal-dialog modal-lg ">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-
-                                            @include('admin.products.extra-fields')
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </form>
+
+
+                            @include('admin.products.option-modal')
+
+
                     </div>
                 </div>
             </div>
@@ -103,15 +85,15 @@
 @section('script')
     <script>
 
-        const all = '{{__("admin/forms.all")}}'
-        const none = '{{__("admin/forms.none")}}'
-        const empty = '{{__("admin/forms.empty")}}'
-        const emptySearch = '{{__("admin/forms.emptySearch")}}'
-        const limit = '{{__("admin/forms.limit")}}'
-        const placeholder = '{{__("admin/forms.placeholder")}}'
-        const placeholderMulti = '{{__("admin/forms.placeholderMulti")}}'
-        const search = '{{__("admin/forms.search")}}'
-        const disabled = '{{__("admin/forms.disabled")}}'
+        const all = '{{__("forms.all")}}'
+        const none = '{{__("forms.none")}}'
+        const empty = '{{__("forms.empty")}}'
+        const emptySearch = '{{__("forms.emptySearch")}}'
+        const limit = '{{__("forms.limit")}}'
+        const placeholder = '{{__("forms.placeholder")}}'
+        const placeholderMulti = '{{__("forms.placeholderMulti")}}'
+        const search = '{{__("forms.search")}}'
+        const disabled = '{{__("forms.disabled")}}'
     </script>
 
     <script src="{{asset('assets/js/tail-select.js')}}"></script>
@@ -126,6 +108,7 @@
             animate: true,
             multiShowCount: true,
             search: 'search',
+            deselect: false,
             width: '100%',
             multiShowLimit: true,      // [0.5.0]      Boolean
             multiSelectAll: true,
@@ -134,30 +117,26 @@
         tail.select('.single-select', {
             width: '100%',
             animate: true,
-            deselect: true,
+            deselect: false,
 
         })
     </script>
 
+    @yield('option-script')
 
     <script type="text/javascript">
-        $('#add').on('click', function () {
-            let newField = '';
-            newField += `@include('admin.products.extra-fields')`;
-            $('#options').append(newField)
-        })
+
+        // upload multiple images by dropzone
         let uploadedDocumentMap = {}
-
-
         Dropzone.options.photos =
             {
                 paramName: 'dzProductImages',
                 url: '{{route('admin.product.images.save')}}',
                 method: 'POST',
                 maxFilesize: 5,
-                parallelUploads:1,
+                parallelUploads: 1,
                 clickable: true,
-                dictRemoveFile: "{{__('admin/forms.delete_image')}}",
+                dictRemoveFile: "{{__('forms.delete_image')}}",
                 headers: {
                     'X-CSRF-TOKEN':
                         "{{ csrf_token() }}",
@@ -245,7 +224,5 @@
                 }
             })
         }
-
-
     </script>
 @endsection

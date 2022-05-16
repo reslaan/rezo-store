@@ -28,6 +28,8 @@ return [
     'attributes' =>'الخصائص',
     'options' =>'الخيارات',
     'add-product' =>'إضافة منتج',
+    'offers' =>'العروض',
+    'add-offer' =>'إضافة عرض',
     'stores' =>'المتاجر',
     'settings' =>'الإعدادات',
     'shipping-methods' =>'وسائل التوصيل',

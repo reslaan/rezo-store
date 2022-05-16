@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductOptionsRequest;
+use App\Http\Requests\ProductRequest;
 use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
@@ -58,42 +60,24 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @param \Illuminate\Http\Request $request
+     * @return Application|\Illuminate\Http\RedirectResponse|Response|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        if (!$request->has('is_active')) {
-            $request->merge(['is_active' => 0]);
-        }
-        if (!$request->has('in_stock')) {
-            $request->merge(['in_stock' => 0]);
-        }
+
 
         $product = new Product();
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->slug = $request->slug;
-        $product->sku = $request->sku;
-        $product->qty = $request->qty;
-        $product->description = $request->description;
-        $product->brand_id = $request->brand;
-        $product->is_active = $request->is_active;
-        $product->in_stock = $request->in_stock;
-
-
-        $product->save();
-        $product->categories()->attach( $request->categories);
-        $product->tags()->attach( $request->tags);
-        Session::flash('success', __('alerts.category_created'));
-        return redirect()->back();
+        $this->saveProductData($request, $product);
+        Session::flash('success', __('alerts.product_created'));
+        return redirect(route('admin.products.edit', $product));
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\product  $product
+     * @param \App\Models\product $product
      * @return Response
      */
     public function show(product $product)
@@ -104,7 +88,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\product  $product
+     * @param \App\Models\product $product
      * @return Application|Factory|Response|View
      */
     public function edit(product $product)
@@ -127,29 +111,35 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\product  $product
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\product $product
      * @return Response
      */
-    public function update(Request $request, product $product)
+    public function update(ProductRequest $request, product $product)
     {
+      //  return $request;
 
 
 
-        return redirect()->back();
+        $this->saveProductData($request, $product);
+
+
+        Session::flash('success', __('alerts.product_updated'));
+        return redirect(route('admin.products.edit', $product));
     }
 
 
-    public function saveImages(Request $request){
+    public function saveImages(Request $request)
+    {
         $id = $request->header('id');
         $product = Product::find($id);
 
         $imagesCount = $product->images->count();
-        if ($imagesCount < 5){
+        if ($imagesCount < 5) {
             $file = $request->file('dzProductImages');
             $size = File::size($file);
             if ($file)
-                $fileName =  uploadImage($file,'products');
+                $fileName = uploadImage($file, 'products');
 
             Media::create([
                 'model_id' => $id,
@@ -158,66 +148,189 @@ class ProductController extends Controller
                 'size' => $size,
             ]);
 
-            $imagesCount+=1;
+
             return response()->json([
                 'name' => $fileName,
-                'success' => '',
-                'imagesCount' => $imagesCount  ,
             ]);
-        }else{
+        } else {
             return response()->json([
-                'failed' => 'الحد المسموح به 5 صور فقط',
-                'imagesCount' => $imagesCount,
+                'failed' => __('alerts.limit_5'),
             ]);
         }
 
     }
-    public function test(){
-        $image = Media::find(284);
-        $path = $image->path('products');
-        $size = File::size($path);
-        dd($size);
-    }
-    public function showImages(Request $request){
+
+
+
+    public function showImages(Request $request)
+    {
         $id = $request->id;
         $product = Product::find($id);
         $images = $product->images;
         $file_list = [];
-        foreach ($images as $image){
-           // $path = asset('storage/images/products/'.$image->file_name);
+        foreach ($images as $image) {
+            // $path = asset('storage/images/products/'.$image->file_name);
             $path = $image->path('products');
-          $size = $image->size;
+            $size = $image->size;
 
-            $file_list[] = ['name' => $image->file_name,'size' => $size, 'path' => $path];
+            $file_list[] = ['name' => $image->file_name, 'size' => $size, 'path' => $path];
         }
         return $file_list;
 
     }
 
 
-
-    public function deleteImage(Request $request){
+    public function deleteImage(Request $request)
+    {
 
         $product = Product::find($request->id);
         $file_name = $request->name;
-        $image = Media::where('file_name',$file_name)->first();
+        $image = Media::where('file_name', $file_name)->first();
         $image->delete();
-        deleteImage($file_name,'products');
+        deleteImage($file_name, 'products');
         $imagesCount = $product->images->count();
         return response()->json([
-            'imagesCount' =>  $imagesCount ,
-            'message' =>  __('alerts.deleted'),
-            'type' =>  'success', // notify classes
+            'imagesCount' => $imagesCount,
+            'message' => __('alerts.deleted'),
+            'type' => 'success', // notify classes
+        ]);
+    }
+    public function saveProductOptions(ProductOptionsRequest $request, Product $product)
+    {
+
+        $attributes = $request->attribute_options;
+//print_r($attributes);
+
+        if (isset($product->attributes)) {
+            foreach ($product->attributes as $attribute) {
+                // check if attribute id not in array
+                if (!isset($attributes[$attribute->id])) {
+                    $product->attributes()->detach($attribute);
+                }
+            }
+        }
+        // delete option that not come with the form
+        if (isset($product->options)){
+            foreach ($product->options as $option) {
+                $state = false;
+                if (isset($attributes)){
+                    foreach ($attributes as $key => $attribute) {
+                        if ($key != 0 ){
+                            if (is_array($attribute)){
+                                foreach ($attribute as $key => $items) {
+                                    if (isset($items['id']) && $option->id == $items['id']){
+                                        $state = true;
+                                    }
+
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+
+                if (!$state) {
+                    $option->translations()->delete();
+                    $option->delete();
+
+
+                }
+            }
+
+        }
+
+        // add new attribute, new option and update existing option
+        if (isset($attributes)){
+            foreach ($attributes as $key => $attribute) {
+
+                if ($key != 0){
+                    // add new attribute
+                    $is_attribute = $product->attributes()->where('attribute_id', $key)->first();
+                    if (!$is_attribute) {
+                        $product->attributes()->attach($key);
+                    }
+                    if (is_array($attribute)){
+                        foreach ($attribute as $items) {
+                            // update existing option
+                            if (isset($items['id'])) {
+
+                                $option = $product->options()->where('id', $items['id'])->first();
+                                if ($option){
+                                    $option->name = $items['name'];
+                                    $option->price = $items['price'];
+                                    $option->attribute_id = $key;
+                                    $option->save();
+                                }
+
+                            } else {
+                                // add new option
+                                if (isset($items['name'])) {
+                                    $option = new Option();
+                                    $option->name = $items['name'];
+                                    $option->product_id = $product->id;
+                                    $option->attribute_id = $key;
+                                    $option->price = $items['price'];
+                                    $option->save();
+                                }
+
+
+                            }
+
+                        }
+                    }
+
+                }
+
+
+
+            }
+        }
+
+
+        return \response()->json([
+            'success' => $product->options
         ]);
     }
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\product  $product
+     * @param \App\Models\product $product
      * @return Response
      */
     public function destroy(product $product)
     {
         //
+    }
+
+    /**
+     * @param $request
+     * @param product $product
+     */
+    public function saveProductData($request, product $product): void
+    {
+        if (!$request->has('is_active')) {
+            $request->merge(['is_active' => 0]);
+        }
+        if (!$request->has('in_stock')) {
+            $request->merge(['in_stock' => 0]);
+        }
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->slug = $request->slug;
+        $product->sku = strtoupper( $request->sku);
+        $product->qty = $request->qty;
+        $product->description = $request->description;
+        $product->short_description = $request->short_description;
+        $product->brand_id = $request->brand;
+        $product->is_active = $request->is_active;
+        $product->in_stock = $request->in_stock;
+
+
+        $product->save();
+        $product->categories()->sync($request->categories);
+        $product->tags()->sync($request->tags);
+
     }
 }

@@ -28,7 +28,7 @@ class CreateProductsTable extends Migration
             $table->boolean('in_stock')->default(false);
             $table->integer('viewed')->unsigned()->default(0);
             $table->boolean('is_active')->default(false);
-            $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('set null');
+            $table->foreignId('brand_id')->nullable()->references('id')->on('brands')->onDelete('set null');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -7,10 +7,10 @@
                 <div class="col-md-6 ">
                     <ul class="breadcrumb py-2 ps-3 mb-0 bg-transparent ">
                         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                        <li class="breadcrumb-item"><a href="">{{__('admin/sidebar.home')}} </a>
+                        <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                         </li>
                         <li class="breadcrumb-item"><a
-                                href="{{route('admin.products.index')}}"> {{__('admin/sidebar.products')}}  </a>
+                                href="{{route('admin.products.index')}}"> {{__('sidebar.products')}}  </a>
                         </li>
                     </ul>
                 </div>
@@ -20,8 +20,8 @@
         @include('admin.includes.alerts.alert')
         <div class="card">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                <h4 class="card-title mb-0">{{__('admin/forms.products')}}</h4>
-                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.products.create')}}"><i class="icon fa fa-plus"></i> {{__('admin/sidebar.add-product')}}</a>
+                <h4 class="card-title mb-0">{{__('forms.products')}}</h4>
+                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.products.create')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-product')}}</a>
             </div>
             <div class="card-body px-0">
                 <div class="row">
@@ -30,12 +30,12 @@
                             <table class="table table-hover table-bordered text-center " id="sampleTable">
                                 <thead>
                                 <tr>
-                                    <th>{{__('admin/forms.name')}}</th>
-                                    <th>{{__('admin/forms.photo')}}</th>
-                                    <th>{{__('admin/forms.price')}}</th>
-                                    <th>{{__('admin/forms.qty')}}</th>
-                                    <th>{{__('admin/forms.state')}}</th>
-                                    <th>{{__('admin/forms.actions')}}</th>
+                                    <th>{{__('forms.name')}}</th>
+                                    <th>{{__('forms.photo')}}</th>
+                                    <th>{{__('forms.price')}}</th>
+                                    <th>{{__('forms.qty')}}</th>
+                                    <th>{{__('forms.state')}}</th>
+                                    <th>{{__('forms.actions')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="">
@@ -47,7 +47,7 @@
                                         <td class="align-middle">{{$product->qty ?? '--'}}</td>
                                         <td class="align-middle">
                                             <div class="row">
-                                                <div class="col-8 col-md-6 text-light {{($product->is_active == 0) ? 'bg-secondary': 'bg-primary' }} m-auto fs-5 p-1"
+                                                <div class="col-10 col-md-8 text-light {{($product->is_active == 0) ? 'bg-secondary': 'bg-primary' }} m-auto fs-6 p-1"
                                                 >{{$product->active()}}</div>
                                             </div>
                                         </td>
@@ -63,7 +63,7 @@
                                                     <form id="deleteForm_{{$product->id}}"
                                                           class="deleteForm"
                                                           action="{{route('admin.products.destroy', $product->id)}}"                                                          method="post"
-                                                          data-name="{{__('admin/forms.product')}}"
+                                                          data-name="{{__('forms.product')}}"
                                                           data-title="{{__('alerts.sure')}}"
                                                           data-text="{{__('alerts.delete_warning')}}">
                                                         @csrf

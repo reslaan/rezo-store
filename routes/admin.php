@@ -72,10 +72,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix'=> '
             'attributes' => 'AttributeController',
             'options' => 'OptionController',
         ]);
-        Route::get('test','ProductController@test');
+
         Route::post('product/images/','ProductController@saveImages')->name('product.images.save');
         Route::post('product/images/show','ProductController@showImages')->name('product.images.show');
         Route::post('product/images/delete','ProductController@deleteImage')->name('image.delete');
+        Route::post('product/options/{product}','ProductController@saveProductOptions')->name('product.options');
     });
 
     ////////////////// end resources /////////////////

@@ -8,10 +8,10 @@
                 <div class="col-md-6 ">
                     <ul class="breadcrumb py-2 ps-3 mb-0 bg-transparent ">
                         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                        <li class="breadcrumb-item"><a href="">{{__('admin/sidebar.home')}} </a>
+                        <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                         </li>
                         <li class="breadcrumb-item"><a
-                                href="{{route('admin.brands')}}"> {{__('admin/sidebar.brands')}} </a>
+                                href="{{route('admin.brands')}}"> {{__('sidebar.brands')}} </a>
                         </li>
                     </ul>
                 </div>
@@ -23,8 +23,8 @@
 
         <div class="card">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                <h4 class="card-title mb-0">{{__('admin/sidebar.brands')}}</h4>
-                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.new-brand')}}"><i class="icon fa fa-plus"></i> {{__('admin/sidebar.add-brand')}}</a>
+                <h4 class="card-title mb-0">{{__('sidebar.brands')}}</h4>
+                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.new-brand')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-brand')}}</a>
             </div>
             @include('admin.includes.alerts.alert')
             <div class="card-body px-0">
@@ -35,10 +35,10 @@
                                    id="sampleTable">
                                 <thead>
                                 <tr>
-                                    <th>{{__('admin/forms.name')}}</th>
-                                    <th>{{__('admin/forms.photo')}}</th>
-                                    <th>{{__('admin/forms.state')}}</th>
-                                    <th>{{__('admin/forms.actions')}}</th>
+                                    <th>{{__('forms.name')}}</th>
+                                    <th>{{__('forms.photo')}}</th>
+                                    <th>{{__('forms.state')}}</th>
+                                    <th>{{__('forms.actions')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="">
@@ -67,7 +67,7 @@
                                                     <form id="deleteForm_{{$brand->id}}"
                                                           class="deleteForm"
                                                           action="{{route('admin.delete-brand',['id' => $brand->id])}}"                                                          method="post"
-                                                          data-name="{{__('admin/forms.brand')}}"
+                                                          data-name="{{__('forms.brand')}}"
                                                           data-title="{{__('alerts.sure')}}"
                                                           data-text="{{__('alerts.delete_warning')}}">
                                                         @csrf

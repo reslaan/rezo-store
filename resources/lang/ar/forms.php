@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'name' => 'الإسم',
     'slug' => 'الرابط',
     'state' => 'الحالة',
@@ -11,12 +10,18 @@ return [
     'sku' => 'رمز التخزين',
     'description' => 'الوصف',
     'short_description' => 'وصف مختصر',
+    'in_stock' => 'متوفر',
+    'attribute' => 'الخاصية',
+    'option' => 'الخيار',
+    'options' => 'خيارات المنتج',
     'select_multiple' => 'الرجاء الاختيار...',
     'update-photo' => 'تحديث الصورة',
     'actions' => 'الإجراءات',
     'shipping-value' => 'قيمة التوصيل',
     'active' => 'مفعل',
     'inactive' => 'غيرمفعل',
+    'yes' => 'نعم',
+    'no' => 'لا',
     'save' => 'حفظ',
     'update' => 'تحديث',
 

@@ -41,7 +41,7 @@ class Category extends Model
     }
 
     public function active(){
-        return $this->is_active == 1 ? __('admin/forms.active') : __('admin/forms.inactive');
+        return $this->is_active == 1 ? __('forms.active') : __('forms.inactive');
     }
 
     public function parent(){

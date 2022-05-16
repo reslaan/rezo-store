@@ -28,6 +28,8 @@ return [
     'attributes' =>'Attributes',
     'options' =>'Options',
     'add-product' =>'Add Product',
+    'offers' =>'Offers',
+    'add-offer' =>'Add Offer',
     'stores' =>'Stores',
     'settings' =>'Settings',
     'shipping-methods' =>'Shipping Methods',

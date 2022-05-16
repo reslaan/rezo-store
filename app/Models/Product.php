@@ -63,14 +63,14 @@ class Product extends Model
         return $this->belongsToMany(Attribute::class,'product_attributes');
     }
     public function active(){
-        return $this->is_active == 1 ? __('admin/forms.active') : __('admin/forms.inactive');
+        return $this->is_active == 1 ? __('forms.active') : __('forms.inactive');
     }
     public function translations(): HasMany
     {
         return $this->hasMany(ProductTranslation::class,'product_id');
     }
     public function options(){
-        return $this->belongsToMany(Option::class,'product_options');
+        return $this->hasMany(Option::class,'product_id');
     }
     public function images(){
         return $this->morphMany(Media::class,'model');
