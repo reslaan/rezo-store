@@ -64,12 +64,22 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix'=> '
     ////////////////// end Brands /////////////////
 
 
-    ///////////////// Tags ///////////////////////
+    ///////////////// resources ///////////////////////
     Route::name('admin.')->group(function (){
-        Route::resource('tags','TagController');
+        Route::resources([
+            'tags' => 'TagController',
+            'products' => 'ProductController',
+            'attributes' => 'AttributeController',
+            'options' => 'OptionController',
+        ]);
+
+        Route::post('product/images/','ProductController@saveImages')->name('product.images.save');
+        Route::post('product/images/show','ProductController@showImages')->name('product.images.show');
+        Route::post('product/images/delete','ProductController@deleteImage')->name('image.delete');
+        Route::post('product/options/{product}','ProductController@saveProductOptions')->name('product.options');
     });
 
-    ////////////////// end Brands /////////////////
+    ////////////////// end resources /////////////////
 
     Route::group(['prefix'=>'settings'],function (){
      Route::get('shipping-methods/{type}','SettingController@editShippingMethods')->name('edit.shipping.methods');

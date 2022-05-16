@@ -19759,31 +19759,12 @@ jQuery(document).ready(function ($) {
         });
       }
     });
-  }); // deleteBtn.on('click',function(e){
-  //     let deleteForm = $('#deleteForm');
-  //     let name = deleteForm.data('name');
-  //     let title = deleteForm.data('title');
-  //     let text = deleteForm.data('text');
-  //     let id = deleteForm.data('id');
-  //     e.preventDefault();
-  //     console.log(id)
-  //     swal({
-  //         title: title,
-  //         text: text +" "+ name + " !!",
-  //         icon: "warning",
-  //          buttons: [cancel,ok],
-  //         //buttons: true,
-  //         dangerMode: true,
-  //
-  //     })
-  //         .then(willDelete => {
-  //             if (willDelete) {
-  //                 $('#deleteForm').submit();
-  //                 // swal("Deleted!", "Your imaginary file has been deleted!", "success");
-  //
-  //             }
-  //         });
-  // });
+  }); //
+  // let form = document.querySelector('#form');
+  // $('#showFields').click(function (){
+  //     console.log('show ')
+  //     form.innerHTML +=`@include('admin.products.extra-fields')`;
+  // })
 });
 
 /***/ }),

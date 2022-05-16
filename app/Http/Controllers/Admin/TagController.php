@@ -132,6 +132,7 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
+
         try {
             $tag->translations()->delete();
             $tag->delete();

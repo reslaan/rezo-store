@@ -8,9 +8,9 @@
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="">{{__('admin/sidebar.home')}} </a>
+                                <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                                 </li>
-                                <li class="breadcrumb-item"><a href=""> {{__('admin/sidebar.settings')}} </a>
+                                <li class="breadcrumb-item"><a href=""> {{__('sidebar.settings')}} </a>
                                 </li>
                                 <li class="breadcrumb-item"><a href=""> {{__('الملف الشخصي')}} </a>
                                 </li>

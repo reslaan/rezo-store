@@ -6,10 +6,10 @@
                 <div class="col-md-6 ">
                     <ul class="breadcrumb py-2 ps-3 mb-0 bg-transparent ">
                         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                        <li class="breadcrumb-item"><a href="">{{__('admin/sidebar.home')}} </a>
+                        <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                         </li>
                         <li class="breadcrumb-item "><a
-                                href="{{route('admin.categories',$type)}}">  {{ $type == 'categories'? __('admin/forms.main-categories') : __('admin/forms.sub-categories')}} </a>
+                                href="{{route('admin.categories',$type)}}">  {{ $type == 'categories'? __('forms.main-categories') : __('forms.sub-categories')}} </a>
                         </li>
                     </ul>
                 </div>
@@ -19,8 +19,8 @@
         @include('admin.includes.alerts.alert')
         <div class="card">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                <h4 class="card-title mb-0">{{ $type == 'categories'? __('admin/forms.main-categories') : __('admin/forms.sub-categories')}}</h4>
-                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.new-category',$type)}}">  <i class="me-2 fa fa-plus"></i>{{ $type == 'categories'? __('admin/sidebar.add-category') : __('admin/sidebar.add-subcategory')}}</a>
+                <h4 class="card-title mb-0">{{ $type == 'categories'? __('forms.main-categories') : __('forms.sub-categories')}}</h4>
+                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.new-category',$type)}}">  <i class="me-2 fa fa-plus"></i>{{ $type == 'categories'? __('sidebar.add-category') : __('sidebar.add-subcategory')}}</a>
             </div>
             <div class="card-body px-0">
                 <div class="row">
@@ -29,14 +29,14 @@
                             <table class="table table-hover table-bordered text-center " id="sampleTable">
                                 <thead>
                                 <tr>
-                                    <th>{{__('admin/forms.name')}}</th>
+                                    <th>{{__('forms.name')}}</th>
                                     @if($type == 'subcategories')
-                                        <th>{{__('admin/forms.main-category')}}</th>
+                                        <th>{{__('forms.main-category')}}</th>
                                     @endif
-                                    <th>{{__('admin/forms.photo')}}</th>
-                                    <th>{{__('admin/forms.slug')}}</th>
-                                    <th>{{__('admin/forms.state')}}</th>
-                                    <th>{{__('admin/forms.actions')}}</th>
+                                    <th>{{__('forms.photo')}}</th>
+                                    <th>{{__('forms.slug')}}</th>
+                                    <th>{{__('forms.state')}}</th>
+                                    <th>{{__('forms.actions')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="">
@@ -68,7 +68,7 @@
                                                           class="deleteForm"
                                                           action="{{route('admin.delete-category',['type' => $type,'id' => $category->id])}}"
                                                           method="post"
-                                                          data-name="{{ $type == 'categories'? __('admin/forms.main-category') : __('admin/forms.sub-category')}}"
+                                                          data-name="{{ $type == 'categories'? __('forms.main-category') : __('forms.sub-category')}}"
                                                           data-title="{{__('alerts.sure')}}"
                                                           data-text="{{__('alerts.delete_warning')}}">
                                                         @csrf

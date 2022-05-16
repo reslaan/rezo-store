@@ -6,10 +6,10 @@
                 <div class="col-md-6 ">
                     <ul class="breadcrumb py-2 ps-3 mb-0 bg-transparent ">
                         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                        <li class="breadcrumb-item"><a href="">{{__('admin/sidebar.home')}} </a>
+                        <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                         </li>
                         <li class="breadcrumb-item"><a
-                                href="{{route('admin.categories',$type)}}">  {{ $type == 'categories'? __('admin/forms.main-categories') : __('admin/forms.sub-categories')}} </a>
+                                href="{{route('admin.categories',$type)}}">  {{ $type == 'categories'? __('forms.main-categories') : __('forms.sub-categories')}} </a>
                         </li>
                     </ul>
                 </div>
@@ -20,7 +20,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="basic-layout-form"> {{ $type == 'categories'? __('admin/forms.new-category') : __('admin/forms.new-subcategory')}} </h4>
+                        <h4 class="card-title" id="basic-layout-form"> {{ $type == 'categories'? __('forms.new-category') : __('forms.new-subcategory')}} </h4>
                     </div>
                     @include('admin.includes.alerts.alert')
 
@@ -37,9 +37,9 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="name"> {{__('admin/forms.name')}} </label>
+                                            <label for="name"> {{__('forms.name')}} </label>
                                             <input type="text" id="name" class="form-control"
-                                                   placeholder="{{__('admin/forms.name')}}"
+                                                   placeholder="{{__('forms.name')}}"
                                                    name="name" value="{{old('name')}}">
                                             @error("name")
                                             <span class="text-danger">{{$message}}</span>
@@ -50,9 +50,9 @@
                                     @if($type == 'subcategories')
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="parentId"> {{__('admin/forms.main-categories')}} </label>
+                                                <label for="parentId"> {{__('forms.main-categories')}} </label>
                                                 <select class="form-select" name="parent_id" id="parentId"  aria-label="Default select example" >
-                                                    <option value="" disabled selected>{{__('admin/forms.main-categories')}}</option>
+                                                    <option value="" disabled selected>{{__('forms.main-categories')}}</option>
                                                     @if($categories &&  $categories -> count() > 0)
                                                         @foreach($categories as $category)
                                                             <option value="{{$category->id}}">{{$category->name}}</option>
@@ -69,7 +69,7 @@
 
                                     <div class="col-md-6 ">
                                         <div class="form-group">
-                                            <label for="slug"> {{__('admin/forms.slug')}} </label>
+                                            <label for="slug"> {{__('forms.slug')}} </label>
                                             <input type="text" id="slug" class="form-control"
                                                    placeholder="{{__('slug')}}"
                                                    value="{{old('slug')}}" name="slug">
@@ -81,7 +81,7 @@
 
                                     <div class="col-md-6 ">
                                         <div class="form-group">
-                                            <label for="photo" class="form-label"> {{__('admin/forms.photo')}} </label>
+                                            <label for="photo" class="form-label"> {{__('forms.photo')}} </label>
                                             <input type="file" id="photo" class="form-control"
                                                    placeholder=""
                                                    value="" name="photo">
@@ -94,11 +94,11 @@
                                     <div class="col-md-6">
                                         <div class="toggle-flip form-group mt-1">
                                             <label for="isActive" class="form-check-label ">
-                                                {{__('admin/forms.state')}}
+                                                {{__('forms.state')}}
                                                 <input type="checkbox" id="isActive" value="1"
                                                        name="is_active" ><span
-                                                    class="flip-indecator mt-2"  data-toggle-on="{{__('admin/forms.active')}}"
-                                                    data-toggle-off={{__('admin/forms.inactive')}}></span>
+                                                    class="flip-indecator mt-2"  data-toggle-on="{{__('forms.active')}}"
+                                                    data-toggle-off={{__('forms.inactive')}}></span>
                                             </label>
                                             @error("is_active")
                                             <span class="text-danger">{{$message}} </span>
@@ -112,7 +112,7 @@
                             <div class="col-md-6 ps-0">
                                 <div class="">
                                     <button type="submit" class="btn btn-primary w-25">
-                                        {{__('admin/forms.save')}}
+                                        {{__('forms.save')}}
                                     </button>
                                 </div>
                             </div>

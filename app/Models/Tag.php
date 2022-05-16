@@ -26,10 +26,14 @@ class Tag extends Model
     ];
 
     public function active(){
-        return $this->is_active == 1 ? __('admin/forms.active') : __('admin/forms.inactive');
+        return $this->is_active == 1 ? __('forms.active') : __('forms.inactive');
     }
     public function translations(): HasMany
     {
         return $this->hasMany(TagTranslation::class,'tag_id');
+    }
+
+    public function products(){
+        return $this->belongsToMany(Product::class,'product_tags');
     }
 }

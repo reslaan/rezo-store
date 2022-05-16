@@ -146,6 +146,13 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => __('forms.name'),
+        'photo' => __('forms.photo'),
+        'slug' => __('forms.slug'),
+        'value' => __('forms.shipping-value'),
+        'attribute_options.*.*.name' => __('forms.option'),
+        'attribute_options.*.*.price' => __('forms.price'),
+    ],
 
 ];

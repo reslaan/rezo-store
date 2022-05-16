@@ -32,3 +32,19 @@ $youtube:#ff0000;
 $facebook:#1877f2;
 $linkedin:#0077b5;
 $twitter:#1da1f2;
+
+.bg-light-50{
+    background: #fafafa !important;
+}
+.border-dashed{
+    border-style:dashed !important;
+    &:hover{
+        border-style: solid !important;
+    }
+}
+
+.w-10{
+    width: 10% !important;
+}.w-15{
+    width: 15% !important;
+}
