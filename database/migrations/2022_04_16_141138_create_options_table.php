@@ -15,7 +15,7 @@ class CreateOptionsTable extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price',8,2)->unsigned()->default(00);
+            $table->decimal('price',8,2)->unsigned()->default(0);
             $table->foreignId('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();

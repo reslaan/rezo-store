@@ -122,6 +122,5 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="line-awesome" level="application" />
     <orderEntry type="library" name="tail.select" level="application" />
-    <orderEntry type="library" name="theme-4527f124" level="application" />
   </component>
 </module>
