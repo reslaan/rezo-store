@@ -111,14 +111,11 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\product $product
-     * @return Response
+     *
      */
     public function update(ProductRequest $request, product $product)
     {
-      //  return $request;
-
+        //  return $request;
 
 
         $this->saveProductData($request, $product);
@@ -161,7 +158,6 @@ class ProductController extends Controller
     }
 
 
-
     public function showImages(Request $request)
     {
         $id = $request->id;
@@ -195,6 +191,7 @@ class ProductController extends Controller
             'type' => 'success', // notify classes
         ]);
     }
+
     public function saveProductOptions(ProductOptionsRequest $request, Product $product)
     {
 
@@ -210,15 +207,15 @@ class ProductController extends Controller
             }
         }
         // delete option that not come with the form
-        if (isset($product->options)){
+        if (isset($product->options)) {
             foreach ($product->options as $option) {
                 $state = false;
-                if (isset($attributes)){
+                if (isset($attributes)) {
                     foreach ($attributes as $key => $attribute) {
-                        if ($key != 0 ){
-                            if (is_array($attribute)){
+                        if ($key != 0) {
+                            if (is_array($attribute)) {
                                 foreach ($attribute as $key => $items) {
-                                    if (isset($items['id']) && $option->id == $items['id']){
+                                    if (isset($items['id']) && $option->id == $items['id']) {
                                         $state = true;
                                     }
 
@@ -241,22 +238,22 @@ class ProductController extends Controller
         }
 
         // add new attribute, new option and update existing option
-        if (isset($attributes)){
+        if (isset($attributes)) {
             foreach ($attributes as $key => $attribute) {
 
-                if ($key != 0){
+                if ($key != 0) {
                     // add new attribute
                     $is_attribute = $product->attributes()->where('attribute_id', $key)->first();
                     if (!$is_attribute) {
                         $product->attributes()->attach($key);
                     }
-                    if (is_array($attribute)){
+                    if (is_array($attribute)) {
                         foreach ($attribute as $items) {
                             // update existing option
                             if (isset($items['id'])) {
 
                                 $option = $product->options()->where('id', $items['id'])->first();
-                                if ($option){
+                                if ($option) {
                                     $option->name = $items['name'];
                                     $option->price = $items['price'];
                                     $option->attribute_id = $key;
@@ -283,7 +280,6 @@ class ProductController extends Controller
                 }
 
 
-
             }
         }
 
@@ -292,15 +288,24 @@ class ProductController extends Controller
             'success' => $product->options
         ]);
     }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\product $product
-     * @return Response
+     *
      */
     public function destroy(product $product)
     {
-        //
+        try {
+            $product->translations()->delete();
+            $product->delete();
+            Session::flash('success', __('alerts.deleted'));
+            return redirect()->route('admin.products.index');
+        } catch (\Exception $ex) {
+            return redirect()->back()->with([
+                'error' => __('alerts.not_exist')
+            ]);
+        }
     }
 
     /**
@@ -319,7 +324,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->price = $request->price;
         $product->slug = $request->slug;
-        $product->sku = strtoupper( $request->sku);
+        $product->sku = strtoupper($request->sku);
         $product->qty = $request->qty;
         $product->description = $request->description;
         $product->short_description = $request->short_description;

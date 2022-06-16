@@ -25,7 +25,7 @@ class ProductOptionsRequest extends FormRequest
     {
         return [
             'attribute_options' => 'array',
-            'attribute_options.*.*.name' => 'required|string|max:20',
+            'attribute_options.*.*.name' => 'required|string|distinct|max:20',
             'attribute_options.*.*.price' => 'nullable|numeric',
         ];
     }

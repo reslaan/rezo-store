@@ -28,4 +28,8 @@ class Option extends Model
     {
         return $this->hasMany(OptionTranslation::class,'option_id');
     }
+
+    public function setPriceAttribute($value){
+        is_null($value) ? $this->attributes['price'] = 0 : $this->attributes['price'] = $value;
+    }
 }

@@ -20,6 +20,8 @@ return [
     'tag_created' => 'تم إضافة العلامة بنجاح',
     'product_created' => 'تم إضافة المنتج بنجاح',
     'product_updated' => 'تم تحديث المنتج بنجاح',
+    'offer_created' => 'تم إضافة العرض بنجاح',
+    'offer_updated' => 'تم تحديث العرض بنجاح',
     'delete' => 'حذف',
     'ok' => 'نعم',
     'cancel' => 'إلغاء',
