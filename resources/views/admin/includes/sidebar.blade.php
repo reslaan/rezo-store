@@ -83,8 +83,8 @@
                 <span class="badge badge badge-primary badge-pill float-right mr-2">{{App\Models\Product::count()}}</span>
                 <i class="treeview-indicator fa  fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="{{route('admin.offers.index')}}"><i class="icon fa fa-circle-o"></i> {{__('sidebar.all')}}  </a></li>
-                <li><a class="treeview-item" href="{{route('admin.offers.create')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-offer')}}  </a></li>
+                <li><a class="treeview-item" href="{{route('admin.products.index')}}"><i class="icon fa fa-circle-o"></i> {{__('sidebar.all')}}  </a></li>
+                <li><a class="treeview-item" href="{{route('admin.attributes.index')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-offer')}}  </a></li>
 
             </ul>
         </li>

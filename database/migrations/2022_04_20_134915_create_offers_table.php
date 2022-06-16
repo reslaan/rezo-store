@@ -15,13 +15,14 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->string('code',100)->nullable()->unique();
-            $table->text('description')->nullable();
-            $table->enum('type',[0, 1])->default(0);
+            $table->string('code');
             $table->integer('discount');
+            $table->String('type',100);
+            $table->text('description');
             $table->date('start_date');
             $table->date('end_date');
-            $table->boolean('is_active');
+            $table->string('image')->default('noimage.jpg');
+            $table->foreignId('category_id')->nullable()->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,16 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function (){
 Route::get('/', function () {
-    $categories = \App\Models\Category::select('id')->get();
-    return view('front.home',$categories);
+    return view('layouts.admin');
 });
 
 Route::get('login',function (){
     return 'this page for normal users';
 })->name('login');
-
-
-});
