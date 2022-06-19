@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => LaravelLocalization::setLocale(),
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function (){
 Route::get('/', function () {
-    $categories = \App\Models\Category::select('id')->get();
-    return view('welcome',$categories);
+    return view('welcome');
 });
 
 Auth::routes();
