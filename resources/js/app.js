@@ -6,6 +6,7 @@
 
 require('bootstrap');
 require('sweetalert');
+require('intl-tel-input')
 window.$ = window.jQuery = require('jquery');
 
 let deleteBtn = document.querySelector('#deleteBtn');

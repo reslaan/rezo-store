@@ -1,7 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.site')
 
 @section('content')
-<div class="container">
+    <section class="material-half-bg">
+        <div class="cover"></div>
+    </section>
+<div class="container top-50 start-50 translate-middle position-absolute">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
