@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\ProductOption;
+use App\Models\Offer;
 use Illuminate\Http\Request;
 
-class ProductOptionController extends Controller
+class OfferController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,10 +41,10 @@ class ProductOptionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProductOption  $productOption
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductOption $productOption)
+    public function show(Offer $offer)
     {
         //
     }
@@ -53,10 +52,10 @@ class ProductOptionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProductOption  $productOption
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductOption $productOption)
+    public function edit(Offer $offer)
     {
         //
     }
@@ -65,10 +64,10 @@ class ProductOptionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductOption  $productOption
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductOption $productOption)
+    public function update(Request $request, Offer $offer)
     {
         //
     }
@@ -76,10 +75,10 @@ class ProductOptionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProductOption  $productOption
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductOption $productOption)
+    public function destroy(Offer $offer)
     {
         //
     }

@@ -15,7 +15,7 @@ return [
 
     'accepted' => ' :attribute يجب أن يكون مقبول',
     'active_url' => 'The :attribute is not a valid URL.',
-    'after' => 'تاريخ :attribute يجب أن يكون بعد :date.',
+    'after' => 'The :attribute must be a date after :date.',
     'after_or_equal' => 'The :attribute must be a date after or equal to :date.',
     'alpha' => 'The :attribute may only contain letters.',
     'alpha_dash' => 'The :attribute may only contain letters, numbers, dashes and underscores.',
@@ -38,7 +38,7 @@ return [
     'digits' => ' :attribute يجب أن يكون :digits أرقام',
     'digits_between' => 'The :attribute must be between :min and :max digits.',
     'dimensions' => 'The :attribute has invalid image dimensions.',
-    'distinct' => 'هذا :attribute مكرر',
+    'distinct' => 'The :attribute field has a duplicate value.',
     'email' => 'الرجاء إدخال بريد الكتروني صحيح',
     'ends_with' => 'The :attribute must end with one of the following: :values.',
     'exists' => 'The selected :attribute is invalid.',
@@ -113,7 +113,7 @@ return [
     'starts_with' => ' :attribute يجب أن يبدأ بـ :values.',
     'string' => ' :attribute يجب أن يكون نص.',
     'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => ' هذا :attribute مستخدم  .',
+    'unique' => ' هذا :attribute موجود  .',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
@@ -132,11 +132,7 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
-            'today' => 'اليوم',
         ],
-        'start_date' => [
-            'after' => 'تاريخ بداية العرض يجب أن يكون بعد تاريخ اليوم'
-        ]
     ],
 
     /*
@@ -168,11 +164,6 @@ return [
         'value' => __('forms.shipping-value'),
         'attribute_options.*.*.name' => __('forms.option'),
         'attribute_options.*.*.price' => __('forms.price'),
-        'code' => __('forms.code'),
-        'type' => __('forms.type'),
-        'discount' => __('forms.discount'),
-        'start_date' => __('forms.start_offer'),
-        'end_date' => __('forms.end_offer'),
     ],
 
 ];

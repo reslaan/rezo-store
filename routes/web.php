@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function (){
 Route::get('/', function () {
+
     return view('welcome');
+
 });
 Route::group(['middleware' => 'auth'],function (){
     Route::group(['middleware' => 'isVerified'],function (){
@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'],function (){
             return view('home');
         })->name('home');
     });
+
 
 
     Route::get('/verify','web\verificationCodeController@verifyForm')->name('auth.verifyCode');
@@ -36,3 +37,5 @@ Auth::routes();
 
 
 });
+
+

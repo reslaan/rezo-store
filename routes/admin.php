@@ -71,7 +71,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix'=> '
             'products' => 'ProductController',
             'attributes' => 'AttributeController',
             'options' => 'OptionController',
-            'offers' => 'OfferController',
         ]);
 
         Route::post('product/images/','ProductController@saveImages')->name('product.images.save');
