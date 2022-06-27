@@ -3,6 +3,10 @@
 return [
 
     'name' => 'Name',
+    'mobile' => 'Mobile Number',
+    'email' => 'E-mail',
+    'password' => 'Password',
+    'confirm_password' => 'Confirm Password',
     'slug' => 'Slug',
     'state' => 'State',
     'photo' => 'Photo',

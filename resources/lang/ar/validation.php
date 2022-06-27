@@ -35,7 +35,7 @@ return [
     'date_equals' => 'The :attribute must be a date equal to :date.',
     'date_format' => 'The :attribute does not match the format :format.',
     'different' => 'The :attribute and :other must be different.',
-    'digits' => 'The :attribute must be :digits digits.',
+    'digits' => ' :attribute يجب أن يكون :digits أرقام',
     'digits_between' => 'The :attribute must be between :min and :max digits.',
     'dimensions' => 'The :attribute has invalid image dimensions.',
     'distinct' => 'The :attribute field has a duplicate value.',
@@ -110,7 +110,7 @@ return [
         'string' => 'The :attribute must be :size characters.',
         'array' => 'The :attribute must contain :size items.',
     ],
-    'starts_with' => 'The :attribute must start with one of the following: :values.',
+    'starts_with' => ' :attribute يجب أن يبدأ بـ :values.',
     'string' => ' :attribute يجب أن يكون نص.',
     'timezone' => 'The :attribute must be a valid zone.',
     'unique' => ' هذا :attribute موجود  .',
@@ -148,6 +148,9 @@ return [
 
     'attributes' => [
         'name' => __('forms.name'),
+        'mobile' => __('forms.mobile'),
+        'email' => __('forms.email'),
+        'password' => __('forms.password'),
         'price' => __('forms.price'),
         'photo' => __('forms.photo'),
         'slug' => __('forms.slug'),

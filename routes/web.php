@@ -14,9 +14,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.admin');
+
+    return view('welcome');
+
+});
+Route::group(['middleware' => 'auth'],function (){
+    Route::group(['middleware' => 'isVerified'],function (){
+        Route::get('/home', function (){
+            return view('home');
+        })->name('home');
+    });
+
+
+
+    Route::get('/verify','web\verificationCodeController@verifyForm')->name('auth.verifyCode');
+    Route::post('/verify','web\verificationCodeController@verify')->name('auth.verify');
+    Route::get('/resend-otp','web\verificationCodeController@resendOtpCode')->name('auth.resendOtp');
 });
 
-Route::get('login',function (){
-    return 'this page for normal users';
-})->name('login');
+
+Auth::routes();
+
+
+});
+
+

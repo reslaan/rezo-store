@@ -8,7 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ app()->getLocale() == 'ar' ? asset('css/main-ar.css') : asset('css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ app()->getLocale() == 'ar' ? asset('css/app-ar.css') : asset('css/app.css') }}">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
