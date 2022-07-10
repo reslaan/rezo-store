@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,30 +13,36 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function (){
+//Route::get('/', function () {
+//
+//   return view('welcome');
+//
+//});
+    Route::get('/','Admin\LoginController@loginForm')->name('admin.login');
 
-Route::get('/', function () {
+//    Route::group(['middleware' => 'auth'],function (){
+//
+//
+//
+//    Route::group(['middleware' => 'isVerified'],function (){
+//        Route::get('/home', function (){
+//            return view('home');
+//        })->name('home');
+//    });
+//
+//
+//
+//    Route::get('/verify','web\verificationCodeController@verifyForm')->name('auth.verifyCode');
+//    Route::post('/verify','web\verificationCodeController@verify')->name('auth.verify');
+//    Route::get('/resend-otp','web\verificationCodeController@resendOtpCode')->name('auth.resendOtp');
+//});
+//
+//
+//Auth::routes();
 
-    return view('welcome');
+
+
 
 });
-Route::group(['middleware' => 'auth'],function (){
-    Route::group(['middleware' => 'isVerified'],function (){
-        Route::get('/home', function (){
-            return view('home');
-        })->name('home');
-    });
-
-
-
-    Route::get('/verify','web\verificationCodeController@verifyForm')->name('auth.verifyCode');
-    Route::post('/verify','web\verificationCodeController@verify')->name('auth.verify');
-    Route::get('/resend-otp','web\verificationCodeController@resendOtpCode')->name('auth.resendOtp');
-});
-
-
-Auth::routes();
-
-
-});
-
-
