@@ -11,6 +11,6 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Brand::class,10)->create();
+    //    factory(\App\Models\Brand::class,10)->create();
     }
 }
