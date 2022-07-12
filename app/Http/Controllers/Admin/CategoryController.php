@@ -15,7 +15,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     *
+     * @param $type
      */
     public function index($type)
     {
@@ -35,8 +35,9 @@ class CategoryController extends Controller
      */
     public function create($type)
     {
-        $categories = Category::all();
+
         if ($type == 'subcategories') {
+            $categories = Category::all();
             return view('admin.categories.new')->with([
                 'type' => $type,
                 'categories' => $categories,
@@ -55,6 +56,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request, $type)
     {
+
         if (!$request->has('is_active')) {
            $request->merge(['is_active' => 0]);
         }
@@ -118,7 +120,7 @@ class CategoryController extends Controller
 
         $category = Category::find($id);
 
-        
+
 
         if (!$category)
             return redirect(route('admin.categories',$type))->with([

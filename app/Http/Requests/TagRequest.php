@@ -27,12 +27,12 @@ class TagRequest extends FormRequest
      *
      * @return void
      */
-    public function prepareForValidation()
-    {
-        $this->merge([
-            'slug' => Str::slug($this->slug),
-        ]);
-    }
+//    public function prepareForValidation()
+//    {
+//        $this->merge([
+//            'slug' => Str::slug($this->slug),
+//        ]);
+//    }
     /**
      * Get the validation rules that apply to the request.
      *
