@@ -40,6 +40,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="">
+                                @if($categories)
                                 @foreach($categories as $category)
                                     <tr class=" bg-lighten-5">
                                         <td class="align-middle">{{$category->name}}</td>
@@ -87,6 +88,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>
