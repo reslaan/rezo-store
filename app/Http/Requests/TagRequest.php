@@ -43,7 +43,7 @@ class TagRequest extends FormRequest
         return [
             //'name' => 'required|unique:tag_translations,name,'.$this->id,
             'name' => ['required',new UpdateUniqueValue('tag_translations',$this->id,'tag_id')],
-            'slug' => ['required',new UpdateUniqueValue('tags',$this->id,'tag_id')],
+            'slug' => ['required',new UpdateUniqueValue('tags',$this->id,null)],
 //            'slug' => 'required|unique:tags,slug,'.$this->id,
         ];
     }

@@ -25,12 +25,12 @@ class CategoryRequest extends FormRequest
      * @return void
      */
 
-    public function prepareForValidation()
-    {
-        $this->merge([
-            'slug' => Str::slug($this->slug),
-        ]);
-    }
+//    public function prepareForValidation()
+//    {
+//        $this->merge([
+//            'slug' => Str::slug($this->slug),
+//        ]);
+//    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -43,7 +43,8 @@ class CategoryRequest extends FormRequest
 
 //            'name' => 'required|unique:category_translations,name,'.$this->id,
             'name' => ['required',new UpdateUniqueValue('category_translations',$this->id,'category_id')],
-            'slug' => 'required|unique:categories,slug,'.$this->id,
+            'slug' => ['required',new UpdateUniqueValue('categories',$this->id,null)],
+//            'slug' => 'required|unique:categories,slug,'.$this->id,
 
             //Rule::unique('category_translations','name')->ignore($this->id),
         ];

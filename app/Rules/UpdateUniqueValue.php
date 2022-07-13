@@ -11,17 +11,22 @@ class UpdateUniqueValue implements Rule
     private $table ;
     private $attributeId;
     private $foreignKey;
+
     /**
      * Create a new rule instance.
      *
-     * @return void
+     * @param $table
+     * @param $attributeId
+     * @param $foreignKey
      */
+
     public function __construct($table,$attributeId,$foreignKey)
     {
         $this->table = $table;
         $this->attributeId = $attributeId;
         $this->foreignKey = $foreignKey;
     }
+
 
     /**
      * Determine if the validation rule passes.
@@ -34,9 +39,13 @@ class UpdateUniqueValue implements Rule
     {
         // this for update exist item
         if ($this->attributeId){
-            $attribute = DB::table($this->table)->where($attribute,$value)->where($this->foreignKey,'!=',$this->attributeId)->first();
+            if (is_null($this->foreignKey )){
+                $attribute = DB::table($this->table)->where($attribute,$value)->where('id','!=',$this->attributeId)->first();
+            }else{
+                $attribute = DB::table($this->table)->where($attribute,$value)->where($this->foreignKey,'!=',$this->attributeId)->first();
+            }
             if ($attribute)
-                return false;
+                return false;  // if find attribute value with another id return false
             return true;
         }else{
             // this for create new item
