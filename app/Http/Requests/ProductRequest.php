@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UpdateUniqueValue;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -24,11 +25,11 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:product_translations,name,'.$this->id,
+            'name' => ['required','string',new UpdateUniqueValue('product_translations',$this->id,'product_id')],
             'price' => 'required|numeric',
             'qty' => 'required|numeric',
-            'slug' => 'nullable|string|unique:products,slug,'.$this->id,
-            'sku' => 'required|string|unique:products,sku,'.$this->id,
+            'slug' => ['nullable','string',new UpdateUniqueValue('products',$this->id,null)],
+            'sku' => ['required','string',new UpdateUniqueValue('products',$this->id,null)],
             'categories' => 'required',
             'tags' => 'nullable',
             'brand' => 'nullable',
