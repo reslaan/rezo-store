@@ -10,7 +10,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Media;
 use App\Models\Option;
-use App\Models\product;
+use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
