@@ -62,18 +62,18 @@
         </li>
 
 
-        <li class="treeview">
-            <a class="app-menu__item  {{ $activePage == 'products' ? ' active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-archive"></i>
-                <span class="app-menu__label">{{__('sidebar.products')}}
-                </span>
-                <span class="badge badge badge-primary badge-pill float-right mr-2">{{App\Models\Product::count()}}</span>
-                <i class="treeview-indicator fa  fa-angle-right"></i></a>
-            <ul class="treeview-menu">
-                <li><a class="treeview-item" href="{{route('admin.products.index')}}"><i class="icon fa fa-circle-o"></i> {{__('sidebar.all')}}  </a></li>
-                <li><a class="treeview-item" href="{{route('admin.attributes.index')}}"><i class="icon fa fa-sliders-h-square"></i> {{__('sidebar.attributes')}}  </a></li>
-                <li><a class="treeview-item" href="{{route('admin.products.create')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-product')}}</a></li>
-            </ul>
-        </li>
+{{--        <li class="treeview">--}}
+{{--            <a class="app-menu__item  {{ $activePage == 'products' ? ' active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-archive"></i>--}}
+{{--                <span class="app-menu__label">{{__('sidebar.products')}}--}}
+{{--                </span>--}}
+{{--                <span class="badge badge badge-primary badge-pill float-right mr-2">{{App\Models\Product::count()}}</span>--}}
+{{--                <i class="treeview-indicator fa  fa-angle-right"></i></a>--}}
+{{--            <ul class="treeview-menu">--}}
+{{--                <li><a class="treeview-item" href="{{route('admin.products.index')}}"><i class="icon fa fa-circle-o"></i> {{__('sidebar.all')}}  </a></li>--}}
+{{--                <li><a class="treeview-item" href="{{route('admin.attributes.index')}}"><i class="icon fa fa-sliders-h-square"></i> {{__('sidebar.attributes')}}  </a></li>--}}
+{{--                <li><a class="treeview-item" href="{{route('admin.products.create')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-product')}}</a></li>--}}
+{{--            </ul>--}}
+{{--        </li>--}}
 
 
         <li class="treeview">
