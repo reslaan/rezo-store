@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin',['activePage' => 'settings'])
 
 @section('content')
     <div class="app-content content">
@@ -65,9 +65,9 @@
                                                     <div class="col-md-6 ">
                                                         <div class="form-group">
                                                             <label for="email"> البريد الالكتروني </label>
-                                                            <input type="email" id="email" class="form-control"
+                                                            <input type="email" disabled id="email" class="form-control"
                                                                    placeholder="{{$admin->email}}"
-                                                                   value="{{$admin->email}}" name="email">
+                                                                   value="{{$admin->email}}" >
                                                             @error("email")
                                                             <span class="text-danger">{{$message}}</span>
                                                             @enderror

@@ -1,6 +1,6 @@
 <!-- Navbar-->
 <header class="app-header">
-    <a class="app-header__logo" href="{{ url('/') }}">Rezo</a>
+    <a class="app-header__logo" href="{{ url('/') }}">Rezo Store</a>
     <!-- Sidebar toggle button-->
             <a class="app-nav__item pb-0" href="#" data-toggle="sidebar"
                aria-label=" hide Sidebar"><i class="fa fa-bars fa-2x"></i>
@@ -87,8 +87,7 @@
         <li class="dropdown"><a class="app-nav__item h-100" href="#" data-toggle="dropdown"
                                 aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"> {{auth('admin')->user()->name}}</i></a>
             <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                <li><a class="dropdown-item" href="{{ url('/' . ($page = 'pages-user')) }}"><i
-                            class="fa fa-cog fa-lg"></i> Settings</a></li>
+
                 <li><a class="dropdown-item" href="{{route('profile')}}"><i
                             class="fa fa-user fa-lg"></i> Profile</a></li>
                 <li><a class="dropdown-item" href="{{route('admin.logout')}}"><i

@@ -2,14 +2,15 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar w-25" src="{{asset('assets/admin/images/logo/logo.png')}}" alt="User Image">
+    <div class="app-sidebar__user">
+{{--        <img class="app-sidebar__user-avatar w-25" src="{{asset('assets/admin/images/logo/logo.png')}}" alt="User Image">--}}
         <div>
-            <p class="app-sidebar__user-name">John Doe</p>
-            <p class="app-sidebar__user-designation">Frontend Developer</p>
+            <p class="app-sidebar__user-name">Reslaan Alobeidi</p>
+            <p class="app-sidebar__user-designation">Full Stack Develeoper</p>
         </div>
     </div>
     <ul class="app-menu">
-        <li><a class="app-menu__item  {{ $activePage == 'dashboard' ? ' active' : '' }}" href="{{ url('/admin') }}"><i class="app-menu__icon fa fa-tachometer-alt"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <li><a class="app-menu__item  {{ $activePage == 'dashboard' ? ' active' : ''  }}" href="{{ url('/admin') }}"><i class="app-menu__icon fa fa-tachometer-alt"></i><span class="app-menu__label">Dashboard</span></a></li>
 
 
         <li class="treeview"><a class="app-menu__item  {{ $activePage == 'categories' ? ' active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-layer-group"></i>
@@ -70,21 +71,19 @@
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="{{route('admin.products.index')}}"><i class="icon fa fa-circle-o"></i> {{__('sidebar.all')}}  </a></li>
                 <li><a class="treeview-item" href="{{route('admin.attributes.index')}}"><i class="icon fa fa-sliders-h-square"></i> {{__('sidebar.attributes')}}  </a></li>
-                <li><a class="treeview-item" href="{{route('admin.options.index')}}"><i class="icon fa fa-sliders-h"></i> {{__('sidebar.options')}}  </a></li>
                 <li><a class="treeview-item" href="{{route('admin.products.create')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-product')}}</a></li>
             </ul>
         </li>
 
 
         <li class="treeview">
-            <a class="app-menu__item  {{ $activePage == 'offers' ? ' active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-percent"></i>
-                <span class="app-menu__label">{{__('sidebar.offers')}}
+            <a class="app-menu__item  {{ $activePage == 'orders' ? ' active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cabinet-filing"></i>
+                <span class="app-menu__label">{{__('sidebar.orders')}}
                 </span>
                 <span class="badge badge badge-primary badge-pill float-right mr-2">{{App\Models\Product::count()}}</span>
                 <i class="treeview-indicator fa  fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="{{route('admin.products.index')}}"><i class="icon fa fa-circle-o"></i> {{__('sidebar.all')}}  </a></li>
-                <li><a class="treeview-item" href="{{route('admin.attributes.index')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-offer')}}  </a></li>
 
             </ul>
         </li>
@@ -99,6 +98,7 @@
                 <i class="treeview-indicator fa  fa-angle-right"></i>
             </a>
             <ul class="treeview-menu">
+                <li><a class="treeview-item" href="{{route('profile')}}"> Profile</a></li>
                 <li class="subtreeview ">
                     <a class="app-menu__item" href="#submenu" data-toggle="collapse">
                         <span class="app-menu__label">{{__('sidebar.shipping-methods')}}</span>
@@ -110,12 +110,10 @@
                         <li ><a class="treeview-item" href="{{route('edit.shipping.methods','local')}}"><i class="icon fa fa-circle-o"></i> {{__('sidebar.local-shipping')}}</a></li>
                         <li ><a class="treeview-item" href="{{route('edit.shipping.methods','outer')}}"><i class="icon fa fa-circle-o"></i> {{__('sidebar.outer-shipping')}}</a></li>
                     </ul>
+
                 </li>
-                <li><a class="treeview-item" href="{{route('admin.new-category','subcategories')}}"><i class="icon fa fa-circle-o"></i> إضافة  ماركة جديدة</a></li>
             </ul>
         </li>
-
-        <li><a class="app-menu__item" href="{{ url('/' . $page='docs') }}"><i class="app-menu__icon fa fa-file-code-o"></i><span class="app-menu__label">Docs</span></a></li>
     </ul>
 </aside>
 

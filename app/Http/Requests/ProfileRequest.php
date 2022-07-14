@@ -25,7 +25,7 @@ class ProfileRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:admins,email,'.auth('admin')->user()->id,
+//            'email' => 'required|email|unique:admins,email,'.auth('admin')->user()->id,
             'password' => 'nullable|confirmed|min:6'
         ];
     }

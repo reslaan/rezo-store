@@ -28,6 +28,7 @@ return [
     'attributes' =>'الخصائص',
     'options' =>'الخيارات',
     'add-product' =>'إضافة منتج',
+    'orders' => 'الطلبات',
     'offers' =>'العروض',
     'add-offer' =>'إضافة عرض',
     'stores' =>'المتاجر',
