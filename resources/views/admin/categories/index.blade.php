@@ -47,7 +47,11 @@
                                         @if($type == 'subcategories')
                                             <td class="align-middle ">{{$category->parent->name ?? '--'}}</td>
                                         @endif
-                                        <td class="align-middle"><img src="" alt=""></td>
+                                        <td class="align-middle w-25">
+                                            <img src="{{$category->photoPath()}}"
+                                                 class="img-fluid  w-50" width="200"
+                                                 height="200" alt="">
+                                        </td>
                                         <td class="align-middle w-25">{{$category->slug}}</td>
                                         <td class="align-middle">
                                             <div class="row">

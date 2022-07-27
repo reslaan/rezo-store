@@ -42,7 +42,10 @@
                                 @foreach($products as $product)
                                     <tr class=" bg-lighten-5">
                                         <td class="align-middle w-25">{{$product->name}}</td>
-                                        <td class="align-middle">{{$product->image ?? '--'}}</td>
+                                        <td class="align-middle w-25">
+                                            <img src="{{ $product->firstImage()}}" alt=""
+                                                                      class="img-fluid  w-50" width="200"
+                                                                      height="200"></td>
                                         <td class="align-middle">{{$product->price}}</td>
                                         <td class="align-middle">{{$product->qty ?? '--'}}</td>
                                         <td class="align-middle">

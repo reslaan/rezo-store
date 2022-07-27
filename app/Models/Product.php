@@ -75,4 +75,13 @@ class Product extends Model
     public function images(){
         return $this->morphMany(Media::class,'model');
     }
+
+    public function firstImage(){
+        $image = $this->images()->pluck('file_name')->first();
+
+        if (!$image)
+            return asset('images/image_default.png');
+
+        return asset('storage/images/products/'.$image);
+    }
 }

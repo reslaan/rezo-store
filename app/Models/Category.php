@@ -58,5 +58,9 @@ class Category extends Model
         return $this->name;
     }
 
-
+    public function photoPath(){
+        if (!$this->photo)
+            return asset('images/image_default.png');
+        return asset('storage/images/categories/'.$this->photo);
+    }
 }

@@ -29,6 +29,8 @@ class Brand extends Model
         return $this->is_active == 1 ? __('forms.active') : __('forms.inactive');
     }
     public function photoPath(){
+        if (!$this->photo)
+            return asset('images/image_default.png');
         return asset('storage/images/brands/'.$this->photo);
     }
     public function translations(): HasMany

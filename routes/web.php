@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -15,12 +16,17 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 Route::group(['prefix' => LaravelLocalization::setLocale(),
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function (){
-//Route::get('/', function () {
-//
-//   return view('welcome');
-//
-//});
-    Route::get('/','Admin\LoginController@loginForm')->name('admin.login');
+
+    Route::group(['namespace' => 'Web'],function (){
+        Route::get('/', 'HomeController@index');
+        Route::get('/product', 'HomeController@product');
+        Route::get('/category', 'HomeController@category')->name('category');
+        Route::get('/cart', 'HomeController@cart')->name('cart');
+        Route::get('/checkout', 'HomeController@checkout')->name('checkout');
+
+    });
+
+//    Route::get('/','Admin\LoginController@loginForm')->name('admin.login');
 //
 //    Route::group(['middleware' => 'auth'],function (){
 //
@@ -40,7 +46,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
 //});
 //
 //
-//Auth::routes();
+Auth::routes();
 
 
 

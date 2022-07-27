@@ -40,6 +40,7 @@ class Setting extends Model
      * @param mixed $value
      * @return void
      */
+
     public static function set($key , $value){
         if ($key === 'translatable'){
             return static::setTranslatableSettings($value);
