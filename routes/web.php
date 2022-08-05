@@ -20,7 +20,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
     Route::group(['namespace' => 'Web'],function (){
         Route::get('/', 'HomeController@index');
         Route::get('/product', 'HomeController@product');
-        Route::get('/category', 'HomeController@category')->name('category');
+        Route::get('/show/{slug}', 'CategoryController@show')->name('category.show');
         Route::get('/cart', 'HomeController@cart')->name('cart');
         Route::get('/checkout', 'HomeController@checkout')->name('checkout');
 

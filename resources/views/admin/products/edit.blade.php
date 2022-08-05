@@ -32,7 +32,7 @@
                         <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.products.create')}}"><i
                                 class="icon fa fa-plus"></i> {{__('sidebar.add-product')}}</a>
                     </div>
-                    @include('admin.includes.alerts.alert')
+                    @include('admin.includes.alert')
                     <div class="card-body">
                         <form class="form"
                               action="{{route('admin.products.update',$product)}}"
@@ -82,7 +82,7 @@
     </main>
 
 @endsection
-@section('script')
+@push('script')
     <script>
 
         const all = '{{__("forms.all")}}'
@@ -225,4 +225,4 @@
             })
         }
     </script>
-@endsection
+@endpush

@@ -46,23 +46,25 @@
                 </div>
                 <!-- col.// -->
                 <div class="col-md-3">
-                    @for($i = 0 ; $i < 3 ; $i++)
+                    @foreach($products as $product)
+                        @if($loop->index < 3)
                         <div class="card mt-2 mb-2">
                             <figure class="d-flex justify-content-center align-items-center">
                                 <div class="w-25 p-2">
-                                    <img src="{{asset('images/image_default.png')}}" class=" img-fluid" alt="">
+                                    <img src="{{$product->firstImage() ?? asset('images/image_default.png')}}" class=" img-fluid" alt="">
                                 </div>
                                 <figcaption class="p-3 w-75">
-                                    <h6 class="title"><a href="#"> منتج عينة</a></h6>
+                                    <h6 class="title"><a href="#">{{$product->name}}</a></h6>
                                     <div class="fw-bold">
-                                        <span class="text-primary">$1280</span>
-                                        <del class="text-danger">$1980</del>
+                                        <span class="text-primary">{{ $product->price .' '. \App\Models\Setting::get('currency_symbol')}}</span>
+                                        <del class="text-danger"></del>
                                     </div>
                                     <!-- price-wrap.// -->
                                 </figcaption>
                             </figure>
                         </div>
-                    @endfor
+                        @endif
+                    @endforeach
                 </div>
                 <!-- col.// -->
             </div>
@@ -74,14 +76,17 @@
     <section class="mt-4 ">
         <div class="container">
             <header class="mb-3">
-                <h4 class="">Featured Categories</h4>
+                <h4 class="">{{__('app.featured_categories')}}</h4>
             </header>
             <div class="row">
                 @foreach($categories as $category)
 
                 <div class="col-md-4">
+{{--                    <figure class="mt-2" style="width: 120px; height: auto;">--}}
+{{--                        <img src="{{ $category->photoPath() }}" id="categoryImage" class="img-fluid" alt="img">--}}
+{{--                    </figure>--}}
                         <div class="card-banner d-flex"
-                             style="height:250px; background-image: url({{asset('images/image_default.png')}});">
+                             style="height:250px; background-image: url({{$category->photoPath()}}); background-size: cover;">
                             <article class="m-auto">
                                 <div class="text-center">
                                     <h5 class="card-title">{{$category->name}}</h5>
@@ -99,67 +104,30 @@
     <!-- ========================= Blog .END// ========================= -->
 
     <!-- ========================= SECTION CONTENT ========================= -->
-    <section class="mt-4">
-        <div class="container">
 
-            <header class="mb-3">
-                <h4 class="">FEATURED PRODUCTS</h4>
-            </header>
-            <div class="row">
-                @for($i = 0 ; $i < 3 ; $i++)
-
-                    <div class="col-md-4">
-
-                        <div class="card" >
-                            <a href="">
-                                <img src="{{asset('images/image_default.png')}}" height="250" class="card-img-top" alt="" >
-                            </a>
-                            <div class="card-body ">
-                                <h5 class="card-title">Another name of item</h5>
-                                <p class="card-text">Some small description goes here.</p>
-                                <p>154 orders</p>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between align-items-center">
-                                <div class="fw-bold">
-                                    <span class="text-primary">$1280</span>
-                                    <del class="text-danger">$1980</del>
-                                </div>
-                                <a href="" class="btn btn-sm btn-primary "><i class="fa fa-cart-plus"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- col // -->
-                @endfor
-            </div>
-            <!-- row.// -->
-
-        </div>
-        <!-- container .//  -->
-    </section>
 
     <!-- ========================= SECTION ITEMS ========================= -->
     <section class="mt-4">
         <div class="container">
             <header class="mb-3">
-                <h4 class=" text-uppercase">Recently Added</h4>
+                <h4 class=" text-uppercase">{{__('app.recently_added')}}</h4>
             </header>
             <div class="row">
-                @for($i = 0 ; $i < 8 ; $i++)
+
+                    @foreach($products as $product)
 
                 <div class="col-md-3">
                     <figure class="card ">
-                        <img src="{{asset('images/image_default.png')}}" height="250" class="card-img-top" alt="">
+                        <img src="{{ $product->firstImage() ?? asset('images/image_default.png')}}" height="200" width="200" class="card-img-top" alt="">
                         <figcaption class="p-2">
-                            <h4 class="title">Another name of item</h4>
-                            <p class="desc">Some small description goes here</p>
-
-                                <div class="label-rating">154 orders</div>
+                            <h4 class="title">{{ $product->name }}</h4>
+                            <p class="desc">{{ $product->short_description }}</p>
                             <!-- rating-wrap.// -->
                         </figcaption>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <div class="fw-bold">
-                                <span class="text-primary">$1280</span>
-                                <del class="text-danger">$1980</del>
+                                <span class="text-primary">{{ $product->price .' '. \App\Models\Setting::get('currency_symbol')}}</span>
+{{--                                <del class="text-danger">1980 {{ \App\Models\Setting::get('currency_symbol') }}</del>--}}
                             </div>
                             <a href="" class="btn btn-sm btn-primary text-center"><i class="fa fa-cart-plus fa-3x"></i></a>
                         </div>
@@ -167,7 +135,7 @@
                     </figure>
                 </div>
                 <!-- col // -->
-                    @endfor
+                    @endforeach
             </div>
 
 

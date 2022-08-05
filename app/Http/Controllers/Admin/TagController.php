@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\TagContract;
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TagRequest;
 use App\Models\Tag;
@@ -13,8 +15,13 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-class TagController extends Controller
+class TagController extends BaseController
 {
+    protected $tagRepository;
+
+    public function __construct(TagContract $tagRepository){
+        $this->tagRepository = $tagRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +30,8 @@ class TagController extends Controller
     public function index()
     {
 
-        $tags = Tag::orderBy('id', 'DESC')->get();
+        $tags = $this->tagRepository->listTags();
+        $this->setPageTitle(__('sidebar.tags'),'');
         return view('admin.tags.index')->with([
             'tags' => $tags,
         ]);
@@ -36,7 +44,8 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('admin.tags.new');
+        $this->setPageTitle(__('sidebar.add-tag'),'');
+        return view('admin.tags.create');
     }
 
     /**
@@ -47,23 +56,13 @@ class TagController extends Controller
      */
     public function store(TagRequest $request)
     {
-        try {
-            $is_active = 0;
-            if ($request->has('is_active')) {
-                $is_active = 1;
-            }
-            $tag = new Tag();
-            $tag->name = $request->name;
-            $tag->slug = $request->slug;
-            $tag->is_active = $is_active;
-            $tag->save();
-            Session::flash('success',  __('alerts.tag_created'));
-            return redirect()->route('admin.tags.index');
-        } catch (\Exception $ex) {
-            return redirect()->back()->with([
-                'error' => __('alerts.not_exist')
-            ]);
-        }
+        $params = $request->except('_token');
+        $tag = $this->tagRepository->createTag($params);
+        if (!$tag)
+            return $this->responseRedirectBack(__('alerts.try_later'),'error');
+        return $this->responseRedirect('admin.tags.index',__('alerts.tag_created'),'success');
+
+
 
     }
 
@@ -87,7 +86,7 @@ class TagController extends Controller
     public function edit(Tag $tag)
     {
 
-
+        $this->setPageTitle(__('forms.edit-tag'),'');
         return view('admin.tags.edit')->with([
             'tag' => $tag,
         ]);
@@ -100,27 +99,17 @@ class TagController extends Controller
      * @param Tag $tag
      * @return RedirectResponse
      */
-    public function update(TagRequest $request, Tag $tag)
+    public function update(TagRequest $request)
     {
+        $params = $request->except('_token');
+        $tag = $this->tagRepository->updateTag($params);
 
-        try {
-            $is_active = 0;
-            if ($request->has('is_active')) {
-                $is_active = 1;
-            }
+        if (!$tag)
+            return $this->responseRedirectBack(__('alerts.try_later'),'error');
+        return $this->responseRedirectBack(__('alerts.edit_success'),'success');
 
-            $tag->name = $request->name;
-            $tag->slug = $request->slug;
-            $tag->is_active = $is_active;
-            $tag->save();
-            Session::flash('success', __('alerts.edit_success'));
-            return redirect()->back();
 
-        } catch (\Exception $ex) {
-            return redirect()->back()->with([
-                'error' => __('alerts.not_exist')
-            ]);
-        }
+
 
     }
 
@@ -133,16 +122,10 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
 
-        try {
-            $tag->translations()->delete();
-            $tag->delete();
-            Session::flash('success', __('alerts.deleted'));
-            return redirect()->route('admin.tags.index');
-        } catch (\Exception $ex) {
-            return redirect()->back()->with([
-                'error' => __('alerts.not_exist')
-            ]);
-        }
+      $this->tagRepository->deleteTag($tag);
 
+        if (!$tag)
+            return $this->responseRedirectBack(__('alerts.try_later'),'error');
+        return $this->responseRedirect('admin.tags.index',__('alerts.deleted'),'success');
     }
 }

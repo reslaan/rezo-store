@@ -15,7 +15,7 @@ return [
 
     //// success
     'edit_success' => 'تم التحديث بنجاح',
-    'category_created' => 'تم إضافة القسم بنجاح',
+    'category_created' => 'تم إضافة التصنيف بنجاح',
     'brand_created' => 'تم إضافة الماركة بنجاح',
     'tag_created' => 'تم إضافة العلامة بنجاح',
     'product_created' => 'تم إضافة المنتج بنجاح',

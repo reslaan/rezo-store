@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\BrandContract;
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandRequest;
 use App\Http\Requests\CategoryRequest;
@@ -14,8 +16,14 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
-class BrandController extends Controller
+class BrandController extends BaseController
 {
+    protected $brandRepository;
+
+    public function __construct(BrandContract $brandRepository){
+
+        $this->brandRepository = $brandRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +32,9 @@ class BrandController extends Controller
     public function index()
     {
 
-        $brands = Brand::orderBy('id', 'DESC')->get();
+      $brands = $this->brandRepository->listBrands();
 
+      $this->setPageTitle('Brands','list all brands');
         return view('admin.brands.index')->with([
             'brands' => $brands,
         ]);
@@ -38,7 +47,8 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.brands.new');
+        $this->setPageTitle(__('forms.new-brand'),'');
+        return view('admin.brands.create');
     }
 
     /**
@@ -48,108 +58,64 @@ class BrandController extends Controller
      */
     public function store(BrandRequest $request)
     {
-        $is_active = 0;
-        if ($request->has('is_active')) {
-            $is_active = 1;
-        }
 
+        $params = $request->except('_token');
+        $brand = $this->brandRepository->createBrand($params);
 
-        $brand = new Brand();
-        $brand->name = $request->name;
-        $brand->is_active = $is_active;
-        if ($request->hasFile('photo')) {
-            // uploadImage store file in local storage and return file hash name
-            $fileName = uploadImage($request->photo, 'brands');
-            $brand->photo = $fileName;
-        }
-        $brand->save();
+        if (!$params)
+            return $this->responseRedirectBack(__('alert.try_later'),'error');
+        return $this->responseRedirect('admin.brands.index','brand created successfully', 'success');
 
-        Session::flash('success',__('alerts.brand_created'));
-        return redirect()->back();
     }
-
 
 
     /**
      * Show the form for editing the specified resource.
      *
-     *
+     * @param Brand $brand
      */
-    public function edit($id)
+    public function edit(Brand $brand)
     {
-        $brand = Brand::find($id);
 
-        if (!$brand)
-            return redirect(route('admin.brands'))->with([
-                'error' => __('alerts.not_exist'),
-            ]);
 
-        return view('admin.brands.edit')->with([
-            'brand' => $brand,
-        ]);
+        $this->setPageTitle(__('forms.edit-brand'),'');
+        return view('admin.brands.edit',compact('brand'));
 
 
     }
 
     /**
      * Update the specified resource in storage.
-     *
-
+     * @param BrandRequest $request
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(BrandRequest $request, $id)
+    public function update(BrandRequest $request)
     {
 
 
-        $brand = Brand::find($id);
-
-        if (!$brand)
-            return redirect(route('admin.brands'))->with([
-                'error' =>  __('alerts.not_exist'),
-            ]);
-
-        $is_active = 0;
-        if ($request->has('is_active')) {
-            $is_active = 1;
+        $params = $request->except('_token');
+        $brand = $this->brandRepository->updateBrand($params);
+        if (!$brand){
+            return $this->responseRedirectBack(__('alert.try_later','error'));
         }
+        return $this->responseRedirectBack('brand updated','success');
 
-        $brand->name = $request->name;
-        $brand->is_active = $is_active;
-        if ($request->hasFile('photo')) {
-            // uploadImage store file in local storage and return file hash name
-            $fileName = uploadImage($request->photo, 'brands');
-            $brand->photo = $fileName;
-        }
-
-        $brand->save();
-
-        Session::flash('success',  __('alerts.edit_success'));
-        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param $id
-     * @return RedirectResponse
+     * @param Brand $brand
+     *
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
-        $brand = Brand::find($id);
-        if (!$brand)
-            return redirect()->back()->with([
-                'success' =>  __('alerts.not_exist'),
-            ]);
+          $this->brandRepository->deleteBrand($brand);
 
-        // delete image from local storage
-        deleteImage($brand->photo, 'brands');
+          if (!$brand)
+              return $this->responseRedirectBack(__('alert.try_later'),'error');
+          return $this->responseRedirect('admin.brands.index',__('alerts.deleted'),'success');
 
-        // delete translations before delete brand
-        $brand->translations()->delete();
-        $brand->delete();
-
-
-        return redirect()->back()->with([
-            'success' =>  __('alerts.deleted'),
-        ]);
-    }
+     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,10 +27,12 @@ class HomeController extends Controller
     public function index()
     {
 
-        $categories = Category::categories('id')->limit(3)->get();
+        $categories = Category::select('id','image')->where('featured',1)->limit(3)->get();
+        $products = Product::select('id','slug','price')->where('is_active',1)->get();
 
         return view('web.home')->with([
-            'categories' => $categories
+            'categories' => $categories,
+            'products' => $products,
         ]);
     }
 

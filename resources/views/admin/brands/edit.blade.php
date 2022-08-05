@@ -1,4 +1,5 @@
 @extends('layouts.admin',['activePage' => 'brands'])
+@section('title') {{ $pageTitle }} @endsection
 
 @section('content')
     <main class="app-content content">
@@ -11,7 +12,7 @@
                         <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                         </li>
                         <li class="breadcrumb-item"><a
-                                href="{{route('admin.brands')}}"> {{__('sidebar.brands')}} </a>
+                                href="{{route('admin.brands.index')}}"> {{__('sidebar.brands')}} </a>
                         </li>
                     </ul>
                 </div>
@@ -24,10 +25,10 @@
                     <div class="card-header">
                         <h4 class="card-title">{{__('forms.edit-brand')}} </h4>
                     </div>
-                    @include('admin.includes.alerts.alert')
+                    @include('admin.includes.alert')
                     <div class="card-body">
                         <form class="form"
-                              action="{{route('admin.update-brand', $brand->id)}}"
+                              action="{{route('admin.brands.update', $brand)}}"
                               method="post"
                               enctype="multipart/form-data">
                             @csrf

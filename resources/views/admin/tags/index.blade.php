@@ -1,5 +1,5 @@
 @extends('layouts.admin',['activePage' => 'tags'])
-
+@section('title') {{ $pageTitle }} @endsection
 @section('content')
     <main class="app-content">
         <div class="card bg-transparent border-0 mb-3">
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        @include('admin.includes.alerts.alert')
+        @include('admin.includes.alert')
         <div class="card">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h4 class="card-title mb-0">{{__('forms.tags')}}</h4>
@@ -42,20 +42,19 @@
                                         <td class="align-middle">{{$tag->name}}</td>
                                         <td class="align-middle w-25">{{$tag->slug}}</td>
                                         <td class="align-middle">
-                                            <div class="row">
-                                                <div class="col-8 col-md-6 text-light {{($tag->is_active == 0) ? 'bg-secondary': 'bg-primary' }} m-auto fs-5 p-1"
-                                                >{{$tag->active()}}</div>
-                                            </div>
+
+                                                <span class="badge {{($tag->is_active == 0) ? 'badge-danger': 'badge-success' }} "
+                                                >{{$tag->active()}}</span>
+
                                         </td>
                                         <td class="align-middle ">
-                                            <div class="form-actions row">
-                                                <div class="col-lg-5 offset-lg-1 mb-2 mb-lg-0">
-                                                    <a href="{{route('admin.tags.edit',$tag)}}"
-                                                       class=" btn btn-primary p-2  w-100 h-100 d-flex">
-                                                        <i class="fa fa-edit fs-5 text-light m-auto"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-5 ">
+                                           <span class="badge">
+                                                        <a href="{{route('admin.tags.edit',$tag)}}"
+                                                           class=" btn btn-sm btn-primary ">
+                                                           <i class="fa fa-pen  m-auto text-light"></i>
+                                                        </a>
+                                                    </span>
+                                                <span class="badge">
                                                     <form id="deleteForm_{{$tag->id}}"
                                                           class="deleteForm"
                                                           action="{{route('admin.tags.destroy', $tag->id)}}"                                                          method="post"
@@ -68,12 +67,12 @@
                                                            data-cancel="{{__('alerts.cancel')}}"
                                                            data-cancel-success="{{__('alerts.cancel_success')}}"
                                                            data-id="{{$tag->id}}"
-                                                           class="btn deleteBtn btn-danger p-2 w-100 h-100 d-flex">
-                                                            <i class="fa fa-trash fs-5 m-auto text-light"></i>
+                                                           class="btn deleteBtn btn-sm btn-danger ">
+                                                            <i class="fa fa-trash  m-auto text-light"></i>
                                                         </a>
                                                     </form>
-                                                </div>
-                                            </div>
+                                                </span>
+
                                         </td>
                                     </tr>
                                 @endforeach

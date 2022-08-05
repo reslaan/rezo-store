@@ -27,23 +27,7 @@ a{
 summary::marker{
     content: "";
 }
-summary::after {
-    //content:'  \003E';
-    font-size: 80%;
-    content:'  \25B6';
-}
-summary:lang(ar)::after{
-    content: ' 	\25C0';
-}
 
-details[open] > summary::after {
-    content:" \25BC";
-    color: $primary;
-
-}
-details[open] > summary {
-        color: $primary;
-}
 .required::after{
     content: '*';
     color: red;
@@ -60,3 +44,4 @@ details[open] > summary {
     height: 36px;
     right: 2px;
 }
+

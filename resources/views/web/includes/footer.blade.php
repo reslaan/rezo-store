@@ -13,7 +13,7 @@
                     </div>
                     <!-- col.// -->
                     <div class="col-4">
-                        <button type="submit" class="btn  btn-warning">Subscribe
+                        <button type="submit" class="btn  btn-warning">{{__('app.subscribe')}}
 
                         </button>
                     </div>

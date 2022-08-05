@@ -1,5 +1,5 @@
 @extends('layouts.admin',['activePage' => 'brands'])
-
+@section('title') {{ $pageTitle }} @endsection
 @section('content')
     <main class="app-content ">
 
@@ -11,7 +11,7 @@
                         <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
                         </li>
                         <li class="breadcrumb-item"><a
-                                href="{{route('admin.brands')}}"> {{__('sidebar.brands')}} </a>
+                                href="{{route('admin.brands.index')}}"> {{__('sidebar.brands')}} </a>
                         </li>
                     </ul>
                 </div>
@@ -24,9 +24,9 @@
         <div class="card">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h4 class="card-title mb-0">{{__('sidebar.brands')}}</h4>
-                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.new-brand')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-brand')}}</a>
+                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.brands.create')}}"><i class="icon fa fa-plus"></i> {{__('sidebar.add-brand')}}</a>
             </div>
-            @include('admin.includes.alerts.alert')
+            @include('admin.includes.alert')
             <div class="card-body px-0">
                 <div class="row">
                     <div class="col-md-12">
@@ -51,39 +51,40 @@
                                                  height="200">
                                         </td>
                                         <td class="w-25 align-middle">
-                                            <div class="row">
-                                                 <div class="col-8 col-md-6 text-light {{($brand->is_active == 0) ? 'bg-secondary': 'bg-primary' }} m-auto fs-5 p-1"
-                                                 >{{$brand->active()}}</div>
-                                            </div>
+                                           <span class="badge {{ $brand->is_active == 1 ? 'badge-success' : 'badge-danger' }} ">
+                                                        {{$brand->active()}}
+                                                    </span>
                                            </td>
-                                        <td class="align-middle w-25">
-                                            <div class="form-actions row ">
-                                                <div class="col-lg-5 offset-lg-1 mb-2 mb-lg-0">
-                                                    <a href="{{route('admin.edit-brand',['id' => $brand->id])}}"
-                                                       class=" btn btn-primary p-2  w-100 h-100 d-flex">
-                                                        <i class="fa fa-edit fs-5 text-light m-auto"></i>
-                                                    </a></div>
-                                                <div class="col-lg-5">
-                                                    <form id="deleteForm_{{$brand->id}}"
-                                                          class="deleteForm"
-                                                          action="{{route('admin.delete-brand',['id' => $brand->id])}}"                                                          method="post"
-                                                          data-name="{{__('forms.brand')}}"
-                                                          data-title="{{__('alerts.sure')}}"
-                                                          data-text="{{__('alerts.delete_warning')}}">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <a href="#" id="deleteBtn" data-ok="{{__('alerts.ok')}}"
-                                                           data-cancel="{{__('alerts.cancel')}}"
-                                                           data-cancel-success="{{__('alerts.cancel_success')}}"
-                                                           data-id="{{$brand->id}}"
-                                                           class="btn deleteBtn btn-danger p-2 w-100 h-100 d-flex">
-                                                            <i class="fa fa-trash fs-5 m-auto text-light"></i>
-                                                        </a>
-                                                    </form>
 
-                                                </div>
-                                            </div>
+                                        <td class="align-middle ">
+                                                    <span class="badge">
+                                                        <a href="{{route('admin.brands.edit',$brand)}}"
+                                                           class=" btn btn-sm btn-primary ">
+                                                           <i class="fa fa-pen  m-auto text-light"></i>
+                                                        </a>
+                                                    </span>
+                                            <span class="badge">
+                                                        <form id="deleteForm_{{$brand->id}}"
+                                                              class="deleteForm"
+                                                              action="{{route('admin.brands.destroy',$brand)}}"
+                                                              method="post"
+                                                              data-name="{{  __('forms.brand')}}"
+                                                              data-title="{{__('alerts.sure')}}"
+                                                              data-text="{{__('alerts.delete_warning')}}">
+                                                           @csrf
+                                                            @method('delete')
+                                                         <a href="#" id="deleteBtn"
+                                                            data-ok="{{__('alerts.ok')}}"
+                                                            data-cancel="{{__('alerts.cancel')}}"
+                                                            data-cancel-success="{{__('alerts.cancel_success')}}"
+                                                            data-id="{{$brand->id}}"
+                                                            class="btn deleteBtn btn-sm btn-danger ">
+                                                            <i class="fa fa-trash  m-auto text-light"></i>
+                                                         </a>
+                                                    </form>
+                                                  </span>
                                         </td>
+
                                     </tr>
                                 @endforeach
                                 </tbody>

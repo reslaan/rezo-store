@@ -20,14 +20,13 @@
                 </div>
             </div>
         </div>
-
+@include('admin.includes.alert')
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title" id="basic-layout-form"> {{__('forms.new-product')}} </h4>
                     </div>
-                    @include('admin.includes.alerts.alert')
                     <div class="card-body">
                         <form class="form" id="form"
                               action="{{route('admin.products.store')}}"
@@ -45,10 +44,12 @@
                             <div class="row gy-2">
 
                                 {{-- submit form--}}
-                                <div class="col-md-2 order-md-0">
-                                        <button type="submit" class="btn btn-primary w-100">
+                                <div class="col-md-4 order-md-0">
+                                        <button type="submit" class="btn btn-primary w-50">
                                             {{__('forms.save')}}
                                         </button>
+                                    <a class="btn btn-secondary" href="{{ route('admin.products.index') }}"> {{__('forms.cancel')}} <i class="fa fa-fw fa-lg fa-times-circle"></i></a>
+
                                 </div>
 
 
@@ -64,7 +65,7 @@
     </main>
 
 @endsection
-@section('script')
+@push('script')
     <script>
 
         const all = '{{__("forms.all")}}'
@@ -102,4 +103,4 @@
 
     </script>
 
-@endsection
+@endpush

@@ -1,26 +1,27 @@
-@extends('layouts.admin',['activePage' =>  $type == 'categories'? 'categories' : 'subcategories'])
+@extends('layouts.admin',['activePage' =>   'categories' ])
+@section('title') {{ $pageTitle }} @endsection
 @section('content')
     <main class="app-content">
         <div class="card bg-transparent border-0 mb-3">
             <div class="row ">
                 <div class="col-md-6 ">
                     <ul class="breadcrumb py-2 ps-3 mb-0 bg-transparent ">
-                        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                        <li class="breadcrumb-item"><a href="">{{__('sidebar.home')}} </a>
+                        <li class="breadcrumb-item"><a href=""><i class="fa fa-home fa-lg"></i> </a>
                         </li>
                         <li class="breadcrumb-item "><a
-                                href="{{route('admin.categories',$type)}}">  {{ $type == 'categories'? __('forms.main-categories') : __('forms.sub-categories')}} </a>
+                                href="{{route('admin.categories.index')}}">  {{ __('forms.categories') }} </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        @include('admin.includes.alerts.alert')
+        @include('admin.includes.alert')
         <div class="card">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                <h4 class="card-title mb-0">{{ $type == 'categories'? __('forms.main-categories') : __('forms.sub-categories')}}</h4>
-                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.new-category',$type)}}">  <i class="me-2 fa fa-plus"></i>{{ $type == 'categories'? __('sidebar.add-category') : __('sidebar.add-subcategory')}}</a>
+                <h4 class="card-title mb-0">{{  __('forms.categories')}}</h4>
+                <a class="btn btn-primary rounded-pill pb-2" href="{{route('admin.categories.create')}}"> <i
+                        class="me-2 fa fa-plus"></i>{{  __('sidebar.add-category')}}</a>
             </div>
             <div class="card-body px-0">
                 <div class="row">
@@ -29,69 +30,70 @@
                             <table class="table table-hover table-bordered text-center " id="sampleTable">
                                 <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>{{__('forms.name')}}</th>
-                                    @if($type == 'subcategories')
-                                        <th>{{__('forms.main-category')}}</th>
-                                    @endif
-                                    <th>{{__('forms.photo')}}</th>
+                                    <th>{{__('forms.main-category')}}</th>
                                     <th>{{__('forms.slug')}}</th>
+                                    <th class="text-center"> Featured</th>
+                                    <th class="text-center"> Menu</th>
                                     <th>{{__('forms.state')}}</th>
                                     <th>{{__('forms.actions')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="">
                                 @if($categories)
-                                @foreach($categories as $category)
-                                    <tr class=" bg-lighten-5">
-                                        <td class="align-middle">{{$category->name}}</td>
-                                        @if($type == 'subcategories')
-                                            <td class="align-middle ">{{$category->parent->name ?? '--'}}</td>
-                                        @endif
-                                        <td class="align-middle w-25">
-                                            <img src="{{$category->photoPath()}}"
-                                                 class="img-fluid  w-50" width="200"
-                                                 height="200" alt="">
-                                        </td>
-                                        <td class="align-middle w-25">{{$category->slug}}</td>
-                                        <td class="align-middle">
-                                            <div class="row">
-                                                <div
-                                                    class="col-10 col-sm-8 text-light {{($category->is_active == 0) ? 'bg-secondary': 'bg-primary' }} m-auto fs-5 p-1"
-                                                >{{$category->active()}}</div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle ">
-                                            <div class="form-actions row">
-                                                <div class="col-lg-5 offset-lg-1 mb-2 mb-lg-0">
-                                                    <a href="{{route('admin.edit-category',['type' => $type,'id' => $category->id])}}"
-                                                       class=" btn btn-primary p-2  w-100 h-100 d-flex">
-                                                        <i class="fa fa-edit fs-5 text-light m-auto"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-5 ">
-                                                    <form id="deleteForm_{{$category->id}}"
-                                                          class="deleteForm"
-                                                          action="{{route('admin.delete-category',['type' => $type,'id' => $category->id])}}"
-                                                          method="post"
-                                                          data-name="{{ $type == 'categories'? __('forms.main-category') : __('forms.sub-category')}}"
-                                                          data-title="{{__('alerts.sure')}}"
-                                                          data-text="{{__('alerts.delete_warning')}}">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <a href="#" id="deleteBtn"
-                                                           data-ok="{{__('alerts.ok')}}"
-                                                           data-cancel="{{__('alerts.cancel')}}"
-                                                           data-cancel-success="{{__('alerts.cancel_success')}}"
-                                                           data-id="{{$category->id}}"
-                                                           class="btn deleteBtn btn-danger p-2 w-100 h-100 d-flex">
-                                                            <i class="fa fa-trash fs-5 m-auto text-light"></i>
+                                    @foreach($categories as $category)
+                                        @if ($category->id != 1)
+                                            <tr class=" bg-lighten-5">
+                                                <td class="align-middle">{{$loop->index + 1}}</td>
+                                                <td class="align-middle">{{$category->name}}</td>
+                                                <td class="align-middle ">{{$category->parent->name ?? '--'}}</td>
+                                                <td class="align-middle">{{$category->slug}}</td>
+                                                <td class="align-middle">
+                                                    <span
+                                                        class="badge {{ $category->featured == 1 ? 'badge-success' : 'badge-danger' }} ">{{ $category->featured == 1 ? 'Yes' : 'No' }}</span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <span
+                                                        class="badge {{ $category->menu == 1 ? 'badge-success' : 'badge-danger' }} ">{{ $category->menu == 1 ? 'Yes' : 'No' }}</span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <span
+                                                        class="badge {{ $category->is_active == 1 ? 'badge-success' : 'badge-danger' }} ">
+                                                        {{$category->active()}}
+                                                    </span>
+                                                </td>
+                                                <td class="align-middle ">
+                                                    <span class="badge">
+                                                        <a href="{{route('admin.categories.edit',$category)}}"
+                                                           class=" btn btn-sm btn-primary ">
+                                                           <i class="fa fa-pen  m-auto text-light"></i>
                                                         </a>
+                                                    </span>
+                                                    <span class="badge">
+                                                        <form id="deleteForm_{{$category->id}}"
+                                                              class="deleteForm"
+                                                              action="{{route('admin.categories.destroy',$category)}}"
+                                                              method="post"
+                                                              data-name="{{  __('forms.main-category')}}"
+                                                              data-title="{{__('alerts.sure')}}"
+                                                              data-text="{{__('alerts.delete_warning')}}">
+                                                           @csrf
+                                                            @method('delete')
+                                                         <a href="#" id="deleteBtn"
+                                                            data-ok="{{__('alerts.ok')}}"
+                                                            data-cancel="{{__('alerts.cancel')}}"
+                                                            data-cancel-success="{{__('alerts.cancel_success')}}"
+                                                            data-id="{{$category->id}}"
+                                                            class="btn deleteBtn btn-sm btn-danger ">
+                                                            <i class="fa fa-trash  m-auto text-light"></i>
+                                                         </a>
                                                     </form>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                  </span>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                 @endif
                                 </tbody>
                             </table>
@@ -104,11 +106,9 @@
     </main>
 @endsection
 
-@section('script')
-    <script>
-        // function confirmDelete(id){
-        //     console.log(id);
-        // }
-    </script>
-    @stop
+@push('script')
+    <script type="text/javascript" src="{{asset('js/plugins/jquery.dataTables.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/plugins/dataTables.bootstrap.min.js')}}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+@endpush
 

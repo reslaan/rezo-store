@@ -105,12 +105,12 @@
             <div class="collapse navbar-collapse" id="main_nav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link pl-0" href="#"> <strong>All category</strong></a>
+                        <a class="nav-link pl-0" href="#"> <strong>{{__('app.all_categories')}}</strong></a>
                     </li>
 
                     @foreach($categories as $category)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('category')}}">{{$category->name}}</a>
+                            <a class="nav-link" href="{{route('category.show',$category->slug)}}">{{$category->name}}</a>
                         </li>
                     @endforeach
 

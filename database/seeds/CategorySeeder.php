@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -11,6 +12,14 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
+        Category::create([
+            'id'            => 1,
+            'name'          => 'القسم الرئيسي',
+            'slug'          => 'root',
+            'is_active'     => 1,
+            'parent_id'     =>  null,
+            'menu'          =>  0,
+        ]);
       // factory(\App\Models\Category::class,20)->create();
     }
 }

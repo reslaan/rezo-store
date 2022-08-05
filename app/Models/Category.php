@@ -6,6 +6,7 @@ use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -17,13 +18,17 @@ class Category extends Model
 
     protected $translatedAttributes = ['name'];
 
-    protected $fillable = ['parent_id','slug','is_active'];
+    protected $fillable = ['parent_id','slug','is_active','featured', 'menu','image'];
 
     // make it hidden to speed query if i don't need it
     protected $hidden = ['translations'];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'parent_id' => 'integer',
+        'is_active' => 'boolean',
+        'featured' => 'boolean',
+        'menu' => 'boolean',
+
     ];
 
     public function translations(): HasMany
@@ -49,7 +54,8 @@ class Category extends Model
     }
 
     public function children(){
-        return Category::where('parent_id',$this->id)->get();
+
+        return  $this->hasMany(self::class,'parent_id');
     }
 
     public function name(){
@@ -59,8 +65,11 @@ class Category extends Model
     }
 
     public function photoPath(){
-        if (!$this->photo)
-            return asset('images/image_default.png');
-        return asset('storage/images/categories/'.$this->photo);
+//         $exists = Storage::disk('public')->exists('storage/images/categories/'.$this->image);
+//       if (!$this->image || !$exists)
+//        return asset('images/image_default.png');
+        return asset('storage/images/categories/'.$this->image);
+
+
     }
 }

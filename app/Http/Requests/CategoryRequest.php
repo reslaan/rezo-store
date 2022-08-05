@@ -41,12 +41,12 @@ class CategoryRequest extends FormRequest
     {
         return [
 
-//            'name' => 'required|unique:category_translations,name,'.$this->id,
             'name' => ['required',new UpdateUniqueValue('category_translations',$this->id,'category_id')],
             'slug' => ['required',new UpdateUniqueValue('categories',$this->id,null)],
-//            'slug' => 'required|unique:categories,slug,'.$this->id,
+            'parent_id' => 'required|exists:categories,id',
+            'image'     =>  'mimes:jpg,jpeg,png|max:1000'
 
-            //Rule::unique('category_translations','name')->ignore($this->id),
+
         ];
     }
 

@@ -12,8 +12,7 @@ define('PAGINATION_COUNT', 10);
 
 function uploadImage($image , $folder){
     $image->store('public/images/'.$folder);
-    $fileName = $image->hashName();
-    return $fileName;
+    return $image->hashName();
 }
 function deleteImage($fileName , $folder){
     File::delete(public_path('storage/images/'.$folder.'/'.$fileName));

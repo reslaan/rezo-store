@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\CategoryContract;
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
@@ -10,22 +12,32 @@ use Illuminate\Support\Facades\Session;
 use App\Models\CategoryTranslation;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
+
+    protected $categoryRepository;
+
+    public function __construct(CategoryContract $categoryRepository){
+
+        $this->categoryRepository = $categoryRepository;
+    }
     /**
      * Display a listing of the resource.
      *
      * @param $type
      */
-    public function index($type)
+    public function index()
     {
 
 
-        $categories = Category::$type()->orderBy('id', 'DESC')->get();
+        $categories = $this->categoryRepository->listCategories();
+
+
+        $this->setPageTitle(__('sidebar.categories'),'list all categories');
 
         return view('admin.categories.index')->with([
             'categories' => $categories,
-            'type' => $type,
+
         ]);
     }
 
@@ -33,70 +45,35 @@ class CategoryController extends Controller
      * Show the form for creating a new resource.
      *
      */
-    public function create($type)
+    public function create()
     {
 
-        if ($type == 'subcategories') {
-            $categories = Category::all();
-            return view('admin.categories.new')->with([
-                'type' => $type,
-                'categories' => $categories,
-            ]);
-        }
-        return view('admin.categories.new')->with([
-            'type' => $type,
-        ]);
+        $categories = $this->categoryRepository->listCategories('id', 'asc');
+
+        $this->setPageTitle(__('forms.new-category'), 'Create Category');
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      *
-     *
+     * @param CategoryRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(CategoryRequest $request, $type)
+    public function store(CategoryRequest $request)
     {
 
-        if (!$request->has('is_active')) {
-           $request->merge(['is_active' => 0]);
+
+        $params = $request->except('_token');
+
+        $category = $this->categoryRepository->createCategory($params);
+
+        if (!$category) {
+            return $this->responseRedirectBack('Error occurred while creating category.', 'error');
         }
+        return $this->responseRedirect('admin.categories.index', 'Category added successfully' ,'success');
 
-        if ($type == 'subcategories') {
-            $request->validate(
-                [
-                    'parent_id' => 'required|exists:categories,id'
-                ], [
-                'parent_id.required' => 'الرجاء اختيار القسم الرئيسي',
-                'parent_id.exists' => 'القسم غير موجود',
-            ]);
-        }
-        try {
-
-
-            DB::beginTransaction();
-
-
-//        $category = new Category();
-//        $category->slug = $request->slug;
-            //      $category->is_active = $is_active;
-//        if ($request->has('parent_id')){
-//            $category->parent_id = $request->parent_id;
-//        }
-
-            $category = Category::create($request->except('_token'));
-            // save translation
-            $category->name = $request->name;
-            $category->save();
-            DB::commit();
-            Session::flash('success', __('alerts.category_created'));
-            return redirect()->back();
-
-        } catch (\Exception $ex) {
-            return redirect()->back()->with([
-                'error' => __('alerts.try_later')
-            ]);
-            DB::rollback();
-        }
     }
 
     /**
@@ -112,96 +89,50 @@ class CategoryController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @param Category $category
      *
      */
-    public function edit($type, $id)
+    public function edit(Category $category)
     {
+        $categories = $this->categoryRepository->listCategories();
 
-
-        $category = Category::find($id);
-
-
-
-        if (!$category)
-            return redirect(route('admin.categories',$type))->with([
-                'error' => __('alerts.not_exist'),
-            ]);
-
-
-        if ($type == 'subcategories') {
-            $categories = Category::categories()->get();
-            return view('admin.categories.edit')->with([
-                'type' => $type,
-                'category' => $category,
-                'categories' => $categories,
-            ]);
-        } else {
-            return view('admin.categories.edit')->with([
-                'category' => $category,
-                'type' => $type,
-            ]);
-
-        }
-
+        $this->setPageTitle('Categories', 'Edit Category : '.$category->name);
+        return view('admin.categories.edit',compact('category','categories'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-
+     * @param CategoryRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(CategoryRequest $request, $type, $id)
+    public function update(CategoryRequest $request)
     {
+        $params = $request->except('_token');
 
+        $category = $this->categoryRepository->updateCategory($params);
 
-        try {
-
-            DB::beginTransaction();
-            $category = Category::find($id);
-            if (!$category)
-                return redirect()->back()->with([
-                    'error' => __('alerts.not_exist')
-                ]);
-            $is_active = 0;
-            if ($request->has('is_active')) {
-                $is_active = 1;
-            }
-            $category->update($request->all());
-
-            $category->name = $request->name;
-            $category->is_active = $is_active;
-            $category->save();
-
-            DB::commit();
-            return redirect()->back()->with([
-                'success' => __('alerts.edit_success'),
-                'type' => $type,
-            ]);
-
-
-        } catch (\Exception $ex) {
-            return redirect()->back()->with([
-                'error' => __('alerts.try_later')
-            ]);
+        if (!$category) {
+            return $this->responseRedirectBack(__('alerts.try_later'), 'error');
         }
+        return $this->responseRedirectBack(__('alerts.edit_success'), 'success');
 
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-
+     * @param Category $category
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($type, $id)
+    public function destroy(Category $category)
     {
-        // remove all translate before remove category
-        CategoryTranslation::where('category_id', $id)->delete();
-        Category::destroy($id);
+        // delete category and its translations
+        $this->categoryRepository->deleteCategory($category);
+
+        if (!$category) {
+            return $this->responseRedirectBack(__('alerts.try_later'), 'error');
+        }
+        return $this->responseRedirect('admin.categories.index',__('alerts.deleted'), 'success');
 
 
-        return redirect()->back()->with([
-            'success' => __('alerts.deleted'),
-            'type' => $type,
-        ]);
     }
 }

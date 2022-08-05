@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        @include('admin.includes.alerts.alert')
+        @include('admin.includes.alert')
         <div class="card">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h4 class="card-title mb-0">{{__('forms.products')}}</h4>
@@ -41,28 +41,30 @@
                                 <tbody class="">
                                 @foreach($products as $product)
                                     <tr class=" bg-lighten-5">
-                                        <td class="align-middle w-25">{{$product->name}}</td>
-                                        <td class="align-middle w-25">
-                                            <img src="{{ $product->firstImage()}}" alt=""
-                                                                      class="img-fluid  w-50" width="200"
-                                                                      height="200"></td>
+                                        <td class="align-middle ">{{$product->name}}</td>
+                                        <td class="align-middle w-10">
+                                            <span class="badge">
+                                                  <img src="{{ $product->firstImage()}}" alt=""
+                                                       class="img-fluid " width="200"
+                                                       height="200">
+                                            </span>
+                                          </td>
                                         <td class="align-middle">{{$product->price}}</td>
                                         <td class="align-middle">{{$product->qty ?? '--'}}</td>
                                         <td class="align-middle">
-                                            <div class="row">
-                                                <div class="col-10 col-md-8 text-light {{($product->is_active == 0) ? 'bg-secondary': 'bg-primary' }} m-auto fs-6 p-1"
-                                                >{{$product->active()}}</div>
-                                            </div>
+
+                                                <span class="badge {{($product->is_active == 0) ? 'badge-danger': 'badge-success' }}"
+                                                >{{$product->active()}}</span>
                                         </td>
                                         <td class="align-middle ">
-                                            <div class="form-actions row">
-                                                <div class="col-lg-5 offset-lg-1 mb-2 mb-lg-0">
+
+                                                <span class="badge">
                                                     <a href="{{route('admin.products.edit',$product)}}"
-                                                       class=" btn btn-primary p-2  w-100 h-100 d-flex">
-                                                        <i class="fa fa-edit fs-5 text-light m-auto"></i>
+                                                       class=" btn btn-primary  btn-sm">
+                                                        <i class="fa fa-edit  text-light m-auto"></i>
                                                     </a>
-                                                </div>
-                                                <div class="col-lg-5 ">
+                                                </span>
+                                                <span class="badge">
                                                     <form id="deleteForm_{{$product->id}}"
                                                           class="deleteForm"
                                                           action="{{route('admin.products.destroy', $product->id)}}"                                                          method="post"
@@ -75,12 +77,12 @@
                                                            data-cancel="{{__('alerts.cancel')}}"
                                                            data-cancel-success="{{__('alerts.cancel_success')}}"
                                                            data-id="{{$product->id}}"
-                                                           class="btn deleteBtn btn-danger p-2 w-100 h-100 d-flex">
+                                                           class="btn deleteBtn btn-danger btn-sm">
                                                             <i class="fa fa-trash fs-5 m-auto text-light"></i>
                                                         </a>
                                                     </form>
-                                                </div>
-                                            </div>
+                                                </span>
+
                                         </td>
                                     </tr>
                                 @endforeach

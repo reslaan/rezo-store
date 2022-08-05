@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 class Setting extends Model
 {
     use Translatable;
+
 
     // The relation to eager load on every query
     protected $with = ['translations'];
@@ -65,6 +67,22 @@ class Setting extends Model
                 'value' => $value,
             ]);
         }
+    }
+
+    /**
+     * @param $key
+     */
+    public static function get($key)
+    {
+        $setting = new self();
+        $entry = $setting->where('key', $key)->first();
+        if (!$entry) {
+            return false;
+        }
+        if (!$entry->is_translatable)
+            return $entry->plain_value;
+
+        return $entry->value;
     }
 
 }

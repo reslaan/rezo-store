@@ -16,7 +16,7 @@
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description"
           content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Rezo Store</title>
+    <title>@yield('title') - {{ config('app.name') }}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +31,7 @@
 
 </head>
 
-<body class="app sidebar-mini">
+<body class="app sidebar-mini hide-scrollbar">
 
 <!-- fixed-top-->
 @include('admin.includes.header')
@@ -53,13 +53,8 @@
 
 <!-- Page specific javascripts-->
 <script type="text/javascript" src="{{ asset('js/plugins/chart.js') }}"></script>
-</script>
-<script type="text/javascript" src="{{asset('js/plugins/jquery.dataTables.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/plugins/dataTables.bootstrap.min.js')}}"></script>
-<script type="text/javascript">$('#sampleTable').DataTable();</script>
 
-
-@yield('script')
+@stack('script')
 @yield('alert-script')
 </body>
 

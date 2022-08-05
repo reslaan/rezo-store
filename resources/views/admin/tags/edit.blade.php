@@ -1,5 +1,5 @@
 @extends('layouts.admin',['activePage' => 'tags'])
-
+@section('title') {{ $pageTitle }} @endsection
 @section('content')
     <main class="app-content content">
 
@@ -24,7 +24,7 @@
                     <div class="card-header">
                         <h4 class="card-title" id="basic-layout-form"> {{__('forms.edit-tag')}} </h4>
                     </div>
-                    @include('admin.includes.alerts.alert')
+                    @include('admin.includes.alert')
                     <div class="card-body">
                         <form class="form"
                               action="{{route('admin.tags.update',$tag)}}"

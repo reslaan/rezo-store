@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "2.1",
         "mcamara/laravel-localization": "^1.7",
-        "yajra/laravel-datatables-oracle": "~9.0"
+        "yajra/laravel-datatables-oracle": "~9.0",
+      "ext-http": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
