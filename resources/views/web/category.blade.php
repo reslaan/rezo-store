@@ -5,7 +5,7 @@
     <!-- ========================= SECTION PAGETOP ========================= -->
     <section class="py-4 bg-dark">
         <div class="container clearfix">
-            <h2 class="title-page">{{ $category->name .' Category' }}</h2>
+            <h2 class="text-light">{{ $category->name  }}</h2>
         </div>
         <!-- container //  -->
     </section>
@@ -20,21 +20,21 @@
                         <div class="card-body">
                             <div class="row">
                                 <aside class="col-sm-3">
-                                    <div class="img-wrap"><img class="img-fluid" src="{{asset('images/image_default.png')}}"></div>
+                                    <img class="img-fluid align-middle "   src="{{ $product->firstImage() ?? asset('images/image_default.png')}}">
                                 </aside>
                                 <!-- col.// -->
                                 <article class="col-sm-6">
                                     <h4 class="title"> {{$product->name}} </h4>
 
-                                    <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Ut wisi enim ad minim veniam </p>
+                                    <p> Lorem ipsum dolor sit amet, con adipiscing elit, Ut wisi enim ad minim veniam </p>
                                     <div class="fw-bold text-primary">154 orders </div>
                                 </article>
                                 <!-- col.// -->
                                 <aside class="col-sm-3 border-left">
                                     <div class="action-wrap">
                                         <div class="price-wrap h4">
-                                            <span class="text-primary"> $56 </span>
-                                            <del class="text-danger"> $98</del>
+                                            <span class="text-primary"> {{$product->price }} </span>
+{{--                                            <del class="text-danger"> $98</del>--}}
                                         </div>
                                         <!-- info-price-detail // -->
                                         <p class="text-success">Free shipping</p>

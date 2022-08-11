@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Contracts\CategoryContract;
+use App\Contracts\ProductContract;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
@@ -9,14 +11,21 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    protected $productRepository;
+    protected $categoryRepository;
+
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param ProductContract $productRepository
+     * @param CategoryContract $categoryRepository
      */
-    public function __construct()
+    public function __construct(ProductContract $productRepository , CategoryContract $categoryRepository)
     {
+
         $this->middleware('guest');
+        $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -36,19 +45,20 @@ class HomeController extends Controller
         ]);
     }
 
-    public function product(){
-        $categories = Category::categories('id')->limit(3)->get();
+    public function product($slug){
+        $product = $this->productRepository->findBySlug($slug);
+       // $product = Product::where('slug',$slug)->first();
+
 
         return view('web.product-details')->with([
-            'categories' => $categories
+            'product' => $product
         ]);
     }
 
-    public function category(){
-        $categories = Category::categories('id')->limit(3)->get();
-
+    public function category($slug){
+        $category = $this->categoryRepository->findBySlug($slug);
         return view('web.category')->with([
-            'categories' => $categories
+            'category' => $category
         ]);
     }
 

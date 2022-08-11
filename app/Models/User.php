@@ -37,4 +37,8 @@ class User extends Authenticatable
         'mobile_verified_at' => 'datetime',
         'isVerified' => 'boolean'
     ];
+
+    public function cart(){
+        return $this->hasMany(Cart::class,'user_id');
+    }
 }

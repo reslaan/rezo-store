@@ -58,9 +58,46 @@
 <script type="text/javascript" src="{{asset('js/plugins/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/plugins/dataTables.bootstrap.min.js')}}"></script>
 <script type="text/javascript">$('#sampleTable').DataTable();</script>
+<script type="text/javascript">
 
+    $(document).on('click','.addToCart',function (e) {
 
-@yield('script')
+        e.preventDefault();
+
+        let id = $(this).data('id');
+
+                    $.ajax({
+                        url: '{{ route('cart.add') }}',
+                        type: 'post',
+                        data: {
+                            id: id,
+                        },
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        },
+                        success: function(response) {
+                            console.log(response.message);
+                            console.log(response.cartCount);
+                            $('#cartCount').html('(' + response.cartCount + ')')
+                            $.notify(`<p class="text-light mb-0 text-center fs-5"> ${response.message} <i class="fa fa-xing ms-2"></i></p>`, {
+                            type: 'success',
+                        });
+
+                        },
+                        error: function(response) {
+                            console.log(response.responseJSON.message);
+                            let errorMessage = response.responseJSON.message;
+                            $.notify(`<p class="text-light mb-0 text-center fs-5"> ${errorMessage} <i class="fa fa-xing ms-2"></i></p>`, {
+                            type: 'danger',
+                        });
+                        },
+                    });
+    });
+
+</script>
+
+@stack('script')
 @yield('alert-script')
 </body>
 

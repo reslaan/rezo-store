@@ -5,8 +5,8 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-3">
                     <div class="navbar-brand">
-                        {{--                        <img class="img-fluid w-25" src="{{asset('images/logo_default.png')}}" width="80" >--}}
-                        <a href="{{ url('/') }}" class="app-header__logo bg-transparent  h2">Rezo</a>
+                        {{-- <img class="img-fluid w-25" src="{{asset('images/logo_default.png')}}" width="80" > --}}
+                        <a href="{{ route('home') }}" class="app-header__logo bg-transparent  h2">Rezo</a>
                     </div>
                     <!-- brand-wrap.// -->
                 </div>
@@ -28,34 +28,36 @@
                     <ul class="list-unstyled d-flex align-items-center justify-content-evenly mb-0 text-white">
 
                         <li class="nav-item">
-                            <a href="{{route('cart')}}" class="position-relative text-center">
-                                <i class="fa fa-shopping-cart fs-5  position-relative text-white ">
-                                    <span
-                                        class="fs-6 position-absolute translate-middle top-0 start-100 rounded-circle bg-info  text-light w-75"><small>3</small></span>
+                            <a href="{{ route('cart') }}" class="position-relative text-center">
+                                <i class="fa fa-shopping-cart fs-5  text-white ">
+                                    @auth
+                                        <small id="cartCount">({{ auth()->user()->cart->count() ?? 0 }})</small>
+                                    @endauth
+
+
                                 </i>
                             </a>
                         </li>
 
 
                         <li class="dropdown nav-item">
-                            <a class="" href="#" data-toggle="dropdown"
-                               aria-label="Open Profile Menu">
+                            <a class="" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
                                 <i class="fa fa-user fa-lg text-white"> </i></a>
                             <ul class="dropdown-menu ">
 
                                 @auth
                                     <li>
-                                        <a class="dropdown-item" href="{{route('profile')}}"><i
+                                        <a class="dropdown-item" href="{{ route('profile') }}"><i
                                                 class="fa fa-user fa-lg"></i> Profile</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{route('logout')}}"><i
+                                        <a class="dropdown-item" href="{{ route('logout') }}"><i
                                                 class="fa fa-sign-out fa-lg "></i> Logout</a>
                                     </li>
                                 @endauth
                                 @guest()
                                     <li>
-                                        <a class="dropdown-item" href="{{route('login')}}"><i
+                                        <a class="dropdown-item" href="{{ route('login') }}"><i
                                                 class="fa fa-sign-in fa-lg"></i> Login</a>
                                     </li>
                                 @endguest
@@ -65,18 +67,16 @@
 
                         <!-- languages Menu-->
                         <li class="dropdown align-middle nav-item">
-                            <a class="" href="#"
-                               data-toggle="dropdown"
-                               aria-label="Open Profile Menu">
+                            <a class="" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
                                 <span class="user-name text-bold-700 text-white">
-                                {{app()->getLocale() == 'ar' ? 'AR' : 'EN'}}
-                                 </span>
+                                    {{ app()->getLocale() == 'ar' ? 'AR' : 'EN' }}
+                                </span>
                             </a>
                             <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                     <li class="dropdown dropdown-user nav-item w-100">
                                         <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
-                                           href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                             {{ $properties['native'] }}
                                         </a>
                                     </li>
@@ -94,31 +94,32 @@
     </section>
     <!-- header-main .// -->
     @isset($categories)
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-        <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+            <div class="container">
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
                     aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="main_nav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link pl-0" href="#"> <strong>{{__('app.all_categories')}}</strong></a>
-                    </li>
+                <div class="collapse navbar-collapse" id="main_nav">
+                    <ul class="navbar-nav">
+                        {{-- <li class="nav-item"> --}}
+                        {{-- <a class="nav-link pl-0" href="#"> <strong>{{__('app.all_categories')}}</strong></a> --}}
+                        {{-- </li> --}}
 
-                    @foreach($categories as $category)
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('category.show',$category->slug)}}">{{$category->name}}</a>
-                        </li>
-                    @endforeach
+                        @foreach ($categories as $category)
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="{{ route('category.show', $category->slug) }}">{{ $category->name }}</a>
+                            </li>
+                        @endforeach
 
-                </ul>
+                    </ul>
+                </div>
+                <!-- collapse .// -->
             </div>
-            <!-- collapse .// -->
-        </div>
-        <!-- container .// -->
-    </nav>
+            <!-- container .// -->
+        </nav>
     @endisset
 </header>

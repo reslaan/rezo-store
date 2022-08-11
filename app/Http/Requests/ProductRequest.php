@@ -28,13 +28,13 @@ class ProductRequest extends FormRequest
             'name' => ['required','string',new UpdateUniqueValue('product_translations',$this->id,'product_id')],
             'price' => 'required|numeric',
             'qty' => 'required|numeric',
-            'slug' => ['nullable','string',new UpdateUniqueValue('products',$this->id,null)],
+            'slug' => ['required','string',new UpdateUniqueValue('products',$this->id,null)],
             'sku' => ['required','string',new UpdateUniqueValue('products',$this->id,null)],
             'categories' => 'required',
             'tags' => 'nullable',
             'brand' => 'nullable',
             'short_description' => 'required|string|max:50',
-            'description' => 'required|string|max:50',
+            'description' => 'required|string|max:500',
         ];
     }
 }

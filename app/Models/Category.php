@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -70,6 +71,22 @@ class Category extends Model
 //        return asset('images/image_default.png');
         return asset('storage/images/categories/'.$this->image);
 
+
+    }
+
+    public function setSlugAttribute($value){
+
+        $separator = '-';
+        $value = trim($value);
+
+        $value = mb_strtolower($value, "UTF-8");;
+
+        $value = preg_replace("/[^a-z0-9_\sءاأإآؤئبتثجحخدذرزسشصضطظعغفقكلمنهويةى]#u/", "", $value);
+
+        $value = preg_replace("/[\s-]+/", " ", $value);
+
+        $value = preg_replace("/[\s_]/", $separator, $value);
+        $this->attributes['slug'] = $value;
 
     }
 }

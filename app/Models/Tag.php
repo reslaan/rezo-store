@@ -36,4 +36,20 @@ class Tag extends Model
     public function products(){
         return $this->belongsToMany(Product::class,'product_tags');
     }
+
+    public function setSlugAttribute($value){
+
+        $separator = '-';
+        $value = trim($value);
+
+        $value = mb_strtolower($value, "UTF-8");;
+
+        $value = preg_replace("/[^a-z0-9_\sءاأإآؤئبتثجحخدذرزسشصضطظعغفقكلمنهويةى]#u/", "", $value);
+
+        $value = preg_replace("/[\s-]+/", " ", $value);
+
+        $value = preg_replace("/[\s_]/", $separator, $value);
+        $this->attributes['slug'] = $value;
+
+    }
 }

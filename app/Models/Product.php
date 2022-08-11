@@ -62,6 +62,7 @@ class Product extends Model
     public function attributes(){
         return $this->belongsToMany(Attribute::class,'product_attributes');
     }
+    
     public function active(){
         return $this->is_active == 1 ? __('forms.active') : __('forms.inactive');
     }
@@ -83,5 +84,20 @@ class Product extends Model
             return asset('images/image_default.png');
 
         return asset('storage/images/products/'.$image);
+    }
+    public function setSlugAttribute($value){
+
+        $separator = '-';
+        $value = trim($value);
+
+        $value = mb_strtolower($value, "UTF-8");;
+
+        $value = preg_replace("/[^a-z0-9_\sءاأإآؤئبتثجحخدذرزسشصضطظعغفقكلمنهويةى]#u/", "", $value);
+
+        $value = preg_replace("/[\s-]+/", " ", $value);
+
+        $value = preg_replace("/[\s_]/", $separator, $value);
+        $this->attributes['slug'] = $value;
+
     }
 }

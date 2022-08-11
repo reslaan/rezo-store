@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -14,41 +15,52 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function (){
 
-    Route::group(['namespace' => 'Web'],function (){
-        Route::get('/', 'HomeController@index');
-        Route::get('/product', 'HomeController@product');
-        Route::get('/show/{slug}', 'CategoryController@show')->name('category.show');
-        Route::get('/cart', 'HomeController@cart')->name('cart');
-        Route::get('/checkout', 'HomeController@checkout')->name('checkout');
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+], function () {
 
+    Auth::routes();
+    Route::get('logout', 'Auth\LoginController@logout')->name('logout')->middleware('auth');
+
+
+    Route::group(['namespace' => 'Web'], function () {
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::get('/product/{slug}', 'HomeController@product')->name('product.show');
+        Route::get('/category/{slug}', 'HomeController@category')->name('category.show');
+
+
+        Route::group(['middleware' => 'auth'], function () {
+
+
+            Route::get('/cart', 'CartController@index')->name('cart');
+            Route::post('/add/cart', 'CartController@addToCart')->name('cart.add');
+            Route::post('/delete/cart/{id}', 'CartController@delete')->name('cart.delete');
+
+            Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+        });
     });
 
-//    Route::get('/','Admin\LoginController@loginForm')->name('admin.login');
-//
-//    Route::group(['middleware' => 'auth'],function (){
-//
-//
-//
-//    Route::group(['middleware' => 'isVerified'],function (){
-//        Route::get('/home', function (){
-//            return view('home');
-//        })->name('home');
-//    });
-//
-//
-//
-//    Route::get('/verify','web\verificationCodeController@verifyForm')->name('auth.verifyCode');
-//    Route::post('/verify','web\verificationCodeController@verify')->name('auth.verify');
-//    Route::get('/resend-otp','web\verificationCodeController@resendOtpCode')->name('auth.resendOtp');
-//});
-//
-//
-Auth::routes();
-
-
-
+    //    Route::get('/','Admin\LoginController@loginForm')->name('admin.login');
+    //
+    //    Route::group(['middleware' => 'auth'],function (){
+    //
+    //
+    //
+    //    Route::group(['middleware' => 'isVerified'],function (){
+    //        Route::get('/home', function (){
+    //            return view('home');
+    //        })->name('home');
+    //    });
+    //
+    //
+    //
+    //    Route::get('/verify','web\verificationCodeController@verifyForm')->name('auth.verifyCode');
+    //    Route::post('/verify','web\verificationCodeController@verify')->name('auth.verify');
+    //    Route::get('/resend-otp','web\verificationCodeController@resendOtpCode')->name('auth.resendOtp');
+    //});
+    //
+    //
 
 });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\ProductContract;
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductOptionsRequest;
 use App\Http\Requests\ProductRequest;
@@ -21,8 +23,13 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
-class ProductController extends Controller
+class ProductController extends BaseController
 {
+    protected $productRepository;
+
+    public function __construct(ProductContract $productRepository){
+        $this->productRepository = $productRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -30,11 +37,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('id', 'DESC')->get();
-        $categories = Category::select('id')->get();
+        $products = $this->productRepository->listProducts();
+
+        $this->setPageTitle(__('forms.products'),'');
+       // $categories = Category::select('id')->get();
         return view('admin.products.index')->with([
             'products' => $products,
-            'categories' => $categories,
         ]);
     }
 
@@ -66,9 +74,13 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
 
+        $params = $request->except('_token');
 
-        $product = new Product();
-        $this->saveProductData($request, $product);
+        $product = $this->productRepository->create($params);
+
+        if (!$product)
+            return $this->responseRedirectBack(__('alerts.try_later'),'error');
+
         Session::flash('success', __('alerts.product_created'));
         return redirect(route('admin.products.edit', $product));
 
@@ -113,19 +125,19 @@ class ProductController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\product $product
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProductRequest $request, product $product)
     {
-      //  return $request;
 
+        $params = $request->except('_token');
 
+        $product = $this->productRepository->updateProduct($params,$product);
 
-        $this->saveProductData($request, $product);
+        if (!$product)
+            return $this->responseRedirectBack(__('alerts.try_later'),'error');
+        return $this->responseRedirectBack(__('alerts.product_updated'),'success');
 
-
-        Session::flash('success', __('alerts.product_updated'));
-        return redirect(route('admin.products.edit', $product));
     }
 
 
@@ -296,41 +308,16 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\product $product
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(product $product)
     {
-        //
-    }
 
-    /**
-     * @param $request
-     * @param product $product
-     */
-    public function saveProductData($request, product $product): void
-    {
-        if (!$request->has('is_active')) {
-            $request->merge(['is_active' => 0]);
+
+        $this->productRepository->delete($product);
+        if (!$product) {
+            return $this->responseRedirectBack(__('alerts.try_later'), 'error');
         }
-        if (!$request->has('in_stock')) {
-            $request->merge(['in_stock' => 0]);
-        }
-
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->slug = $request->slug;
-        $product->sku = strtoupper( $request->sku);
-        $product->qty = $request->qty;
-        $product->description = $request->description;
-        $product->short_description = $request->short_description;
-        $product->brand_id = $request->brand;
-        $product->is_active = $request->is_active;
-        $product->in_stock = $request->in_stock;
-
-
-        $product->save();
-        $product->categories()->sync($request->categories);
-        $product->tags()->sync($request->tags);
-
+        return $this->responseRedirect('admin.products.index',__('alerts.deleted'), 'success');
     }
 }

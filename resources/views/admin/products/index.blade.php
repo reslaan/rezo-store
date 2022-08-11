@@ -1,4 +1,5 @@
 @extends('layouts.admin',['activePage' => 'products'])
+@section('title') {{ $pageTitle }} @endsection
 
 @section('content')
     <main class="app-content">

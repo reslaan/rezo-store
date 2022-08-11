@@ -3,9 +3,10 @@ namespace App\Contracts;
 
 
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-interface TagContract
+interface ProductContract
 {
     /**
      * @param string $order
@@ -13,29 +14,34 @@ interface TagContract
      * @param array $columns
      * @return mixed
      */
-    public function listTags(string $order = 'id', string $sort = 'desc', array $columns = ['*']);
+    public function listProducts(string $order = 'id', string $sort = 'desc', array $columns = ['*']);
 
     /**
      * @param int $id
      * @return mixed
      */
-    public function findTagById(int $id);
+    public function findById(int $id);
+
+    public function findBySlug($slug);
 
     /**
      * @param array $params
      * @return mixed
      */
-    public function createTag(array $params);
+    public function create(array $params);
 
     /**
      * @param array $params
+     * @param Product $product
      * @return mixed
      */
-    public function updateTag(array $params );
+    public function updateProduct(array $params ,Product $product );
 
     /**
      * @param $category
      * @return bool
      */
-    public function deleteTag($tag);
+    public function delete($category);
+
+
 }
