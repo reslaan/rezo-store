@@ -36,9 +36,11 @@ Route::group([
 
             Route::get('/cart', 'CartController@index')->name('cart');
             Route::post('/add/cart', 'CartController@addToCart')->name('cart.add');
+            Route::post('/update/cart', 'CartController@updateQuantity')->name('quantity.update');
             Route::post('/delete/cart/{id}', 'CartController@delete')->name('cart.delete');
 
             Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+            Route::post('/checkout/order', 'CheckoutController@placeOrder')->name('checkout.place.order');
         });
     });
 

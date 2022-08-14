@@ -12,163 +12,128 @@
     <!-- ========================= SECTION CONTENT ========================= -->
     <section class="content-section py-4">
         <div class="container">
+            <form action="{{route('checkout.place.order')}}" method="post">
+                @csrf
             <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
-                        <header class="card-header">
+
+                    <div class="col-md-8">
+                        <div class="card">
+                            {{-- <header class="card-header">
                             <h4 class="card-title mt-2">Billing Details</h4>
-                        </header>
-                        <article class="card-body">
-                            <form>
+                        </header> --}}
+                            <article class="card-body">
+
                                 <div class="form-row">
                                     <div class="col form-group">
-                                        <label>First name</label>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </div>
-                                    <!-- form-group end.// -->
-                                    <div class="col form-group">
-                                        <label>Last name</label>
-                                        <input type="text" class="form-control" placeholder="">
+                                        <label>العنوان </label>
+                                        <input type="text" name="address" class="form-control" placeholder="">
                                     </div>
                                     <!-- form-group end.// -->
                                 </div>
                                 <!-- form-row end.// -->
                                 <div class="form-group">
-                                    <label>Address</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <label>رقم البطاقة</label>
+                                    <input type="text" name="card_number" class="form-control" placeholder="">
                                 </div>
                                 <!-- form-group end.// -->
+                                <p for="">تاريخ الإنتهاء</p>
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>City</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <!-- form-group end.// -->
-                                    <div class="form-group col-md-6">
-                                        <label>Country</label>
-                                        <select id="inputState" class="form-control">
-                                            <option> Choose...</option>
-                                            <option>Uzbekistan</option>
-                                            <option>Russia</option>
-                                            <option selected="">United States</option>
-                                            <option>India</option>
-                                            <option>Afganistan</option>
+
+                                    <div class="form-group col-md-4">
+                                        <select class="form-select" name="expire_year" id="">
+                                            <option selected disabled>Year</option>
+                                            @for ($year = date('Y'); $year <= 2050; $year++)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endfor
                                         </select>
                                     </div>
+
+                                    <div class="form-group col-md-4">
+                                        <select class="form-select" name="month" id="">
+                                            <option selected disabled>month</option>
+                                            @for ($month = 01; $month <= 12; $month++)
+                                                <option value="{{ $month }}">{{ $month }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-group col-md-4">
+                                        <input type="text" name="secret_code" placeholder="Secret Code"
+                                            class="form-control">
+                                    </div>
                                     <!-- form-group end.// -->
                                 </div>
-                                <div class="form-group">
-                                    <label>Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                <div class="form-row">
+                                    <div class="col form-group">
+                                        <label>الإسم على البطاقة </label>
+                                        <input type="text" name="card_name" class="form-control" placeholder="ex:RESLAAN ALBOEIDI">
+                                    </div>
+                                    <!-- form-group end.// -->
                                 </div>
-                                <!-- form-group end.// -->
-                                <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input type="email" class="form-control" placeholder="">
-                                    <small class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                </div>
-                                <!-- form-group end.// -->
-                                <div class="form-group">
-                                    <label>Order Notes</label>
-                                    <textarea class="form-control" name="notes" rows="6"></textarea>
-                                </div>
-                                <!-- form-group end.// -->
-                            </form>
-                        </article>
+
+
+                            </article>
+                        </div>
+                        <!-- card.// -->
                     </div>
-                    <!-- card.// -->
-                </div>
-                <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <header class="card-header">
-                                    <h4 class="card-title mt-2">Your Order</h4>
-                                </header>
-                                <article class="card-body">
-                                    <dl class="dlist-align">
-                                        <dt>Parameter: </dt>
-                                        <dd class="text-right">Value name</dd>
-                                    </dl>
-                                    <dl class="dlist-align">
-                                        <dt>Color:</dt>
-                                        <dd class="text-right">Orange and Black</dd>
-                                    </dl>
-                                    <dl class="dlist-align">
-                                        <dt>Material:</dt>
-                                        <dd class="text-right">Leather</dd>
-                                    </dl>
-                                    <dl class="dlist-align">
-                                        <dt>Total cost: </dt>
-                                        <dd class="text-right h5 b"> USD195 </dd>
-                                    </dl>
-                                </article>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+
+                                    <article class="card-body">
+
+                                        <dl class="d-flex justify-content-between m-0">
+                                            <dt class="h5">الإجمالي:</dt>
+                                            <dt class="text-start h5 b">
+                                                {{ $totalPrice . ' ' . App\Models\Setting::get('currency_symbol') }} </dt>
+                                        </dl>
+                                    </article>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 mt-4">
-                            <div class="card">
-                                <header class="card-header">
-                                    <h4 class="card-title mt-2">Shipment Type</h4>
-                                </header>
-                                <article class="card-body">
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadio" value="">
-                                        <span class="form-check-label">
-                                        First hand items
-                                      </span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadio" value="">
-                                        <span class="form-check-label">
-                                        Brand new items
-                                      </span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadio" value="">
-                                        <span class="form-check-label">
-                                        Some other option
-                                      </span>
-                                    </label>
-                                </article>
+                            <div class="col-md-12 mt-4">
+                                <div class="card">
+                                    <header class="card-header">
+                                        <h4 class="card-title mt-2">Shipment Type</h4>
+                                    </header>
+                                    <article class="card-body">
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="radio" name="shipping_method"
+                                                value="0">
+                                            <span class="form-check-label">
+                                                First hand items
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="radio" name="shipping_method"
+                                                value="15">
+                                            <span class="form-check-label">
+                                                Brand new items
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="radio" name="shipping_method"
+                                                value="25">
+                                            <span class="form-check-label">
+                                                Some other option
+                                            </span>
+                                        </label>
+                                    </article>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 mt-4">
-                            <div class="card">
-                                <header class="card-header">
-                                    <h4 class="card-title mt-2">Payment Method</h4>
-                                </header>
-                                <article class="card-body">
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadio" value="">
-                                        <span class="form-check-label">
-                                        First hand items
-                                      </span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadio" value="">
-                                        <span class="form-check-label">
-                                        Brand new items
-                                      </span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadio" value="">
-                                        <span class="form-check-label">
-                                        Some other option
-                                      </span>
-                                    </label>
-                                </article>
+                            <input type="hidden" name="total_price" value="{{$totalPrice}}" />
+
+                            <div class="col-md-12 mt-4">
+                                <button class="subscribe btn btn-success btn-lg btn-block" type="submit">Place
+                                    Order</button>
                             </div>
-                        </div>
-                        <div class="col-md-12 mt-4">
-                            <button class="subscribe btn btn-success btn-lg btn-block" type="button">Place Order</button>
                         </div>
                     </div>
-                </div>
+
             </div>
+        </form>
         </div>
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
-
-
 @endsection
-

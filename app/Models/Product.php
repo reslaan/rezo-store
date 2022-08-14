@@ -21,10 +21,6 @@ class Product extends Model
         'slug',
         'sku',
         'price',
-        'special_price',
-        'special_price_type',
-        'special_price_start',
-        'special_price_end',
         'selling_price',
         'manage_stock',
         'qty',
@@ -62,7 +58,7 @@ class Product extends Model
     public function attributes(){
         return $this->belongsToMany(Attribute::class,'product_attributes');
     }
-    
+
     public function active(){
         return $this->is_active == 1 ? __('forms.active') : __('forms.inactive');
     }
@@ -72,6 +68,16 @@ class Product extends Model
     }
     public function options(){
         return $this->hasMany(Option::class,'product_id');
+    }
+
+    public function cartQuantity(){
+        $cart = Cart::where('product_id', $this->id)->where( 'user_id',auth()->user()->id)->first();
+
+        if(!$cart)
+        return 1;
+
+        return $cart->quantity;
+
     }
     public function images(){
         return $this->morphMany(Media::class,'model');

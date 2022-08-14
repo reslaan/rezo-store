@@ -41,7 +41,7 @@ interface ProductContract
      * @param $category
      * @return bool
      */
-    public function delete($category);
+    public function delete($product);
 
 
 }

@@ -38,7 +38,11 @@ class User extends Authenticatable
         'isVerified' => 'boolean'
     ];
 
-    public function cart(){
+    public function carts(){
         return $this->hasMany(Cart::class,'user_id');
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
     }
 }

@@ -26,7 +26,7 @@ class RepositoryServiceProvider extends ServiceProvider
         BrandContract::class          => BrandRepository::class,
         TagContract::class            => TagRepository::class,
         ProductContract::class        => ProductRepository::class,
-        OrderContract::class        => OrderRepository::class,
+        OrderContract::class          => OrderRepository::class,
     ];
     /**
      * Register services.

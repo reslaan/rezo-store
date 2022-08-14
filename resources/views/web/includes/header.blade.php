@@ -31,7 +31,7 @@
                             <a href="{{ route('cart') }}" class="position-relative text-center">
                                 <i class="fa fa-shopping-cart fs-5  text-white ">
                                     @auth
-                                        <small id="cartCount">({{ auth()->user()->cart->count() ?? 0 }})</small>
+                                        <small id="cartCount">({{ auth()->user()->carts->count() ?? 0 }})</small>
                                     @endauth
 
 
@@ -41,8 +41,10 @@
 
 
                         <li class="dropdown nav-item">
-                            <a class="" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
-                                <i class="fa fa-user fa-lg text-white"> </i></a>
+                            <a class="nav-link" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
+                                <i class="fa fa-user fa-lg text-white"> </i> @auth
+                                    {{Auth::user()->name}}
+                                @endauth</a>
                             <ul class="dropdown-menu ">
 
                                 @auth
