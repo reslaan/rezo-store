@@ -43,16 +43,16 @@ class CheckoutController extends BaseController
     {
 
         $data = [
-            'CustomerName'       => 'FName LName',
+            'CustomerName'       => 'Reslaan Alobeidi',
             'InvoiceValue'       => 10,
-            'DisplayCurrencyIso' => 'KWD',
+            'DisplayCurrencyIso' => 'SAR',
             'NotificationOption' => 'LNK',
             'CustomerEmail'      => 'test@test.com',
             'CallBackUrl'        => 'https://google.com',
             'ErrorUrl'           => 'https://youtube.com',
-            'MobileCountryCode'  => '+965',
-            'CustomerMobile'     => '1234567890',
-            'Language'           => 'en',
+            'MobileCountryCode'  => '+966',
+            'CustomerMobile'     => '580334498',
+            'Language'           => 'ar',
         ];
 
         try {
@@ -70,5 +70,14 @@ class CheckoutController extends BaseController
         }
 
         return $this->responseRedirect('order.index', __('alerts.ok'), 'success');
+    }
+
+    public function paymentCallback(Request $request){
+
+        $data = [];
+        $data['key'] = $request->paymentId;
+        $data['keyType'] = 'paymentId';
+
+        return $this->fatoorahService->getPaymentStatus($data);
     }
 }

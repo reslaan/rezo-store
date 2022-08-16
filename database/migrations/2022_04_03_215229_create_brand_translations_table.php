@@ -15,11 +15,10 @@ class CreateBrandTranslationsTable extends Migration
     {
         Schema::create('brand_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('brand_id');
             $table->string('locale');
             $table->string('name');
             $table->unique(['brand_id','locale']);
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table->timestamps();
         });
     }

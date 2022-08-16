@@ -18,8 +18,30 @@ class CategorySeeder extends Seeder
             'slug'          => 'root',
             'is_active'     => 1,
             'parent_id'     =>  null,
-            'menu'          =>  0,
+            'menu'          =>  1,
+            'featured'      =>  1,
         ]);
+        Category::create([
+            'id'            => 2,
+            'name'          => 'جوالات',
+            'slug'          => 'جوالات',
+            'is_active'     => 1,
+            'parent_id'     =>  null,
+            'menu'          =>  1,
+            'featured'      =>  1,
+        ]);
+        Category::create([
+            'id'            => 3,
+            'name'          => 'أجهزة لابتوب',
+            'slug'          => 'أجهزة-لابتوب',
+            'is_active'     => 1,
+            'parent_id'     =>  null,
+            'menu'          =>  1,
+            'featured'      =>  1,
+        ]);
+     
+
+
       // factory(\App\Models\Category::class,20)->create();
     }
 }
