@@ -125,7 +125,7 @@
                                     class="card-img-top" alt="">
                                 <figcaption class="p-2">
                                     <h4 class="title">{{ $product->name }}</h4>
-                                    <p class="desc">{{ $product->short_description }}</p>
+                                    <p class="desc text-nowrap overflow-hidden">{{ $product->short_description }}</p>
                                     <!-- rating-wrap.// -->
                                 </figcaption>
                             </a>
