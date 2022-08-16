@@ -60,7 +60,7 @@ class ProductSeeder extends Seeder
         'sku' => 'er234',
         'manage_stock' => false,
         'in_stock' => true,
-        'is_active' => ture,
+        'is_active' => true,
         'brand_id' => 1,
         'created_at' => '2019-10-17 23:06:51',
         'updated_at' => '2019-10-17 23:06:51',
