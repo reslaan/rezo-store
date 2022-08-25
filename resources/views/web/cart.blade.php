@@ -5,7 +5,7 @@
     <!-- ========================= SECTION PAGETOP ========================= -->
     <section class="py-4 bg-dark">
         <div class="container clearfix">
-            <h2 class="title-page">Cart Page</h2>
+            <h2 class="title-page text-light">Cart Page</h2>
         </div>
         <!-- container //  -->
     </section>

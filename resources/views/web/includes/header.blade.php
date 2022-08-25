@@ -42,9 +42,8 @@
 
                         <li class="dropdown nav-item">
                             <a class="nav-link" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
-                                <i class="fa fa-user fa-lg text-white"> </i> @auth
-                                    {{Auth::user()->name}}
-                                @endauth</a>
+                                <i class="fa fa-user fa-lg text-white"> </i>
+                               </a>
                             <ul class="dropdown-menu ">
 
                                 @auth

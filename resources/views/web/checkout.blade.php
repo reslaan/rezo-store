@@ -18,9 +18,7 @@
 
                     <div class="col-md-8">
                         <div class="card">
-                            {{-- <header class="card-header">
-                            <h4 class="card-title mt-2">Billing Details</h4>
-                        </header> --}}
+
                             <article class="card-body">
 
                                 <div class="form-row">
@@ -31,49 +29,7 @@
                                     <!-- form-group end.// -->
                                 </div>
                                 <!-- form-row end.// -->
-                                <div class="form-group">
-                                    <label>رقم البطاقة</label>
-                                    <input type="text" name="card_number" class="form-control" placeholder="">
-                                </div>
-                                <!-- form-group end.// -->
-                                <p for="">تاريخ الإنتهاء</p>
-                                <div class="form-row">
-
-                                    <div class="form-group col-md-4">
-                                        <select class="form-select" name="expire_year" id="">
-                                            <option selected disabled>Year</option>
-                                            @for ($year = date('Y'); $year <= 2050; $year++)
-                                                <option value="{{ $year }}">{{ $year }}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <select class="form-select" name="month" id="">
-                                            <option selected disabled>month</option>
-                                            @for ($month = 01; $month <= 12; $month++)
-                                                <option value="{{ $month }}">{{ $month }}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-
-
-                                    <div class="form-group col-md-4">
-                                        <input type="text" name="secret_code" placeholder="Secret Code"
-                                            class="form-control">
-                                    </div>
-                                    <!-- form-group end.// -->
-                                </div>
-                                <div class="form-row">
-                                    <div class="col form-group">
-                                        <label>الإسم على البطاقة </label>
-                                        <input type="text" name="card_name" class="form-control" placeholder="ex:RESLAAN ALBOEIDI">
-                                    </div>
-                                    <!-- form-group end.// -->
-                                </div>
-
-
-                            </article>
+                              
                         </div>
                         <!-- card.// -->
                     </div>

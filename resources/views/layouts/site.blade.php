@@ -86,11 +86,18 @@
 
                         },
                         error: function(response) {
-                            console.log(response.responseJSON.message);
-                            let errorMessage = response.responseJSON.message;
+                           // window.location.assign("{{route('login')}}")
+                            console.log(response.status);
+                            if(response.status == 401){
+                                window.location.assign("{{route('login')}}")
+                            }else{
+                                 let errorMessage = response.responseJSON.message;
                             $.notify(`<p class="text-light mb-0 text-center fs-5"> ${errorMessage} <i class="fa fa-xing ms-2"></i></p>`, {
                             type: 'danger',
                         });
+                            }
+
+
                         },
                     });
     });
