@@ -15,6 +15,7 @@ class CartController extends Controller
     public function __construct(ProductRepository $productRepository){
         $this->productRepository = $productRepository;
         $this->middleware('auth');
+
     }
 
 
@@ -32,6 +33,8 @@ class CartController extends Controller
 
 
     public function addToCart(Request $request){
+
+
 
        $cartIds = auth()->user()->carts->pluck('product_id');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Contracts\OrderContract;
 use App\Contracts\ProductContract;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\FatoorahService;
 use App\Http\Controllers\BaseController;
+use Illuminate\Support\Facades\Redirect;
 use Webmozart\Assert\InvalidArgumentException;
 
 class CheckoutController extends BaseController
@@ -42,9 +44,10 @@ class CheckoutController extends BaseController
     public function placeOrder(Request $request)
     {
 
+
         $data = [
             'CustomerName'       => 'Reslaan Alobeidi',
-            'InvoiceValue'       => 10,
+            'InvoiceValue'       => $request->total_price,
             'DisplayCurrencyIso' => 'SAR',
             'NotificationOption' => 'LNK',
             'CustomerEmail'      => 'test@test.com',
@@ -56,23 +59,30 @@ class CheckoutController extends BaseController
         ];
 
         try {
+            $order = $this->orderRepository->storeOrderDetails($request->all());
 
+            if (!$order) {
+                return $this->responseRedirectBack(__('alerts.try_later'), 'error');
+            }
 
-      return    $this->fatoorahService->sendPayment($data);
-        }catch (InvalidArgumentException $e) {
+            Cart::where('user_id',Auth::user()->id)->delete();
+
+            $response = $this->fatoorahService->sendPayment($data);
+            $url = $response['Data']['InvoiceURL'];
+
+            return  Redirect::to($url);
+        } catch (InvalidArgumentException $e) {
             return $e;
         };
 
-        $order = $this->orderRepository->storeOrderDetails($request->all());
-
-        if (!$order) {
-            return $this->responseRedirectBack(__('alerts.try_later'), 'error');
-        }
 
         return $this->responseRedirect('order.index', __('alerts.ok'), 'success');
     }
 
-    public function paymentCallback(Request $request){
+
+
+    public function paymentCallback(Request $request)
+    {
 
         $data = [];
         $data['key'] = $request->paymentId;
