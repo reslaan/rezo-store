@@ -46,27 +46,32 @@
                 </div>
                 <!-- col.// -->
                 <div class="col-md-3">
-                    @foreach ($products as $product)
-                        @if ($loop->index < 3)
-                            <div class="card mt-2 mb-2">
-                                <figure class="d-flex justify-content-center align-items-center">
-                                    <div class="w-50 p-2">
-                                        <img src="{{ $product->firstImage() ?? asset('images/image_default.png') }}"
-                                            class=" img-fluid" alt="">
-                                    </div>
-                                    <figcaption class="p-3 w-75">
-                                        <h6 class="title"><a class="nav-link" href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a></h6>
-                                        <div class="fw-bold">
-                                            <span
-                                                class="text-primary">{{ $product->price . ' ' . \App\Models\Setting::get('currency_symbol') }}</span>
-                                            <del class="text-danger"></del>
+                    @isset($products)
+                        @foreach ($products as $product)
+                            @if ($loop->index < 3)
+                                <div class="card mt-2 mb-2">
+                                    <figure class="d-flex justify-content-center align-items-center">
+                                        <div class="w-50 p-2">
+                                            <img src="{{ $product->firstImage() ?? asset('images/image_default.png') }}"
+                                                class=" img-fluid" alt="">
                                         </div>
-                                        <!-- price-wrap.// -->
-                                    </figcaption>
-                                </figure>
-                            </div>
-                        @endif
-                    @endforeach
+                                        <figcaption class="p-3 w-75">
+                                            <h6 class="title"><a class="nav-link"
+                                                    href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
+                                            </h6>
+                                            <div class="fw-bold">
+                                                <span
+                                                    class="text-primary">{{ $product->price . ' ' . \App\Models\Setting::get('currency_symbol') }}</span>
+                                                <del class="text-danger"></del>
+                                            </div>
+                                            <!-- price-wrap.// -->
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endisset
+
                 </div>
                 <!-- col.// -->
             </div>
@@ -82,23 +87,26 @@
             </header>
             <hr>
             <div class="row">
-                @foreach ($categories as $category)
-                    <div class="col-md-4">
-                        {{-- <figure class="mt-2" style="width: 120px; height: auto;"> --}}
-                        {{-- <img src="{{ $category->photoPath() }}" id="categoryImage" class="img-fluid" alt="img"> --}}
-                        {{-- </figure> --}}
-                        <div class="card-banner d-flex"
-                            style="height:250px; background-image: url({{ $category->photoPath() }}); background-size: cover;">
-                            <article class="m-auto">
-                                <div class="text-center">
-                                    <h5 class="card-title">{{ $category->name }}</h5>
-                                    <a href="#" class="btn btn-warning btn-sm">{{ __('sidebar.all') }} </a>
-                                </div>
-                            </article>
+                @isset($categories)
+                    @foreach ($categories as $category)
+                        <div class="col-md-4">
+                            {{-- <figure class="mt-2" style="width: 120px; height: auto;"> --}}
+                            {{-- <img src="{{ $category->photoPath() }}" id="categoryImage" class="img-fluid" alt="img"> --}}
+                            {{-- </figure> --}}
+                            <div class="card-banner d-flex"
+                                style="height:250px; background-image: url({{ $category->photoPath() }}); background-size: cover;">
+                                <article class="m-auto">
+                                    <div class="text-center">
+                                        <h5 class="card-title">{{ $category->name }}</h5>
+                                        <a href="#" class="btn btn-warning btn-sm">{{ __('sidebar.all') }} </a>
+                                    </div>
+                                </article>
+                            </div>
+                            <!-- card.// -->
                         </div>
-                        <!-- card.// -->
-                    </div>
-                @endforeach
+                    @endforeach
+                @endisset
+
 
             </div>
         </div>
@@ -115,34 +123,37 @@
                 <h4 class=" text-uppercase">{{ __('app.recently_added') }}</h4>
             </header>
             <hr>
-            <div class="row">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
 
-                @foreach ($products as $product)
-                    <div class="col-md-3">
-                        <figure class="card ">
-                            <a href="{{ route('product.show', $product->slug) }}" class="nav-link p-0">
-                                <img src="{{ $product->firstImage() ?? asset('images/image_default.png') }}" height="200"
-                                    class="card-img-top" alt="">
-                                <figcaption class="p-2">
-                                    <h4 class="title">{{ $product->name }}</h4>
-                                    <p class="desc text-nowrap overflow-hidden">{{ $product->short_description }}</p>
-                                    <!-- rating-wrap.// -->
-                                </figcaption>
-                            </a>
-                            <div class="card-footer d-flex justify-content-between align-items-center">
-                                <div class="fw-bold">
-                                    <span
-                                        class="text-primary">{{ $product->price . ' ' . Config::get('settings.currency_symbol') }}</span>
-                                    {{-- <del class="text-danger">1980 {{ \App\Models\Setting::get('currency_symbol') }}</del> --}}
+                @isset($products)
+                    @foreach ($products as $product)
+                        <div class="col">
+                            <figure class="card  ">
+                                <a href="{{ route('product.show', $product->slug) }}" class="nav-link p-0">
+                                    <img src="{{ $product->firstImage() ?? asset('images/image_default.png') }}" height="200"
+                                        class="card-img-top border-top border-primary border-2" alt="">
+                                    <figcaption class="p-2">
+                                        <h4 class="title">{{ $product->name }}</h4>
+                                        <p class="desc text-nowrap overflow-hidden">{{ $product->short_description }}</p>
+                                        <!-- rating-wrap.// -->
+                                    </figcaption>
+                                </a>
+                                <div class="card-footer d-flex justify-content-between align-items-center">
+                                    <div class="fw-bold">
+                                        <span
+                                            class="text-primary">{{ $product->price . ' ' . Config::get('settings.currency_symbol') }}</span>
+                                        {{-- <del class="text-danger">1980 {{ \App\Models\Setting::get('currency_symbol') }}</del> --}}
+                                    </div>
+                                    <a href="#" class="btn btn-sm btn-primary text-center addToCart"
+                                        data-id="{{ $product->id }}"><i class="fa fa-cart-plus fa-3x"></i></a>
                                 </div>
-                                <a href="#"  class="btn btn-sm btn-primary text-center addToCart" data-id="{{ $product->id }}"><i
-                                        class="fa fa-cart-plus fa-3x"></i></a>
-                            </div>
-                            <!-- bottom-wrap.// -->
-                        </figure>
-                    </div>
-                    <!-- col // -->
-                @endforeach
+                                <!-- bottom-wrap.// -->
+                            </figure>
+                        </div>
+                        <!-- col // -->
+                    @endforeach
+                @endisset
+
             </div>
 
 
@@ -151,7 +162,7 @@
     </section>
 @endsection
 
-    {{-- <script type="text/javascript">
+{{-- <script type="text/javascript">
 
         $(document).on('click','.addToCart',function (e) {
 
@@ -180,4 +191,3 @@
         });
 
     </script> --}}
-

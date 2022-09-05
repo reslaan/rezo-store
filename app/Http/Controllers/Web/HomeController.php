@@ -36,6 +36,7 @@ class HomeController extends Controller
     public function index()
     {
 
+        
         $categories = Category::select('id','image')->where('featured',1)->limit(3)->get();
         $products = Product::select('id','slug','price')->where('is_active',1)->get();
 

@@ -5,13 +5,13 @@
     <!-- ========================= SECTION PAGETOP ========================= -->
     <section class="py-4 bg-dark">
         <div class="container clearfix">
-            <h2 class="title-page">Product Detail View</h2>
+            <h2 class="title-page text-light">Product Detail View</h2>
         </div>
         <!-- container //  -->
     </section>
     <!-- ========================= SECTION INTRO END// ========================= -->
     <!-- ========================= SECTION CONTENT ========================= -->
-    <section class="section-content bg padding-y border-top">
+    <section class="section-content bg my-4 border-top">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -139,7 +139,7 @@
     <!-- ========================= SECTION CONTENT END// ========================= -->
 
     <!-- ========================= SECTION ITEMS ========================= -->
-    <section class="mt-4">
+    {{-- <section class="mt-4">
         <div class="container">
             <header class="mb-3">
                 <h4 class=" text-uppercase">Related Products</h4>
@@ -175,5 +175,5 @@
 
         </div>
         <!-- container // -->
-    </section>
+    </section> --}}
 @endsection
