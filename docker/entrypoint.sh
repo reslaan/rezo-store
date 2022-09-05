@@ -1,26 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-
-if [ ! -f "vednor/autoload.php" ]; then
- composer install --no-progress --no-interaction
-fi
-
-if [ ! -f ".env" ]; then
-  echo "Creating env file for $APP_ENV"
-  cp .env.example .env
-  php artisan key:generate
+if [ $# -gt 0 ];then
+    # If we passed a command, run it as root
+    exec "$@"
 else
- echo ".env file exists"
+    # Otherwise start the web server
+
+    ## Prepare Laravel caches
+    /usr/bin/php /var/www/html/artisan config:cache --no-ansi -q
+    /usr/bin/php /var/www/html/artisan route:cache --no-ansi -q
+    /usr/bin/php /var/www/html/artisan view:cache --no-ansi -q
+    chown -R webuser:webgroup /var/www/html
+
+    exec /init
 fi
-
-# php artisan migrate
-# php artisan db:seed
-# php artisan key:generate
-php artisan cache:clear
-php artisan config:clear
-php artisan route:cache
-php artisan route:clear
-php artisan optimize
-
-php artisan serve --port=$PORT  --host=0.0.0.0  --env=.env
-exec docker-php-entrypoint "$@"
