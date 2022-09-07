@@ -1,16 +1,30 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
-if [ $# -gt 0 ];then
-    # If we passed a command, run it as root
-    exec "$@"
+if [ ! -f "vendor/autoload.php" ]; then
+    composer install --no-progress --no-interaction
+fi
+
+if [ ! -f ".env" ]; then
+    echo "Creating env file for env $APP_ENV"
+    cp .env.example .env
 else
-    # Otherwise start the web server
+    echo "env file exists."
+fi
 
-    ## Prepare Laravel caches
-    /usr/bin/php /var/www/html/artisan config:cache --no-ansi -q
-    /usr/bin/php /var/www/html/artisan route:cache --no-ansi -q
-    /usr/bin/php /var/www/html/artisan view:cache --no-ansi -q
-    chown -R webuser:webgroup /var/www/html
+role=${CONTAINER_ROLE:-app}
 
-    exec /init
+if [ "$role" = "app" ]; then
+    php artisan migrate
+    php artisan key:generate
+    php artisan cache:clear
+    php artisan config:clear
+    php artisan route:clear
+    php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
+    exec docker-php-entrypoint "$@"
+elif [ "$role" = "queue" ]; then
+    echo "Running the queue ... "
+    php /var/www/artisan queue:work --verbose --tries=3 --timeout=180
+elif [ "$role" = "websocket" ]; then
+    echo "Running the websocket server ... "
+    php artisan websockets:serve
 fi
