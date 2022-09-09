@@ -1,6 +1,6 @@
-# fly.toml file generated for rezo-shop on 2022-09-06T00:40:50+03:00
+# fly.toml file generated for rezo-ecommerce on 2022-09-07T09:04:53+03:00
 
-app = "rezo-shop"
+app = "rezo-ecommerce"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -8,7 +8,7 @@ processes = []
 [build]
   [build.args]
     NODE_VERSION = "14"
-    PHP_VERSION = "7.4"
+    PHP_VERSION = "8.0"
 
 [env]
   APP_ENV = "production"

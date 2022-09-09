@@ -5,9 +5,9 @@ RUN apt-get install -y unzip libpq-dev libcurl4-gnutls-dev
 RUN docker-php-ext-install pdo pdo_mysql bcmath
 
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 COPY . .
-
+# RUN COMPOSER_VENDOR_DIR="/var/www/vendor" composer install
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
 
 ENV PORT=8000
