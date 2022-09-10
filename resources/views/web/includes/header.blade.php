@@ -39,6 +39,12 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('admin.login') }}" class="text-white text-center nav-link">
+                                        admin
+                            </a>
+                        </li>
+
 
                         <li class="dropdown nav-item">
                             <a class="nav-link" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 function getFolder(){
     return app()->getLocale() == 'ar' ? 'css-rtl' : 'css';
@@ -16,4 +17,9 @@ function uploadImage($image , $folder){
 }
 function deleteImage($fileName , $folder){
     File::delete(public_path('storage/images/'.$folder.'/'.$fileName));
+}
+
+function imagePath($folder, $fileName){
+   $path =  Storage::disk('s3')->url($folder.'/'.$fileName);
+   return $path;
 }

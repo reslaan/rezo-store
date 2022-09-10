@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Brand extends Model
@@ -31,7 +32,10 @@ class Brand extends Model
     public function photoPath(){
         if (!$this->photo)
             return asset('images/image_default.png');
-        return asset('storage/images/brands/'.$this->photo);
+            
+            $image =  imagePath('brands',$this->photo);
+        return $image;
+       // return asset('storage/images/brands/'.$this->photo);
     }
     public function translations(): HasMany
     {
