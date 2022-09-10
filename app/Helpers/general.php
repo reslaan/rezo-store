@@ -17,7 +17,9 @@ function uploadImage($image , $folder){
     return $path;
 }
 function deleteImage($fileName , $folder){
-    File::delete(public_path('storage/images/'.$folder.'/'.$fileName));
+
+Storage::disk('s3')->delete($fileName);
+    //File::delete(public_path('storage/images/'.$folder.'/'.$fileName));
 }
 
 function imagePath($fileName){

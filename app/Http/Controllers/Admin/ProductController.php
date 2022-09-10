@@ -182,7 +182,7 @@ class ProductController extends BaseController
         $file_list = [];
         foreach ($images as $image) {
             // $path = asset('storage/images/products/'.$image->file_name);
-            $path = $image->path('products');
+            $path = imagePath($image->file_name);
             $size = $image->size;
 
             $file_list[] = ['name' => $image->file_name, 'size' => $size, 'path' => $path];

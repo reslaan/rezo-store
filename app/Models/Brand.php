@@ -34,10 +34,10 @@ class Brand extends Model
             return asset('images/image_default.png');
 
             if (Storage::disk('s3')->exists($this->photo)) {
-                $image =  imagePath($this->image);
+                $image =  imagePath($this->photo);
                 return $image;
             }
-            
+
        // return asset('storage/images/brands/'.$this->photo);
     }
     public function translations(): HasMany
