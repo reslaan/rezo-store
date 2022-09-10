@@ -6,7 +6,7 @@ namespace App\Repositories;
 
 use App\Contracts\BaseContract;
 use App\Contracts\BrandContract;
-use App\Models\brand;
+use App\Models\Brand;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
