@@ -69,9 +69,11 @@ class Category extends Model
 //         $exists = Storage::disk('public')->exists('storage/images/categories/'.$this->image);
 //       if (!$this->image || !$exists)
 //        return asset('images/image_default.png');
-        // this for aws s3
-         $image =  imagePath('categories',$this->image);
-        return $image;
+
+if (Storage::disk('s3')->exists($this->image)) {
+    $image =  imagePath($this->image);
+    return $image;
+}
 
         // this for local
         return asset('storage/images/categories/'.$this->image);

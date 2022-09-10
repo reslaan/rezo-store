@@ -12,14 +12,15 @@ define('PAGINATION_COUNT', 10);
 
 
 function uploadImage($image , $folder){
-    $image->store($folder ,'s3');
-    return $image->hashName();
+  $path =  $image->storePublicly($folder ,'s3');
+
+    return $path;
 }
 function deleteImage($fileName , $folder){
     File::delete(public_path('storage/images/'.$folder.'/'.$fileName));
 }
 
-function imagePath($folder, $fileName){
-   $path =  Storage::disk('s3')->url($folder.'/'.$fileName);
+function imagePath($fileName){
+   $path =  Storage::disk('s3')->url($fileName);
    return $path;
 }

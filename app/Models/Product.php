@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    use Translatable,SoftDeletes;
+    use Translatable, SoftDeletes;
 
     protected $table = 'products';
     // The relation to eager load on every query
     protected $with = ['translations'];
 
-    protected $translatedAttributes = ['name','description','short_description'];
+    protected $translatedAttributes = ['name', 'description', 'short_description'];
 
     protected $fillable = [
         'slug',
@@ -27,7 +28,7 @@ class Product extends Model
         'in_stock',
         'is_active',
         'brand_id',
-        ];
+    ];
 
     // make it hidden to speed query if i don't need it
     protected $hidden = ['translations'];
@@ -46,52 +47,67 @@ class Product extends Model
         'deleted_at',
     ];
 
-    public function brand(){
-        return $this->belongsTo(Brand::class,'brand_id');
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
-    public function categories(){
-        return $this->belongsToMany(Category::class,'product_categories');
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'product_categories');
     }
-    public function tags(){
-        return $this->belongsToMany(Tag::class,'product_tags');
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'product_tags');
     }
-    public function attributes(){
-        return $this->belongsToMany(Attribute::class,'product_attributes');
+    public function attributes()
+    {
+        return $this->belongsToMany(Attribute::class, 'product_attributes');
     }
 
-    public function active(){
+    public function active()
+    {
         return $this->is_active == 1 ? __('forms.active') : __('forms.inactive');
     }
     public function translations(): HasMany
     {
-        return $this->hasMany(ProductTranslation::class,'product_id');
+        return $this->hasMany(ProductTranslation::class, 'product_id');
     }
-    public function options(){
-        return $this->hasMany(Option::class,'product_id');
+    public function options()
+    {
+        return $this->hasMany(Option::class, 'product_id');
     }
 
-    public function cartQuantity(){
-        $cart = Cart::where('product_id', $this->id)->where( 'user_id',auth()->user()->id)->first();
+    public function cartQuantity()
+    {
+        $cart = Cart::where('product_id', $this->id)->where('user_id', auth()->user()->id)->first();
 
-        if(!$cart)
-        return 1;
+        if (!$cart)
+            return 1;
 
         return $cart->quantity;
-
     }
-    public function images(){
-        return $this->morphMany(Media::class,'model');
+    public function images()
+    {
+        return $this->morphMany(Media::class, 'model');
     }
 
-    public function firstImage(){
-        $image = $this->images()->pluck('file_name')->first();
+    public function firstImage()
+    {
+        $first_image = $this->images()->pluck('file_name')->first();
 
-        if (!$image)
+        if (!$first_image)
             return asset('images/image_default.png');
 
-        return asset('storage/images/products/'.$image);
+       
+            $path = imagePath($first_image);
+            return $path;
+
+
+        // this for local
+       // return asset('storage/images/products/' . $first_image);
     }
-    public function setSlugAttribute($value){
+    public function setSlugAttribute($value)
+    {
 
         $separator = '-';
         $value = trim($value);
@@ -104,6 +120,5 @@ class Product extends Model
 
         $value = preg_replace("/[\s_]/", $separator, $value);
         $this->attributes['slug'] = $value;
-
     }
 }
