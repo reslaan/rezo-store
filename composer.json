@@ -12,11 +12,14 @@
         "astrotomic/laravel-translatable": "^11.9",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "google/apiclient": "^2.12",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "league/flysystem-aws-s3-v3": "*",
         "mcamara/laravel-localization": "^1.7",
+        "nao-pon/flysystem-google-drive": "^1.1",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
@@ -38,7 +41,10 @@
             "dont-discover": [
             "laravel/dusk"
             ]
-        }
+        },
+        "google/apiclient-services": [
+            "Drive"
+        ]
     },
     "autoload": {
         "psr-4": {

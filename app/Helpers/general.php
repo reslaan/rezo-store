@@ -11,7 +11,7 @@ define('PAGINATION_COUNT', 10);
 
 
 function uploadImage($image , $folder){
-    $image->store('public/images/'.$folder);
+    $image->store($folder ,'s3');
     return $image->hashName();
 }
 function deleteImage($fileName , $folder){
