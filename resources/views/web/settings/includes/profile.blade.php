@@ -55,11 +55,11 @@
                 </div>
             </div>
 
-            <div class="form-actions text-end">
+            {{-- <div class="form-actions text-end">
                 <button type="submit" class="btn btn-primary">
                     <i class="fa fa-fw fa-lg fa-check-circle"></i> Update Profile
                 </button>
-            </div>
+            </div> --}}
         </form>
 
 
