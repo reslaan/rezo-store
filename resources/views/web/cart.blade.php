@@ -56,13 +56,6 @@
                                                     @for ($i = 1; $i <= 3; $i++)
                                                         <option {{$product->cartQuantity() == $i ? 'selected' : ''}} value="{{$i}}">{{$i}}</option>
                                                     @endfor
-{{--
-                                                    <option {{ $product->cartQuantity() == 2 ? 'selected' : '' }}
-                                                        value="2">2</option>
-                                                    <option {{ $product->cartQuantity() == 3 ? 'selected' : '' }}
-                                                        value="3">3</option>
-                                                    <option {{ $product->cartQuantity() == 4 ? 'selected' : '' }}
-                                                        value="4">4</option> --}}
                                                 </select>
                                             </td>
                                             <td class="align-middle price" data-price="{{ $product->price }}">
@@ -93,7 +86,7 @@
                             <hr>
                             <div class="row h-100">
                                 <div class=" d-flex justify-content-between">
-                                    <label class="">المنتجات 4</label>
+                                    <label class="">المنتجات: {{ auth()->user()->carts->count() ?? 0}} </label>
                                     <span class="" id="subTotal">0</span>
                                 </div>
 

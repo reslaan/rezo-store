@@ -57,10 +57,15 @@
                                         <a class="dropdown-item" href="{{ route('profile') }}"><i
                                                 class="fa fa-user fa-lg"></i> Profile</a>
                                     </li>
+                                     <li>
+                                        <a class="dropdown-item" href="{{ route('settings') }}"><i
+                                                class="fa fa-cog fa-lg "></i> Settings</a>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}"><i
                                                 class="fa fa-sign-out fa-lg "></i> Logout</a>
                                     </li>
+
                                 @endauth
                                 @guest()
                                     <li>

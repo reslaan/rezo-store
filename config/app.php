@@ -177,7 +177,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewComposerServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
-        App\Providers\GoogleDriveServiceProvider::class,
 
     ],
 

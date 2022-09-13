@@ -14,7 +14,7 @@
                 <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
                 <div class="form-group">
                     <label class="control-label">USERNAME</label>
-                    <input class="form-control" type="email" name="email"  value="{{old('email')}}" id="email" placeholder="Email" autofocus>
+                    <input class="form-control" type="email" name="email"  value="{{old('email') ?? "reslaan@gmail.com"}}" id="email" placeholder="Email" autofocus>
                     @error('email')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label class="control-label">PASSWORD</label>
                     <input class="form-control" type="password" name="password"  id="password"
-                           value="{{old('password')}}" placeholder="Password">
+                           value="{{old('password') ?? "12345678"}}" placeholder="Password">
                     @error('password')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
@@ -61,11 +61,7 @@
                 </div>
             </form>
         </div>
-        <div class="text-center ">
-            <button type="button" class="btn btn-primary  my-3 text-center" id="loginData" onclick="loginData()"><i class="ft-user"></i>
-                Admin Info
-            </button>
-        </div>
+
     </section>
 @endsection
 
@@ -76,13 +72,5 @@
             $('.login-box').toggleClass('flipped');
             return false;
         });
-
-        let email = document.querySelector('#email');
-        let password = document.querySelector('#password');
-
-        function loginData(){
-            email.value = 'reslaan@gmail.com';
-            password.value = '12345678';
-        }
     </script>
 @endsection

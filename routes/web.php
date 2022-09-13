@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\SettingController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +44,8 @@ Route::group([
         Route::group(['middleware' => 'auth'], function () {
 
 
+            Route::get('/settings',[SettingController::class,'index'])->name('settings');
+            Route::get('/settings/order/{id}',[SettingController::class,'orderItems'])->name('order.items');
             Route::get('/cart', 'CartController@index')->name('cart');
             Route::post('/add/cart', 'CartController@addToCart')->name('cart.add');
             Route::post('/update/cart', 'CartController@updateQuantity')->name('quantity.update');
