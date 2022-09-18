@@ -141,7 +141,7 @@
                                 <div class="card-footer d-flex justify-content-between align-items-center">
                                     <div class="fw-bold">
                                         <span
-                                            class="text-primary">{{ $product->price . ' ' . Config::get('settings.currency_symbol') }}</span>
+                                            class="text-primary">{{ $product->price . ' ' .  \App\Models\Setting::get('currency_symbol') }}</span>
                                         {{-- <del class="text-danger">1980 {{ \App\Models\Setting::get('currency_symbol') }}</del> --}}
                                     </div>
                                     <a href="#" class="btn btn-sm btn-primary text-center addToCart"

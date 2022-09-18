@@ -1,125 +1,97 @@
 <header class="section-header">
 
-    <section class="header-main border-bottom bg-primary text-white">
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-primary text-white">
         <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-3">
-                    <div class="navbar-brand">
-                        {{-- <img class="img-fluid w-25" src="{{asset('images/logo_default.png')}}" width="80" > --}}
-                        <a href="{{ route('home') }}" class="app-header__logo bg-transparent  h2">Rezo</a>
-                    </div>
-                    <!-- brand-wrap.// -->
-                </div>
-                <div class="col-6 ">
-                    <form action="#" class="search-wrap text-primary">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-primary text-light" placeholder="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-light" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- search-wrap .end// -->
-                </div>
-                <!-- col.// -->
-                <div class=" col-3  ">
-                    <ul class="list-unstyled d-flex align-items-center justify-content-evenly mb-0 text-white">
-
-                        <li class="nav-item">
-                            <a href="{{ route('cart') }}" class="position-relative text-center">
-                                <i class="fa fa-shopping-cart fs-5  text-white ">
-                                    @auth
-                                        <small id="cartCount">({{ auth()->user()->carts->count() ?? 0 }})</small>
-                                    @endauth
-
-
-                                </i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('admin.login') }}" class="text-white text-center nav-link">
-                                        admin
-                            </a>
-                        </li>
-
-
-                        <li class="dropdown nav-item">
-                            <a class="nav-link" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
-                                <i class="fa fa-user fa-lg text-white"> </i>
-                               </a>
-                            <ul class="dropdown-menu ">
-
+            <a href="{{ route('home') }}" class="app-header__logo bg-transparent  h2">Rezo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    {{-- admin link --}}
+                    <li class="nav-item">
+                        <a href="{{ route('admin.login') }}" class="active nav-link">
+                            Admin
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="{{ route('cart') }}">
+                            <i class="fa fa-shopping-cart fs-6  text-white ">
                                 @auth
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('profile') }}"><i
-                                                class="fa fa-user fa-lg"></i> Profile</a>
-                                    </li>
-                                     <li>
-                                        <a class="dropdown-item" href="{{ route('settings') }}"><i
-                                                class="fa fa-cog fa-lg "></i> Settings</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"><i
-                                                class="fa fa-sign-out fa-lg "></i> Logout</a>
-                                    </li>
-
+                                    <small id="cartCount">({{ auth()->user()->carts->count() ?? 0 }})</small>
                                 @endauth
-                                @guest()
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('login') }}"><i
-                                                class="fa fa-sign-in fa-lg"></i> Login</a>
-                                    </li>
-                                @endguest
-                            </ul>
-                        </li>
+                            </i>
+                        </a>
+                    </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa fa-user  text-white"> </i>
+                        </a>
+                        <ul class="dropdown-menu ">
 
-                        <!-- languages Menu-->
-                        <li class="dropdown align-middle nav-item">
-                            <a class="" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
-                                <span class="user-name text-bold-700 text-white">
-                                    {{ app()->getLocale() == 'ar' ? 'AR' : 'EN' }}
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                    <li class="dropdown dropdown-user nav-item w-100">
-                                        <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
-                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                            {{ $properties['native'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    </ul>
+                            @auth
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile') }}"><i class="fa fa-user fa-lg"></i>
+                                        Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('settings') }}"><i class="fa fa-cog fa-lg "></i>
+                                        Settings</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item " href="{{ route('logout') }}"><i
+                                            class="fa fa-sign-out fa-lg "></i> Logout</a>
+                                </li>
 
-                </div>
-                <!-- col.// -->
+                            @endauth
+                            @guest()
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('login') }}"><i class="fa fa-sign-in fa-lg"></i>
+                                        Login</a>
+                                </li>
+                            @endguest
+                        </ul>
+                    </li>
+
+                    <!-- languages Menu-->
+                    <li class="dropdown  nav-item">
+                        <a class="nav-link active dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ app()->getLocale() == 'ar' ? 'AR' : 'EN' }} </a>
+
+                        <ul class="dropdown-menu ">
+                            @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <li class="dropdown dropdown-user nav-item w-100">
+                                    <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                        {{ $properties['native'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <!-- row.// -->
         </div>
-        <!-- container.// -->
-    </section>
+    </nav>
+
     <!-- header-main .// -->
     @isset($categories)
-        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-            <div class="container">
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
+
+        <nav class="navbar navbar-expand navbar-dark bg-secondary">
+            <div class="container">
+                {{-- <a href="#" class="app-header__logo bg-transparent  h2"></a> --}}
+
+                <button class="navbar-toggler align-self-start" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"
                     aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="main_nav">
-                    <ul class="navbar-nav">
-                        {{-- <li class="nav-item"> --}}
-                        {{-- <a class="nav-link pl-0" href="#"> <strong>{{__('app.all_categories')}}</strong></a> --}}
-                        {{-- </li> --}}
-
+                    <ul class="navbar-nav mx-auto">
                         @foreach ($categories as $category)
                             <li class="nav-item">
                                 <a class="nav-link"
@@ -129,10 +101,9 @@
 
                     </ul>
                 </div>
-                <!-- collapse .// -->
             </div>
-            <!-- container .// -->
         </nav>
+
     @endisset
 
 </header>
