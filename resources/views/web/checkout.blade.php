@@ -25,11 +25,14 @@
                                     <div class="col form-group">
                                         <label>العنوان </label>
                                         <input type="text" name="address" class="form-control" placeholder="">
+                                        @error('address')
+                                        <span class="text-danger">{{$message}}</span>
+                                        @enderror
                                     </div>
                                     <!-- form-group end.// -->
                                 </div>
                                 <!-- form-row end.// -->
-                              
+
                         </div>
                         <!-- card.// -->
                     </div>
@@ -58,21 +61,21 @@
                                             <input class="form-check-input" type="radio" name="shipping_method"
                                                 value="0">
                                             <span class="form-check-label">
-                                                First hand items
+                                                aramex
                                             </span>
                                         </label>
                                         <label class="form-check">
                                             <input class="form-check-input" type="radio" name="shipping_method"
                                                 value="15">
                                             <span class="form-check-label">
-                                                Brand new items
+                                                DHL
                                             </span>
                                         </label>
                                         <label class="form-check">
                                             <input class="form-check-input" type="radio" name="shipping_method"
                                                 value="25">
                                             <span class="form-check-label">
-                                                Some other option
+                                                SMSA
                                             </span>
                                         </label>
                                     </article>

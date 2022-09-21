@@ -44,6 +44,9 @@ class CheckoutController extends BaseController
     public function placeOrder(Request $request)
     {
 
+        $request->validate([
+            'address' => 'required',
+        ]);
 
         $data = [
             'CustomerName'       => 'Reslaan Alobeidi',

@@ -148,6 +148,7 @@ return [
 
     'attributes' => [
         'name' => __('forms.name'),
+        'address' => 'العنوان',
         'mobile' => __('forms.mobile'),
         'email' => __('forms.email'),
         'password' => __('forms.password'),
